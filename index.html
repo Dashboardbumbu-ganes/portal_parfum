@@ -3,15 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0b1220">
 <title>VJ PARFUM — Dashboard Penjualan</title>
 
 <script>
-/* Cek sesi login sebelum CSS render (hindari kedip) */
-try {
-  if (localStorage.getItem('vj_session_v3')) {
-    document.documentElement.classList.add('logged-in');
-  }
-} catch(e) {}
+try{
+  if(localStorage.getItem('vj_session_v3'))document.documentElement.classList.add('logged-in');
+}catch(e){}
 </script>
 
 <style>
@@ -40,10 +38,14 @@ html.logged-in #dashboardScreen{display:block!important}
 body{
   font-family:'DM Sans',system-ui,sans-serif;color:var(--text-primary);
   min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased;overflow-x:hidden;
-  background:
-    radial-gradient(1200px 600px at 85% -10%, rgba(201,168,76,.08), transparent 60%),
-    radial-gradient(900px 500px at -10% 110%, rgba(59,130,246,.07), transparent 60%),
-    var(--bg-primary);
+  background-color:#0b1220;
+  background-image:
+    radial-gradient(rgba(201,168,76,.05) 1px, transparent 1.6px),
+    radial-gradient(1000px 500px at 85% -5%, rgba(201,168,76,.13), transparent 60%),
+    radial-gradient(900px 500px at -5% 110%, rgba(59,130,246,.10), transparent 60%),
+    linear-gradient(180deg,#0c1424,#111c36 55%,#0b1220);
+  background-size:26px 26px,auto,auto,auto;
+  background-attachment:fixed;
 }
 img{display:block;max-width:100%}
 button{font-family:inherit}
@@ -52,68 +54,111 @@ button{font-family:inherit}
 ::-webkit-scrollbar-thumb{background:#3d4f73;border-radius:3px}
 .font-display{font-family:'Playfair Display',serif}
 
-/* ---------- LOGIN ---------- */
+/* ============ LOGIN (CANTIK + BACKGROUND JELAS) ============ */
 #loginScreen{
   min-height:100vh;align-items:center;justify-content:center;padding:20px;position:relative;overflow:hidden;
-  background-image:url('https://lh3.googleusercontent.com/d/1biMn45dAjep1fot3jrZaZ5Yw33ytUh62'),linear-gradient(160deg,#0b1220,#1e293b);
-  background-size:cover,cover;background-position:center;background-repeat:no-repeat;
+  background-size:cover;background-position:center;background-repeat:no-repeat;background-color:#0b1220;
 }
-#loginScreen::before{content:'';position:absolute;inset:0;background:rgba(11,18,32,.86);backdrop-filter:blur(5px)}
+/* Overlay TIPIS tanpa blur → background luar TETAP JELAS KELIHATAN.
+   Kalau mau lebih terang lagi, kecilkan angka .75 di bawah */
+#loginScreen::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(11,18,32,.28) 0%,rgba(11,18,32,.42) 55%,rgba(11,18,32,.75) 100%);
+}
 .login-card{
-  background:rgba(19,28,49,.9);backdrop-filter:blur(14px);border:1px solid var(--gold-dark);
-  border-radius:24px;padding:40px 32px;width:100%;max-width:400px;position:relative;z-index:1;
-  box-shadow:0 20px 60px rgba(0,0,0,.6), 0 0 40px rgba(201,168,76,.08);
+  position:relative;z-index:2;
+  background:linear-gradient(160deg,rgba(19,28,49,.94),rgba(10,16,29,.96));
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(201,168,76,.55);
+  border-radius:26px;padding:42px 34px;width:100%;max-width:410px;
+  box-shadow:0 25px 70px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.07), 0 0 55px rgba(201,168,76,.14);
+}
+.login-card::before{
+  content:'';position:absolute;top:0;left:26px;right:26px;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,transparent,var(--gold-light),var(--gold),var(--gold-light),transparent);
 }
 .login-logo{
-  width:92px;height:92px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;
-  margin:0 auto 20px;overflow:hidden;border:3px solid var(--gold);box-shadow:0 0 25px rgba(201,168,76,.45);
+  position:relative;width:94px;height:94px;border-radius:50%;background:#fff;
+  display:flex;align-items:center;justify-content:center;margin:0 auto 20px;overflow:hidden;
+  border:3px solid var(--gold);box-shadow:0 0 30px rgba(201,168,76,.55);
 }
+.login-logo::before{
+  content:'';position:absolute;inset:-9px;border-radius:50%;
+  border:1px solid rgba(201,168,76,.5);animation:logoPulse 2.4s ease-in-out infinite;
+}
+@keyframes logoPulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.1);opacity:.2}}
 .login-logo img{width:100%;height:100%;object-fit:cover}
-.logo-fallback{display:none;width:100%;height:100%;align-items:center;justify-content:center;color:var(--gold);font-size:30px}
+.logo-fallback{display:none;width:100%;height:100%;align-items:center;justify-content:center;color:var(--gold);font-size:32px}
 .gold-shimmer{
   background:linear-gradient(135deg,var(--gold-dark),var(--gold-light),var(--gold),var(--gold-light),var(--gold-dark));
   background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  animation:shimmer 4s linear infinite;filter:drop-shadow(0 0 8px rgba(201,168,76,.4));
+  animation:shimmer 4s linear infinite;filter:drop-shadow(0 0 10px rgba(201,168,76,.5));
 }
 @keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
+.login-marquee{margin-top:22px;border-top:1px solid rgba(201,168,76,.25);padding-top:12px;overflow:hidden}
+.login-marquee div{display:flex;white-space:nowrap;animation:marq 12s linear infinite;font-size:9.5px;letter-spacing:2.5px;color:var(--gold-light);text-transform:uppercase}
+@keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.spark{position:absolute;border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(circle,rgba(232,205,122,.95),rgba(232,205,122,0) 70%);
+  animation:floatUp linear infinite}
+@keyframes floatUp{0%{transform:translateY(0) scale(.7);opacity:0}12%{opacity:1}85%{opacity:.7}100%{transform:translateY(-105vh) scale(1.2);opacity:0}}
 
-/* ---------- FORM ---------- */
+/* ============ FORM ============ */
 .input-field{
-  background:rgba(11,18,32,.75);border:1px solid var(--border);border-radius:10px;padding:11px 14px;
+  background:rgba(11,18,32,.8);border:1px solid var(--border);border-radius:11px;padding:12px 14px;
   color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;width:100%;transition:all .25s;outline:none;
 }
-.input-field:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.15)}
+.input-field:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.18)}
 .input-field::placeholder{color:var(--text-muted)}
 textarea.input-field{resize:vertical;min-height:110px}
 
-/* ---------- BUTTONS ---------- */
-.btn-gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#0a0a0a;font-weight:700;border:none;border-radius:10px;padding:12px 20px;cursor:pointer;transition:all .25s;font-size:14px;width:100%;box-shadow:0 4px 18px rgba(201,168,76,.3)}
-.btn-gold:hover{background:linear-gradient(135deg,var(--gold),var(--gold-light));transform:translateY(-1px);box-shadow:0 6px 22px rgba(201,168,76,.45)}
+/* ============ BUTTONS ============ */
+.btn-gold{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#0a0a0a;font-weight:700;border:none;border-radius:11px;padding:12px 20px;cursor:pointer;transition:all .25s;font-size:14px;width:100%;box-shadow:0 5px 20px rgba(201,168,76,.35)}
+.btn-gold:hover{background:linear-gradient(135deg,var(--gold),var(--gold-light));transform:translateY(-1px);box-shadow:0 8px 26px rgba(201,168,76,.5)}
 .btn-gold:disabled{opacity:.6;cursor:wait;transform:none}
+.btn-gold::after{content:'';position:absolute;top:0;left:-80%;width:40%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);animation:shine 3.5s ease infinite}
+@keyframes shine{0%{left:-80%}55%{left:130%}100%{left:130%}}
 .btn-outline{background:transparent;color:var(--gold-light);border:1px solid var(--gold-dark);border-radius:9px;padding:8px 14px;cursor:pointer;transition:all .25s;font-weight:600;font-size:12px;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
-.btn-outline:hover{background:var(--gold);color:#000;border-color:var(--gold)}
+.btn-outline:hover{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#000;border-color:var(--gold)}
 .btn-danger-sm{background:var(--danger-soft);color:var(--danger);border:1px solid rgba(239,68,68,.35);border-radius:9px;padding:7px 13px;cursor:pointer;transition:all .25s;font-weight:600;font-size:12px;display:inline-flex;align-items:center;gap:6px}
 .btn-danger-sm:hover{background:#ef4444;color:#fff}
 .btn-success-sm{background:var(--success-soft);color:var(--success);border:1px solid rgba(16,185,129,.35);border-radius:9px;padding:8px 14px;cursor:pointer;transition:all .25s;font-weight:600;font-size:12px;display:inline-flex;align-items:center;gap:6px}
 .btn-success-sm:hover{background:#10b981;color:#fff}
 
-/* ---------- HEADER & TABS ---------- */
-.app-header{background:rgba(11,18,32,.92);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);box-shadow:0 2px 12px rgba(0,0,0,.35)}
+/* ============ HEADER + MARQUEE ============ */
+.app-header{background:rgba(11,18,32,.95);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);box-shadow:0 2px 14px rgba(0,0,0,.4)}
+.app-header::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold-light),var(--gold),transparent)}
 .header-inner{max-width:1400px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.header-logo{width:38px;height:38px;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border-2);background:#fff;position:relative}
+.header-logo{width:40px;height:40px;border-radius:11px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--gold-dark);background:#fff;box-shadow:0 0 16px rgba(201,168,76,.3)}
 .header-logo img{width:100%;height:100%;object-fit:cover}
-.tab-nav{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;margin-bottom:16px}
+.marquee-bar{background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light),var(--gold),var(--gold-dark));overflow:hidden;position:relative}
+.marquee-track{display:flex;white-space:nowrap;width:max-content;animation:marq2 30s linear infinite}
+.marquee-track span{padding:7px 0;font-size:12px;font-weight:700;color:#0b1220;letter-spacing:.6px}
+.marquee-bar:hover .marquee-track{animation-play-state:paused}
+@keyframes marq2{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+.tab-nav{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;margin:16px 0}
 .tab-nav::-webkit-scrollbar{display:none}
-.tab-btn{padding:9px 16px;border-radius:11px;font-weight:600;font-size:12px;cursor:pointer;transition:all .25s;border:1px solid transparent;background:var(--bg-card);color:var(--text-secondary);white-space:nowrap;flex-shrink:0}
+.tab-btn{padding:9px 16px;border-radius:11px;font-weight:600;font-size:12px;cursor:pointer;transition:all .25s;border:1px solid transparent;background:linear-gradient(165deg,rgba(24,35,60,.95),rgba(15,24,42,.95));color:var(--text-secondary);white-space:nowrap;flex-shrink:0;display:inline-flex;align-items:center;gap:6px}
 .tab-btn:hover{color:var(--gold-light);border-color:var(--border-2)}
-.tab-btn.active{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#000;border-color:var(--gold);box-shadow:0 3px 12px rgba(201,168,76,.35)}
+.tab-btn.active{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#000;border-color:var(--gold);box-shadow:0 4px 14px rgba(201,168,76,.4)}
 .tab-section{display:none}
 .tab-section.active{display:block;animation:fadeUp .3s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-/* ---------- CARDS ---------- */
-.card{background:linear-gradient(180deg,rgba(23,33,56,.92),rgba(16,25,44,.92));border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 26px rgba(0,0,0,.35);transition:all .25s;position:relative}
-.card:hover{border-color:var(--border-2);box-shadow:0 12px 34px rgba(0,0,0,.45)}
+/* ============ CARDS (GRADASI, TIDAK POLOS) ============ */
+.card{
+  position:relative;background:linear-gradient(165deg,rgba(24,35,60,.96),rgba(15,24,42,.96));
+  border:1px solid #2a3a5e;border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05);
+  transition:all .28s;overflow:hidden;
+}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,rgba(201,168,76,.6) 50%,transparent 95%);opacity:0;transition:opacity .3s}
+.card:hover{border-color:rgba(201,168,76,.4);box-shadow:0 14px 38px rgba(0,0,0,.55),0 0 26px rgba(201,168,76,.1)}
+.card:hover::before{opacity:1}
+.stat-card,.money-card,.chart-card{transition:transform .28s, border-color .28s, box-shadow .28s}
+.stat-card:hover,.money-card:hover,.chart-card:hover{transform:translateY(-3px)}
+
 .stat-grid{display:grid;gap:12px}
 .stat-grid.g4{grid-template-columns:repeat(4,1fr)}
 .stat-grid.g3{grid-template-columns:repeat(3,1fr)}
@@ -122,59 +167,71 @@ textarea.input-field{resize:vertical;min-height:110px}
 @media(max-width:380px){.stat-grid.g4,.stat-grid.g3{grid-template-columns:1fr}}
 
 .stat-card{padding:16px}
-.stat-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:10px}
-.ico-gold{background:var(--gold-soft);color:var(--gold-light)}
-.ico-blue{background:var(--info-soft);color:var(--info)}
-.ico-green{background:var(--success-soft);color:var(--success)}
-.ico-warn{background:var(--warn-soft);color:var(--warn)}
-.big-number{font-size:24px;font-weight:800;line-height:1.1}
-.sisa-highlight{color:#93c5fd;text-shadow:0 0 14px rgba(59,130,246,.45)}
+.stat-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px;border:1px solid}
+.ico-gold{background:linear-gradient(135deg,rgba(201,168,76,.4),rgba(201,168,76,.08));color:var(--gold-light);border-color:rgba(201,168,76,.35)}
+.ico-blue{background:linear-gradient(135deg,rgba(59,130,246,.4),rgba(59,130,246,.08));color:#93c5fd;border-color:rgba(59,130,246,.35)}
+.ico-green{background:linear-gradient(135deg,rgba(16,185,129,.4),rgba(16,185,129,.08));color:#34d399;border-color:rgba(16,185,129,.35)}
+.ico-warn{background:linear-gradient(135deg,rgba(249,115,22,.4),rgba(249,115,22,.08));color:#fdba74;border-color:rgba(249,115,22,.35)}
+.ico-info{background:linear-gradient(135deg,rgba(96,165,250,.4),rgba(96,165,250,.08));color:#93c5fd;border-color:rgba(96,165,250,.35)}
+.big-number{font-size:25px;font-weight:800;line-height:1.1}
+.sisa-highlight{color:#93c5fd;text-shadow:0 0 16px rgba(59,130,246,.5)}
 .stat-sub{font-size:10px;color:var(--text-muted);margin-top:4px}
-.label-sm{font-size:10px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;font-weight:600}
+.label-sm{font-size:10px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;font-weight:700;display:flex;align-items:center;gap:6px}
 
-.money-card{padding:16px}
-.money-value{font-size:20px;font-weight:800;line-height:1.2}
+/* kartu uang + watermark ikon */
+.money-card{padding:17px}
+.money-card::after{font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;right:15px;top:13px;font-size:36px;opacity:.13;pointer-events:none}
+.money-card.b::after{content:'\f51e'}
+.money-card.u::after{content:'\f155'}
+.money-card.r::after{content:'\f53a'}
+.money-card.g::after{content:'\f555'}
+.money-card.h::after{content:'\f201'}
+.money-value{font-size:21px;font-weight:800;line-height:1.2}
 .money-sub{font-size:10px;color:var(--text-muted);margin-top:5px}
-.money-card.b{border-color:rgba(249,115,22,.45)}
-.money-card.b .money-value{color:#fdba74;text-shadow:0 0 14px rgba(249,115,22,.35)}
-.money-card.u{border-color:rgba(16,185,129,.45)}
-.money-card.u .money-value{color:#34d399;text-shadow:0 0 14px rgba(16,185,129,.35)}
-.money-card.r{border-color:rgba(59,130,246,.45)}
-.money-card.r .money-value{color:#7db8ff;text-shadow:0 0 14px rgba(59,130,246,.35)}
-.money-card.g{border-color:rgba(201,168,76,.45)}
+.money-card.b{background:linear-gradient(150deg,rgba(249,115,22,.18),rgba(15,24,42,.96));border-color:rgba(249,115,22,.45)}
+.money-card.b .money-value{color:#fdba74;text-shadow:0 0 16px rgba(249,115,22,.4)}
+.money-card.u{background:linear-gradient(150deg,rgba(16,185,129,.18),rgba(15,24,42,.96));border-color:rgba(16,185,129,.45)}
+.money-card.u .money-value{color:#34d399;text-shadow:0 0 16px rgba(16,185,129,.4)}
+.money-card.r{background:linear-gradient(150deg,rgba(59,130,246,.18),rgba(15,24,42,.96));border-color:rgba(59,130,246,.45)}
+.money-card.r .money-value{color:#7db8ff;text-shadow:0 0 16px rgba(59,130,246,.4)}
+.money-card.g{background:linear-gradient(150deg,rgba(201,168,76,.2),rgba(15,24,42,.96));border-color:rgba(201,168,76,.5)}
 .money-card.g .money-value{color:var(--gold-light)}
-.hasil-plus{border-color:rgba(16,185,129,.5)!important;background:linear-gradient(180deg,rgba(16,185,129,.08),rgba(16,25,44,.9))!important}
-.hasil-minus{border-color:rgba(239,68,68,.5)!important;background:linear-gradient(180deg,rgba(239,68,68,.08),rgba(16,25,44,.9))!important}
+.hasil-plus{background:linear-gradient(150deg,rgba(16,185,129,.2),rgba(15,24,42,.96))!important;border-color:rgba(16,185,129,.55)!important}
+.hasil-minus{background:linear-gradient(150deg,rgba(239,68,68,.2),rgba(15,24,42,.96))!important;border-color:rgba(239,68,68,.55)!important}
 
 .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:800px){.chart-row{grid-template-columns:1fr}}
 .chart-card{padding:16px}
-.chart-title{font-size:11.5px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px;font-weight:700}
+.chart-title{font-size:11.5px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px;font-weight:700;flex-wrap:wrap}
 .chart-title i{color:var(--gold)}
-.chart-badge{font-size:9px;background:var(--gold-soft);color:var(--gold-light);padding:2px 8px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;margin-left:auto}
+.chart-badge{font-size:9px;background:var(--gold-soft);color:var(--gold-light);padding:2px 9px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;margin-left:auto;border:1px solid rgba(201,168,76,.25)}
 
-/* ---------- TABLE ---------- */
-.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:16px}
-.dtable{width:100%;border-collapse:separate;border-spacing:0;min-width:620px}
-.dtable thead th{background:var(--bg-secondary);color:var(--gold-light);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:11px 12px;text-align:left;border-bottom:2px solid var(--border-2);white-space:nowrap}
-.dtable tbody td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:12.5px;vertical-align:middle}
-.dtable tbody tr:nth-child(even){background:rgba(255,255,255,.02)}
-.dtable tbody tr:hover{background:rgba(201,168,76,.06)}
-.dtable tfoot td{padding:11px 12px;font-weight:700;font-size:12.5px;color:var(--gold-light);background:var(--bg-secondary);border-top:2px solid var(--border-2)}
+/* ============ TABEL ============ */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:18px}
+.dtable{width:100%;border-collapse:separate;border-spacing:0;min-width:640px}
+.dtable thead th{background:linear-gradient(180deg,#233352,#1a2740);color:var(--gold-light);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:12px;text-align:left;border-bottom:2px solid rgba(201,168,76,.35);white-space:nowrap}
+.dtable tbody td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:12.5px;vertical-align:middle}
+.dtable tbody tr:nth-child(even){background:rgba(255,255,255,.025)}
+.dtable tbody tr{transition:background .2s}
+.dtable tbody tr:hover{background:rgba(201,168,76,.08)}
+.dtable tfoot td{padding:12px;font-weight:700;font-size:12.5px;color:var(--gold-light);background:linear-gradient(180deg,#233352,#1a2740);border-top:2px solid rgba(201,168,76,.35)}
+.dtable td:first-child{color:var(--gold-light);font-weight:700}
+.mini-bar{width:74px;height:5px;background:rgba(255,255,255,.09);border-radius:99px;margin-top:5px;overflow:hidden}
+.mini-bar>div{height:100%;border-radius:99px;transition:width .5s}
 
-.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700}
-.badge-ok{background:var(--info-soft);color:#93c5fd;border:1px solid rgba(59,130,246,.4)}
-.badge-low{background:var(--warn-soft);color:#fdba74;border:1px solid rgba(249,115,22,.4)}
-.badge-out{background:var(--danger-soft);color:#fca5a5;border:1px solid rgba(239,68,68,.4)}
+.badge{display:inline-flex;align-items:center;padding:3px 11px;border-radius:7px;font-size:11px;font-weight:700}
+.badge-ok{background:linear-gradient(135deg,rgba(59,130,246,.35),rgba(59,130,246,.1));color:#93c5fd;border:1px solid rgba(59,130,246,.4)}
+.badge-low{background:linear-gradient(135deg,rgba(249,115,22,.35),rgba(249,115,22,.1));color:#fdba74;border:1px solid rgba(249,115,22,.4)}
+.badge-out{background:linear-gradient(135deg,rgba(239,68,68,.35),rgba(239,68,68,.1));color:#fca5a5;border:1px solid rgba(239,68,68,.4)}
 .badge-wrap{display:flex;flex-wrap:wrap;gap:7px}
 .curr-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
 .pill-baht{background:var(--warn-soft);color:#fdba74;border:1px solid rgba(249,115,22,.35)}
 .pill-usd{background:var(--success-soft);color:#34d399;border:1px solid rgba(16,185,129,.35)}
 .pill-rp{background:var(--info-soft);color:#93c5fd;border:1px solid rgba(59,130,246,.35)}
 
-/* ---------- DAFTAR PENJUALAN (SHEET) ---------- */
+/* ============ DAFTAR PENJUALAN ============ */
 .sale-item{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s}
-.sale-item:hover{background:rgba(201,168,76,.06)}
+.sale-item:hover{background:rgba(201,168,76,.07)}
 .sale-item:last-child{border-bottom:none}
 .sale-date{font-size:10.5px;color:var(--text-muted);margin-bottom:2px}
 .sale-name{font-size:13px;font-weight:600;color:#fff}
@@ -182,69 +239,77 @@ textarea.input-field{resize:vertical;min-height:110px}
 .sale-total{font-size:13.5px;font-weight:800;text-align:right}
 .sale-total.t-baht{color:#fdba74}.sale-total.t-usd{color:#34d399}.sale-total.t-rp{color:#7db8ff}
 
-/* ---------- ENTRY MODAL (dengan gambar) ---------- */
-.entry-card{display:grid;grid-template-columns:76px 1fr auto;gap:14px;align-items:center;background:linear-gradient(180deg,rgba(23,33,56,.92),rgba(16,25,44,.92));border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px}
-.entry-thumb{width:76px;height:76px;border-radius:10px;object-fit:cover;border:1px solid var(--gold-dark);cursor:zoom-in;background:#fff;transition:transform .2s}
-.entry-thumb:hover{transform:scale(1.04)}
-.entry-thumb-empty{display:flex;align-items:center;justify-content:center;background:var(--bg-secondary);color:var(--text-muted);font-size:22px;cursor:default}
+/* ============ ENTRY MODAL (GAMBAR SELALU TAMPIL) ============ */
+.entry-card{
+  display:grid;grid-template-columns:78px 1fr auto;gap:14px;align-items:center;
+  background:linear-gradient(165deg,rgba(24,35,60,.96),rgba(15,24,42,.96));
+  border:1px solid #2a3a5e;border-left:3px solid var(--gold);
+  border-radius:15px;padding:13px;margin-bottom:10px;transition:all .25s;position:relative;
+}
+.entry-card:hover{border-color:rgba(201,168,76,.4);box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.entry-thumb{width:78px;height:78px;border-radius:11px;object-fit:cover;border:1px solid var(--gold-dark);cursor:zoom-in;background:#fff;transition:transform .2s,box-shadow .2s}
+.entry-thumb:hover{transform:scale(1.06);box-shadow:0 0 18px rgba(201,168,76,.4)}
+.entry-thumb-empty{display:flex;align-items:center;justify-content:center;background:var(--bg-secondary);color:var(--text-muted);font-size:24px;cursor:default;border:1px dashed var(--border-2)}
 .entry-date{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
 .entry-note{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
-.entry-amt{font-size:14px;font-weight:800;color:var(--gold-light)}
-@media(max-width:480px){.entry-card{grid-template-columns:60px 1fr auto}.entry-thumb,.entry-thumb-empty{width:60px;height:60px}}
+.entry-amt{font-size:14.5px;font-weight:800;color:var(--gold-light)}
+.entry-actions{display:flex;flex-direction:column;gap:6px}
+@media(max-width:480px){.entry-card{grid-template-columns:62px 1fr auto}.entry-thumb,.entry-thumb-empty{width:62px;height:62px}}
 
-/* ---------- PROGRESS ---------- */
-.prog{height:10px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
-.prog>div{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold-dark),var(--gold-light));transition:width .7s ease;width:0%}
+/* ============ PROGRESS ============ */
+.prog{height:11px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;border:1px solid var(--border)}
+.prog>div{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light));transition:width .7s ease;width:0%}
 
-/* ---------- LAIN-LAIN ---------- */
-.empty-state{padding:26px 16px;text-align:center;color:var(--text-muted);font-size:12px;border:1px dashed var(--border-2);border-radius:12px;line-height:1.7}
+/* ============ LAIN-LAIN ============ */
+.empty-state{padding:26px 16px;text-align:center;color:var(--text-muted);font-size:12px;border:1px dashed var(--border-2);border-radius:12px;line-height:1.8;background:rgba(255,255,255,.015)}
 .flex-between{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .flex-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .mt8{margin-top:8px}.mt12{margin-top:12px}.mb12{margin-bottom:12px}.mb16{margin-bottom:16px}
 .muted{color:var(--text-muted)}.small{font-size:11px}
-.sec-title{font-size:17px;font-weight:700;display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif}
+.sec-title{font-size:18px;font-weight:700;display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;position:relative;padding-bottom:9px}
 .sec-title i{color:var(--gold);font-size:15px}
-.kv{display:grid;grid-template-columns:150px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.sec-title::after{content:'';position:absolute;left:0;bottom:0;width:64px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--gold-light),var(--gold-dark))}
+.kv{display:grid;grid-template-columns:150px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12.5px}
 .kv:last-child{border-bottom:none}
 .kv-k{color:var(--text-muted);font-weight:600}
 .kv-v{color:#fff;word-break:break-word}
 @media(max-width:480px){.kv{grid-template-columns:1fr;gap:2px}}
 
-/* ---------- MODAL DIALOG ---------- */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+/* ============ MODAL DIALOG ============ */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(7px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
 .modal-bg.show{display:flex}
-.modal-box{background:var(--bg-card);border:1px solid var(--border-2);border-radius:18px;max-width:500px;width:100%;max-height:88vh;overflow-y:auto;padding:24px;animation:mSlide .25s ease;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-@keyframes mSlide{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-box{background:linear-gradient(165deg,rgba(24,35,60,.98),rgba(15,24,42,.98));border:1px solid rgba(201,168,76,.4);border-radius:19px;max-width:500px;width:100%;max-height:88vh;overflow-y:auto;padding:24px;animation:mSlide .28s ease;box-shadow:0 20px 60px rgba(0,0,0,.65)}
+@keyframes mSlide{from{transform:translateY(22px);opacity:0}to{transform:translateY(0);opacity:1}}
 
-/* ---------- TOAST ---------- */
+/* ============ TOAST ============ */
 .toast-box{position:fixed;top:16px;right:16px;z-index:300;display:flex;flex-direction:column;gap:8px}
-.toast{padding:11px 16px;border-radius:10px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:9px;min-width:230px;color:#fff;box-shadow:0 8px 30px rgba(0,0,0,.5);animation:tIn .3s ease,tOut .3s ease 2.6s forwards}
-.toast-ok{background:#059669}.toast-err{background:#dc2626}.toast-inf{background:#2563eb}
+.toast{padding:12px 16px;border-radius:11px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:9px;min-width:235px;color:#fff;box-shadow:0 8px 30px rgba(0,0,0,.55);animation:tIn .3s ease,tOut .3s ease 2.7s forwards;border:1px solid rgba(255,255,255,.15)}
+.toast-ok{background:linear-gradient(135deg,#059669,#047857)}
+.toast-err{background:linear-gradient(135deg,#dc2626,#b91c1c)}
+.toast-inf{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
 @keyframes tIn{from{transform:translateX(110%);opacity:0}to{transform:translateX(0);opacity:1}}
 @keyframes tOut{to{transform:translateX(110%);opacity:0}}
 
-/* ---------- OVERLAY ---------- */
-#imgPreviewOverlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:none;justify-content:center;align-items:center;cursor:zoom-out;padding:20px}
-#imgPreviewLarge{max-width:100%;max-height:100%;border-radius:10px;object-fit:contain;box-shadow:0 0 60px rgba(0,0,0,.8)}
-#syncLoadingOverlay{position:fixed;inset:0;background:rgba(11,18,32,.94);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;backdrop-filter:blur(4px)}
+/* ============ OVERLAY ============ */
+#imgPreviewOverlay{position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9999;display:none;justify-content:center;align-items:center;cursor:zoom-out;padding:20px}
+#imgPreviewLarge{max-width:100%;max-height:100%;border-radius:12px;object-fit:contain;box-shadow:0 0 70px rgba(0,0,0,.9);border:1px solid rgba(201,168,76,.4)}
+#syncLoadingOverlay{position:fixed;inset:0;background:rgba(11,18,32,.95);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;backdrop-filter:blur(5px)}
 #syncLoadingOverlay.show{display:flex}
-.sync-loader{width:48px;height:48px;border:4px solid var(--border);border-top:4px solid var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+.sync-loader{width:50px;height:50px;border:4px solid var(--border);border-top:4px solid var(--gold);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .sync-spin{animation:spin 1s linear infinite}
 </style>
 </head>
 <body>
 
-<!-- OVERLAY SYNC -->
 <div id="syncLoadingOverlay">
   <div class="sync-loader"></div>
   <div class="sync-text" style="color:var(--gold-light);font-weight:600;font-size:14px">Memuat data dari server...</div>
 </div>
 
-<!-- PREVIEW GAMBAR -->
 <div id="imgPreviewOverlay" onclick="closeImgPreview()">
   <img id="imgPreviewLarge" src="" alt="Preview bukti transfer">
-  <div style="position:absolute;bottom:16px;left:0;right:0;text-align:center;color:var(--text-muted);font-size:11px;">Klik di mana saja untuk menutup</div>
+  <div style="position:absolute;bottom:16px;left:0;right:0;text-align:center;color:var(--text-muted);font-size:11px">Klik di mana saja untuk menutup</div>
 </div>
 
 <div class="toast-box" id="toastBox"></div>
@@ -257,27 +322,28 @@ textarea.input-field{resize:vertical;min-height:110px}
            onerror="this.style.display='none';document.getElementById('loginFallback').style.display='flex'">
       <div class="logo-fallback" id="loginFallback"><i class="fas fa-spray-can-sparkles"></i></div>
     </div>
-    <h1 class="font-display gold-shimmer" style="font-size:27px;font-weight:900;text-align:center;letter-spacing:3px;margin-bottom:4px">VJ PARFUM</h1>
-    <p style="text-align:center;color:var(--text-secondary);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:28px">Dashboard Penjualan</p>
+    <h1 class="font-display gold-shimmer" style="font-size:28px;font-weight:900;text-align:center;letter-spacing:3px;margin-bottom:4px">VJ PARFUM</h1>
+    <p style="text-align:center;color:var(--text-secondary);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:26px">Dashboard Penjualan</p>
     <div style="display:flex;flex-direction:column;gap:14px">
       <div>
         <label style="font-size:10.5px;color:var(--gold-light);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:1.2px;font-weight:600">Username</label>
         <div style="position:relative">
           <i class="fas fa-user" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px"></i>
-          <input type="text" class="input-field" id="loginUser" placeholder="Masukkan username" style="padding-left:36px" autocomplete="username">
+          <input type="text" class="input-field" id="loginUser" placeholder="Masukkan username" style="padding-left:37px" autocomplete="username">
         </div>
       </div>
       <div>
         <label style="font-size:10.5px;color:var(--gold-light);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:1.2px;font-weight:600">Password</label>
         <div style="position:relative">
           <i class="fas fa-lock" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px"></i>
-          <input type="password" class="input-field" id="loginPass" placeholder="Masukkan password" style="padding-left:36px" autocomplete="current-password">
+          <input type="password" class="input-field" id="loginPass" placeholder="Masukkan password" style="padding-left:37px" autocomplete="current-password">
           <button type="button" id="passToggleBtn" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer"><i class="fas fa-eye"></i></button>
         </div>
       </div>
       <div id="loginError" style="display:none;background:var(--danger-soft);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:9px 12px;color:var(--danger);font-size:12px;text-align:center"></div>
       <button class="btn-gold" id="loginBtn"><i class="fas fa-right-to-bracket" style="margin-right:6px"></i>Masuk</button>
     </div>
+    <div class="login-marquee"><div><span>✦ VJ PARFUM ✦ DASHBOARD PENJUALAN ✦ TERSIMPAN OTOMATIS DI SEMUA PERANGKAT ✦&nbsp;</span><span>✦ VJ PARFUM ✦ DASHBOARD PENJUALAN ✦ TERSIMPAN OTOMATIS DI SEMUA PERANGKAT ✦&nbsp;</span></div></div>
   </div>
 </div>
 
@@ -288,23 +354,27 @@ textarea.input-field{resize:vertical;min-height:110px}
       <div style="display:flex;align-items:center;gap:11px">
         <div class="header-logo">
           <img src="https://lh3.googleusercontent.com/d/1HxxcX_oSPAAWBAzeZ4qGYzFc-iXW6QIO" alt="Logo"
-               onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-spray-can-sparkles\' style=\'color:var(--gold);font-size:15px\'></i>'">
+               onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-spray-can-sparkles\' style=\'color:var(--gold);font-size:16px\'></i>'">
         </div>
         <div style="min-width:0">
-          <h1 class="font-display gold-shimmer" style="font-size:17px;font-weight:900;letter-spacing:2px">VJ PARFUM</h1>
-          <p style="font-size:9px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase" id="headerDate"></p>
+          <h1 class="font-display gold-shimmer" style="font-size:18px;font-weight:900;letter-spacing:2px">VJ PARFUM</h1>
+          <p style="font-size:9px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase" id="headerDate"></p>
         </div>
       </div>
       <div class="flex-row" style="flex-shrink:0">
         <a class="btn-outline" href="https://docs.google.com/spreadsheets/d/1C_aVqFUws8GsIaW1VW9vBjMiUWmJy4Y2qu_BHZYv6ac" target="_blank" rel="noopener" style="padding:6px 11px;font-size:11px"><i class="fas fa-table"></i> Sheet</a>
         <button class="btn-outline" id="btnSync" style="padding:6px 11px;font-size:11px"><i class="fas fa-cloud-arrow-down" id="syncIcon"></i> <span id="syncText">Sync</span></button>
         <span style="font-size:11px;color:var(--text-secondary)" id="headerUser"></span>
+        <span style="font-size:10px;color:var(--text-muted)" id="lastSync"></span>
         <button class="btn-danger-sm" id="btnLogout"><i class="fas fa-sign-out-alt"></i> Keluar</button>
       </div>
     </div>
   </header>
 
-  <main style="max-width:1400px;margin:0 auto;padding:16px 16px 50px">
+  <!-- TULISAN BERJALAN -->
+  <div class="marquee-bar"><div class="marquee-track"><span id="marqueeText1"></span><span id="marqueeText2"></span></div></div>
+
+  <main style="max-width:1400px;margin:0 auto;padding:16px 16px 50px;position:relative;z-index:1">
     <nav class="tab-nav" id="tabNav">
       <button class="tab-btn active" data-tab="overview"><i class="fas fa-chart-pie"></i> Ringkasan</button>
       <button class="tab-btn" data-tab="products"><i class="fas fa-flask"></i> Varian</button>
@@ -323,24 +393,11 @@ textarea.input-field{resize:vertical;min-height:110px}
       </div>
 
       <div class="stat-grid g3 mb16">
-        <div class="card money-card b">
-          <div class="label-sm"><i class="fas fa-coins" style="color:var(--warn)"></i> Total Baht</div>
-          <div class="money-value" id="sBahtTot">0 Baht</div>
-          <div class="money-sub" id="sBahtCount">0 transaksi</div>
-        </div>
-        <div class="card money-card u">
-          <div class="label-sm"><i class="fas fa-dollar-sign" style="color:var(--success)"></i> Total Dollar</div>
-          <div class="money-value" id="sUsdTot">$0.00</div>
-          <div class="money-sub" id="sUsdCount">0 transaksi</div>
-        </div>
-        <div class="card money-card r">
-          <div class="label-sm"><i class="fas fa-money-bill-wave" style="color:var(--info)"></i> Total Rupiah</div>
-          <div class="money-value" id="sRpTot">Rp 0</div>
-          <div class="money-sub" id="sRpCount">0 transaksi</div>
-        </div>
+        <div class="card money-card b"><div class="label-sm"><i class="fas fa-coins" style="color:var(--warn)"></i> Total Baht</div><div class="money-value" id="sBahtTot">0 Baht</div><div class="money-sub" id="sBahtCount">0 transaksi</div></div>
+        <div class="card money-card u"><div class="label-sm"><i class="fas fa-dollar-sign" style="color:var(--success)"></i> Total Dollar</div><div class="money-value" id="sUsdTot">$0.00</div><div class="money-sub" id="sUsdCount">0 transaksi</div></div>
+        <div class="card money-card r"><div class="label-sm"><i class="fas fa-money-bill-wave" style="color:var(--info)"></i> Total Rupiah</div><div class="money-value" id="sRpTot">Rp 0</div><div class="money-sub" id="sRpCount">0 transaksi</div></div>
       </div>
 
-      <!-- GRAFIK PER BULAN (BARU) -->
       <div class="card chart-card mb16">
         <h3 class="chart-title"><i class="fas fa-chart-column"></i> Grafik Penjualan per Bulan <span class="chart-badge">dari Google Sheet</span></h3>
         <div style="position:relative;height:280px"><canvas id="cMonthly"></canvas></div>
@@ -373,13 +430,13 @@ textarea.input-field{resize:vertical;min-height:110px}
         </div>
       </div>
       <div class="stat-grid g3 mb16">
-        <div class="card stat-card" style="text-align:center"><div class="label-sm">Total Varian</div><div class="big-number" style="color:var(--gold-light)" id="pTotalVarian">0</div></div>
-        <div class="card stat-card" style="text-align:center"><div class="label-sm">Total Botol Awal</div><div class="big-number" style="color:var(--info)" id="pTotalAwal">0</div></div>
-        <div class="card stat-card" style="text-align:center"><div class="label-sm">Sisa Stok Semua</div><div class="big-number sisa-highlight" id="pTotalSisa">0</div></div>
+        <div class="card stat-card" style="text-align:center"><div class="stat-ico ico-gold" style="margin:0 auto 10px"><i class="fas fa-flask"></i></div><div class="label-sm">Total Varian</div><div class="big-number" style="color:var(--gold-light)" id="pTotalVarian">0</div></div>
+        <div class="card stat-card" style="text-align:center"><div class="stat-ico ico-blue" style="margin:0 auto 10px"><i class="fas fa-boxes-packing"></i></div><div class="label-sm">Total Botol Awal</div><div class="big-number" style="color:var(--info)" id="pTotalAwal">0</div></div>
+        <div class="card stat-card" style="text-align:center"><div class="stat-ico ico-info" style="margin:0 auto 10px"><i class="fas fa-warehouse"></i></div><div class="label-sm">Sisa Stok Semua</div><div class="big-number sisa-highlight" id="pTotalSisa">0</div></div>
       </div>
       <div class="card table-wrap">
         <table class="dtable">
-          <thead><tr><th>No</th><th>Varian</th><th>Awal (Manual)</th><th>Terjual</th><th>Sisa (Otomatis)</th><th style="width:110px">Aksi</th></tr></thead>
+          <thead><tr><th>No</th><th>Varian</th><th>Awal (Manual)</th><th>Terjual</th><th>Sisa (Otomatis)</th><th style="width:115px">Aksi</th></tr></thead>
           <tbody id="tProd"></tbody>
         </table>
       </div>
@@ -387,14 +444,14 @@ textarea.input-field{resize:vertical;min-height:110px}
 
     <!-- ============ MODAL / BIAYA ============ -->
     <section class="tab-section" id="tab-costs">
-      <div class="mb16">
+      <div class="flex-between mb16">
         <h2 class="sec-title"><i class="fas fa-wallet"></i> Pencatatan Modal &amp; Bukti Transfer</h2>
-        <p class="muted small mt8">Semua catatan modal, bukti transfer, dan hasil untung/rugi tersimpan otomatis di semua perangkat.</p>
+        <span class="chart-badge" id="mCount">0 catatan</span>
       </div>
       <div class="stat-grid g3 mb16">
         <div class="card money-card g"><div class="label-sm"><i class="fas fa-wallet"></i> Total Modal</div><div class="money-value" id="mTotal">Rp 0</div><div class="money-sub">jumlah semua catatan modal</div></div>
         <div class="card money-card r"><div class="label-sm"><i class="fas fa-money-bill-trend-up"></i> Total Penjualan Rupiah</div><div class="money-value" id="mPenjualan">Rp 0</div><div class="money-sub">hanya transaksi Rupiah</div></div>
-        <div class="card money-card" id="mHasilCard"><div class="label-sm" id="mUntungLabel">Untung</div><div class="money-value" id="mUntung" style="color:var(--success)">Rp 0</div><div class="money-sub">Hasil = Penjualan Rp − Modal</div></div>
+        <div class="card money-card h" id="mHasilCard"><div class="label-sm" id="mUntungLabel">Hasil</div><div class="money-value" id="mUntung" style="color:var(--success)">Rp 0</div><div class="money-sub">Penjualan Rp − Modal</div></div>
       </div>
       <div class="card chart-card mb16">
         <h3 class="chart-title"><i class="fas fa-chart-simple"></i> Pemulihan Modal</h3>
@@ -404,22 +461,16 @@ textarea.input-field{resize:vertical;min-height:110px}
       <div class="card mb16" style="padding:20px">
         <h3 class="chart-title" style="margin-bottom:14px"><i class="fas fa-circle-plus"></i> Tambah Catatan Modal</h3>
         <div style="display:flex;flex-direction:column;gap:13px">
-          <div>
-            <label class="label-sm">Nominal Modal (Rp)</label>
-            <input type="text" class="input-field" id="modalInput" placeholder="Contoh: 500,000" oninput="formatNumber(this)">
-          </div>
-          <div>
-            <label class="label-sm">Keterangan</label>
-            <input type="text" class="input-field" id="modalNote" placeholder="Contoh: Modal bulan Juli">
-          </div>
+          <div><label class="label-sm">Nominal Modal (Rp)</label><input type="text" class="input-field" id="modalInput" placeholder="Contoh: 500,000" oninput="formatNumber(this)"></div>
+          <div><label class="label-sm">Keterangan</label><input type="text" class="input-field" id="modalNote" placeholder="Contoh: Modal bulan Juli"></div>
           <div>
             <label class="label-sm">Bukti Transfer (opsional)</label>
             <label class="btn-outline" style="display:flex;justify-content:center;padding:11px;cursor:pointer;position:relative;overflow:hidden">
               <i class="fas fa-image"></i> Pilih Gambar Bukti Transfer
               <input type="file" id="modalFile" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer">
             </label>
-            <img id="previewModalImg" src="" alt="Preview" style="display:none;max-height:110px;border-radius:10px;border:1px solid var(--gold-dark);margin-top:10px;cursor:zoom-in;object-fit:contain;background:#fff">
-            <p class="small muted mt8"><i class="fas fa-circle-info"></i> Gambar dikompres otomatis supaya aman tersimpan di Sheets (tetap terlihat jelas).</p>
+            <img id="previewModalImg" src="" alt="Preview" style="display:none;max-height:120px;border-radius:11px;border:1px solid var(--gold-dark);margin-top:10px;cursor:zoom-in;object-fit:contain;background:#fff">
+            <p class="small muted mt8"><i class="fas fa-circle-info"></i> Gambar disimpan dalam beberapa bagian supaya tidak rusak di Sheets — pasti tampil.</p>
           </div>
           <button class="btn-gold" id="btnSaveModal"><i class="fas fa-save"></i> Simpan Catatan Modal</button>
         </div>
@@ -436,12 +487,12 @@ textarea.input-field{resize:vertical;min-height:110px}
       <h2 class="sec-title mb16"><i class="fas fa-receipt"></i> Rekap Penjualan (Google Sheet)</h2>
       <div class="stat-grid g4 mb16">
         <div class="card stat-card" style="text-align:center"><div class="label-sm">Transaksi</div><div class="big-number" style="color:var(--gold-light)" id="shCount">0</div></div>
-        <div class="card stat-card" style="text-align:center"><div class="label-sm">Total Baht</div><div class="big-number" style="color:#fdba74;font-size:18px" id="shBaht">0</div></div>
-        <div class="card stat-card" style="text-align:center"><div class="label-sm">Total USD</div><div class="big-number" style="color:#34d399;font-size:18px" id="shUsd">$0.00</div></div>
-        <div class="card stat-card" style="text-align:center"><div class="label-sm">Total Rupiah</div><div class="big-number" style="color:#7db8ff;font-size:18px" id="shRp">Rp 0</div></div>
+        <div class="card stat-card" style="text-align:center"><div class="label-sm">Total Baht</div><div class="big-number" style="color:#fdba74;font-size:19px" id="shBaht">0</div></div>
+        <div class="card stat-card" style="text-align:center"><div class="label-sm">Total USD</div><div class="big-number" style="color:#34d399;font-size:19px" id="shUsd">$0.00</div></div>
+        <div class="card stat-card" style="text-align:center"><div class="label-sm">Total Rupiah</div><div class="big-number" style="color:#7db8ff;font-size:19px" id="shRp">Rp 0</div></div>
       </div>
       <div class="card">
-        <div class="chart-card" style="border:none">
+        <div class="chart-card" style="border:none;padding-bottom:0">
           <h3 class="chart-title"><i class="fas fa-cloud"></i> Semua Pencatatan dari Sheet <span class="chart-badge">klik baris untuk detail</span></h3>
         </div>
         <div id="sheetSalesList" style="max-height:640px;overflow-y:auto">
@@ -456,7 +507,7 @@ textarea.input-field{resize:vertical;min-height:110px}
       <div class="stat-grid g3 mb16">
         <div class="card money-card g"><div class="label-sm">Total Modal</div><div class="money-value" id="fModal">Rp 0</div></div>
         <div class="card money-card r"><div class="label-sm">Total Penjualan (Rupiah)</div><div class="money-value" id="fPenjualan">Rp 0</div></div>
-        <div class="card money-card" id="fHasilCard"><div class="label-sm" id="fHasilLabel">Hasil (Untung)</div><div class="money-value" id="fHasil" style="color:var(--success)">Rp 0</div><div class="money-sub">Penjualan Rp − Modal</div></div>
+        <div class="card money-card h" id="fHasilCard"><div class="label-sm" id="fHasilLabel">Hasil</div><div class="money-value" id="fHasil" style="color:var(--success)">Rp 0</div><div class="money-sub">Penjualan Rp − Modal</div></div>
       </div>
       <div class="card chart-card mb16">
         <h3 class="chart-title"><i class="fas fa-chart-simple"></i> Pemulihan Modal</h3>
@@ -466,9 +517,9 @@ textarea.input-field{resize:vertical;min-height:110px}
       <div class="card chart-card mb16">
         <h3 class="chart-title"><i class="fas fa-globe"></i> Pendapatan per Mata Uang</h3>
         <div class="stat-grid g3">
-          <div style="text-align:center;padding:13px;background:var(--warn-soft);border-radius:12px"><div style="font-size:10px;color:#fdba74;font-weight:700;letter-spacing:1px;margin-bottom:5px">BAHT</div><div style="font-size:17px;font-weight:800;color:#fdba74" id="fBaht">0</div></div>
-          <div style="text-align:center;padding:13px;background:var(--success-soft);border-radius:12px"><div style="font-size:10px;color:#34d399;font-weight:700;letter-spacing:1px;margin-bottom:5px">USD</div><div style="font-size:17px;font-weight:800;color:#34d399" id="fUsd">$0.00</div></div>
-          <div style="text-align:center;padding:13px;background:var(--info-soft);border-radius:12px"><div style="font-size:10px;color:#93c5fd;font-weight:700;letter-spacing:1px;margin-bottom:5px">RUPIAH</div><div style="font-size:17px;font-weight:800;color:#93c5fd" id="fRp">Rp 0</div></div>
+          <div style="text-align:center;padding:14px;background:linear-gradient(150deg,rgba(249,115,22,.18),transparent);border:1px solid rgba(249,115,22,.35);border-radius:12px"><div style="font-size:10px;color:#fdba74;font-weight:700;letter-spacing:1px;margin-bottom:5px">BAHT</div><div style="font-size:17px;font-weight:800;color:#fdba74" id="fBaht">0</div></div>
+          <div style="text-align:center;padding:14px;background:linear-gradient(150deg,rgba(16,185,129,.18),transparent);border:1px solid rgba(16,185,129,.35);border-radius:12px"><div style="font-size:10px;color:#34d399;font-weight:700;letter-spacing:1px;margin-bottom:5px">USD</div><div style="font-size:17px;font-weight:800;color:#34d399" id="fUsd">$0.00</div></div>
+          <div style="text-align:center;padding:14px;background:linear-gradient(150deg,rgba(59,130,246,.18),transparent);border:1px solid rgba(59,130,246,.35);border-radius:12px"><div style="font-size:10px;color:#93c5fd;font-weight:700;letter-spacing:1px;margin-bottom:5px">RUPIAH</div><div style="font-size:17px;font-weight:800;color:#93c5fd" id="fRp">Rp 0</div></div>
         </div>
       </div>
       <div class="card table-wrap mb16">
@@ -511,8 +562,8 @@ textarea.input-field{resize:vertical;min-height:110px}
   </div>
 </div></div>
 
-<div class="modal-bg" id="mConfirm"><div class="modal-box" style="text-align:center;max-width:380px">
-  <div style="width:52px;height:52px;border-radius:50%;background:var(--danger-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 14px"><i class="fas fa-triangle-exclamation" style="color:var(--danger);font-size:21px"></i></div>
+<div class="modal-bg" id="mConfirm"><div class="modal-box" style="text-align:center;max-width:390px">
+  <div style="width:54px;height:54px;border-radius:50%;background:var(--danger-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;border:1px solid rgba(239,68,68,.3)"><i class="fas fa-triangle-exclamation" style="color:var(--danger);font-size:21px"></i></div>
   <h3 class="font-display" style="font-size:17px;font-weight:700;margin-bottom:8px">Konfirmasi</h3>
   <p id="confirmMsg" style="color:var(--text-secondary);font-size:12.5px;margin-bottom:18px;line-height:1.6">-</p>
   <div class="flex-row" style="justify-content:center">
@@ -534,15 +585,22 @@ textarea.input-field{resize:vertical;min-height:110px}
 
 <script>
 /* ============================================================
-   VJ PARFUM — Frontend Logic
+   VJ PARFUM — Frontend v3
    ============================================================ */
 
-// ---------- KONFIG ----------
+// ---------- KONFIG (GANTI DI SINI) ----------
 var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3qQHJ8Vqv13goaL2XvWrx8gljCF3m3JA6yn6hZlhijM5PCUboYwL66eQBXXuj8tA2ng/exec';
-var PRICE_BAHT = 45000;   // harga 1 botol (mata uang setempat)
+var LOGIN_BG_URL = 'https://lh3.googleusercontent.com/d/1biMn45dAjep1fot3jrZaZ5Yw33ytUh62'; // ← GANTI BACKGROUND LOGIN DI SINI
+var DASH_BG_URL  = ''; // ← (opsional) background dashboard. Kosong = polosan elegan
+
+var PRICE_BAHT = 45000;
 var PRICE_USD  = 11.25;
 var PRICE_RP   = 200000;
-var LABEL_LOKAL = 'Baht'; // ganti 'Riel' kalau mau
+var LABEL_LOKAL = 'Baht';
+
+// penyimpanan gambar di Sheets (dipecah supaya tidak terpotong batas 50.000 char/sel)
+var IMG_CHUNK = 44000;
+var IMG_MAX   = 130000;
 
 var DEFAULT_PRODUCTS = [
   {name:"🌹 Scandalous",stockAwal:0},{name:"🌸 Black Opium",stockAwal:0},
@@ -558,11 +616,11 @@ var DEFAULT_PRODUCTS = [
 ];
 
 // ---------- STATE ----------
-var products = [], history = [], modalEntries = [], sheetSales = [];
+var products=[], history=[], modalEntries=[], sheetSales=[];
 var chartMonthly=null, chartStock=null, chartSales=null, chartProfit=null;
 var isSyncing=false, confirmCb=null, autoSyncTimer=null;
 
-// ---------- FORMAT HELPERS ----------
+// ---------- HELPERS ----------
 function fRp(n){return 'Rp '+Math.round(n||0).toLocaleString('en-US');}
 function fBaht(n){return Math.round(n||0).toLocaleString('en-US')+' '+LABEL_LOKAL;}
 function fUsd(n){return '$'+Number(n||0).toFixed(2);}
@@ -574,12 +632,6 @@ function fmtShort(n){
   return String(Math.round(n));
 }
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-function fDate(d){
-  if(!d)return '-';
-  var dt=(d instanceof Date)?d:new Date(d);
-  if(isNaN(dt.getTime()))return String(d);
-  return dt.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
-}
 function fDateTime(d){
   if(!d)return '-';
   var dt=(d instanceof Date)?d:new Date(d);
@@ -598,7 +650,7 @@ function showToast(msg,type){
   var icon=type==='ok'?'fa-circle-check':type==='err'?'fa-circle-xmark':'fa-circle-info';
   t.innerHTML='<i class="fas '+icon+'"></i><span>'+esc(msg)+'</span>';
   box.appendChild(t);
-  setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},3200);
+  setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},3300);
 }
 function showOverlay(msg){
   var o=document.getElementById('syncLoadingOverlay');
@@ -616,8 +668,6 @@ function askConfirm(msg,cb,okLabel){
   confirmCb=cb;
   openModal('mConfirm');
 }
-
-// ---------- PREVIEW GAMBAR ----------
 function openImgPreview(src){
   if(!src||!/^data:image|^https?:/i.test(String(src))){showToast('Bukti transfer tidak tersedia','err');return;}
   document.getElementById('imgPreviewLarge').src=src;
@@ -628,11 +678,11 @@ function closeImgPreview(){
   document.getElementById('imgPreviewLarge').removeAttribute('src');
 }
 
-// ---------- KOMPRES GAMBAR (aman untuk Google Sheets < 50.000 char) ----------
+// ---------- KOMPRES GAMBAR (kualitas lebih bagus, dibatasi IMG_MAX) ----------
 function compressImage(file){
   return new Promise(function(resolve){
     if(!file){resolve('');return;}
-    var steps=[{w:700,q:.62},{w:520,q:.5},{w:400,q:.42},{w:300,q:.34},{w:220,q:.28},{w:160,q:.22}];
+    var steps=[{w:900,q:.75},{w:720,q:.62},{w:560,q:.52},{w:430,q:.42},{w:320,q:.34},{w:240,q:.26},{w:170,q:.2}];
     var img=new Image();
     var reader=new FileReader();
     reader.onload=function(e){
@@ -652,12 +702,37 @@ function compressImage(file){
       ctx.fillStyle='#ffffff';ctx.fillRect(0,0,w,h);
       ctx.drawImage(img,0,0,w,h);
       var url=c.toDataURL('image/jpeg',st.q);
-      if(url.length<=45000||w<=160){resolve(url);}else{run(i+1);}
+      if(url.length<=IMG_MAX||w<=170){resolve(url);}else{run(i+1);}
     }
   });
 }
 
-// ---------- VALIDASI DATA MODAL ----------
+// ---------- PECAH & GABUNG GAMBAR (anti terpotong di Sheets) ----------
+function splitImageForSave(entry){
+  var out={id:entry.id,date:entry.date,amount:entry.amount,note:entry.note};
+  var img=entry.image||'';
+  if(img){
+    var n=Math.ceil(img.length/IMG_CHUNK);
+    for(var i=0;i<n;i++)out['image_'+i]=img.substr(i*IMG_CHUNK,IMG_CHUNK);
+  }
+  return out;
+}
+function joinImageFromChunks(m){
+  if(m.image&&/^data:image\//.test(String(m.image)))return String(m.image);
+  var parts=[];
+  for(var c=0;c<8;c++){
+    var p=m['image_'+c];
+    if(p===undefined||p===null||p==='')break;
+    parts.push(String(p));
+  }
+  var joined=parts.join('');
+  if(joined&&joined.indexOf('base64')>-1&&!/^data:image\//.test(joined)){
+    joined='data:image/jpeg;base64,'+joined.split('base64,')[1];
+  }
+  return /^data:image\//.test(joined)?joined:'';
+}
+
+// ---------- VALIDASI MODAL ENTRIES ----------
 function validateModalEntries(arr){
   if(!Array.isArray(arr))return[];
   var out=[];
@@ -666,11 +741,7 @@ function validateModalEntries(arr){
     if(!m||typeof m!=='object')continue;
     var amt=parseInt(String(m.amount==null?'':m.amount).replace(/[^0-9]/g,''),10)||0;
     if(amt<=0)continue;
-    var img=String(m.image||'');
-    if(img.indexOf('base64')>-1&&!/^data:image\//.test(img)){
-      img='data:image/jpeg;base64,'+img.split('base64,')[1];
-    }
-    if(!/^data:image\//.test(img)&&img.length<=100)img='';
+    var img=joinImageFromChunks(m);
     out.push({
       id:m.id||('m'+Date.now()+i),
       date:m.date||new Date().toISOString(),
@@ -682,7 +753,7 @@ function validateModalEntries(arr){
   return out;
 }
 
-// ---------- PARSER DATA SHEET ----------
+// ---------- PARSER SHEET ----------
 function parseSheetDate(s){
   var raw=s['Timestamp']||s['Date']||s['Tanggal']||s['Waktu']||'';
   if(!raw)return null;
@@ -715,7 +786,7 @@ function parseSheetSale(s){
   return{qty:qty,curr:curr,amount:amount,amountRp:amountRp};
 }
 
-// ---------- HITUNGAN STOK ----------
+// ---------- STOK ----------
 function normName(s){return String(s||'').replace(/[^\w\s]/g,'').replace(/\s+/g,' ').trim().toLowerCase();}
 function matchVariant(a,b){
   var x=normName(a),y=normName(b);
@@ -741,7 +812,7 @@ function getSoldManual(name){
 function getRemainingStock(p){return (p.stockAwal||0)-getSoldFromSheet(p.name)-getSoldManual(p.name);}
 function getTotalSold(p){return getSoldFromSheet(p.name)+getSoldManual(p.name);}
 
-// ---------- HITUNGAN KEUANGAN ----------
+// ---------- KEUANGAN ----------
 function getTotals(){
   var baht=0,usd=0,rp=0,cB=0,cU=0,cR=0;
   for(var i=0;i<sheetSales.length;i++){
@@ -778,8 +849,6 @@ function getPenjualanRpVarian(name){
   }
   return rp;
 }
-
-// ---------- GRAFIK BULANAN (dari Sheet) ----------
 function getMonthlySales(){
   var map={};
   var bulan=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
@@ -800,7 +869,7 @@ function getMonthlySales(){
   return arr;
 }
 
-// ---------- LOGIN / SESI ----------
+// ---------- LOGIN ----------
 function doLogin(){
   var u=document.getElementById('loginUser').value.trim();
   var p=document.getElementById('loginPass').value.trim();
@@ -834,9 +903,9 @@ function initDashboard(){
     document.getElementById('headerDate').textContent=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   }catch(e){}
   loadDataLocal();
-  renderAll();
+  // SELALU ambil data terbaru dari server dulu → data HP & web pasti sama
   syncSheet();
-  if(!autoSyncTimer){autoSyncTimer=setInterval(syncSheet,300000);} // auto sync tiap 5 menit
+  if(!autoSyncTimer){autoSyncTimer=setInterval(syncSheet,120000);} // auto sync tiap 2 menit
 }
 
 // ---------- STORAGE ----------
@@ -857,15 +926,15 @@ function saveDataLocal(){
     localStorage.setItem('vj_history_v3',JSON.stringify(history));
     localStorage.setItem('vj_modals_v3',JSON.stringify(modalEntries));
     localStorage.setItem('vj_sheetsales_v3',JSON.stringify(sheetSales));
-  }catch(e){showToast('Penyimpanan lokal penuh','err');}
+  }catch(e){showToast('Penyimpanan lokal penuh — data tetap aman di server','err');}
 }
 function saveAndSync(){saveDataLocal();saveToCloud();}
 
-// ---------- CLOUD ----------
+// ---------- CLOUD SYNC ----------
 function syncSheet(){
   if(isSyncing)return Promise.resolve();
   isSyncing=true;
-  showOverlay('Mengambil data dari server...');
+  showOverlay('Mengambil data terbaru dari server...');
   var icon=document.getElementById('syncIcon'),text=document.getElementById('syncText');
   icon.className='fas fa-sync-alt sync-spin';text.textContent='Sync...';
   return fetch(APPS_SCRIPT_URL+'?action=getAll',{cache:'no-store'})
@@ -877,17 +946,23 @@ function syncSheet(){
       var cHist=Array.isArray(data.history)?data.history:[];
       var cModals=validateModalEntries(Array.isArray(data.modals)?data.modals:(Array.isArray(data.modalEntries)?data.modalEntries:[]));
       var cSales=Array.isArray(data.sheetSales)?data.sheetSales:[];
-      var needSave=false;
+      // SERVER = sumber utama (supaya semua perangkat sama)
       if(cSales.length>0)sheetSales=cSales;
-      if(cProds.length>0)products=cProds;else if(products.length>0)needSave=true;
-      if(cHist.length>0)history=cHist;else if(history.length>0)needSave=true;
-      if(cModals.length>0)modalEntries=cModals;else if(modalEntries.length>0)needSave=true;
-      if(needSave)saveToCloud();
+      if(cProds.length>0)products=cProds;
+      else if(products.length>0)saveToCloud();
+      if(cHist.length>0)history=cHist;
+      else if(history.length>0)saveToCloud();
+      if(cModals.length>0)modalEntries=cModals;
+      else if(modalEntries.length>0)saveToCloud();
       saveDataLocal();
       renderAll();
+      set('lastSync','Sync '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
       showToast('Data berhasil disinkronkan','ok');
     })
-    .catch(function(e){showToast('Gagal sync: '+e.message,'err');})
+    .catch(function(e){
+      showToast('Gagal sync: '+e.message,'err');
+      renderAll(); // offline? tetap tampilkan data lokal
+    })
     .finally(function(){
       icon.className='fas fa-cloud-arrow-down';text.textContent='Sync';
       isSyncing=false;hideOverlay();
@@ -895,6 +970,7 @@ function syncSheet(){
 }
 async function saveToCloud(){
   try{
+    var modalsChunks=modalEntries.map(splitImageForSave); // pecah gambar per kolom
     var response=await fetch(APPS_SCRIPT_URL,{
       method:'POST',
       headers:{'Content-Type':'text/plain;charset=utf-8'},
@@ -902,17 +978,33 @@ async function saveToCloud(){
         action:'saveAll',
         products:Array.isArray(products)?products:[],
         history:Array.isArray(history)?history:[],
-        modals:Array.isArray(modalEntries)?modalEntries:[]
+        modals:modalsChunks
       })
     });
     var result=await response.json();
-    if(result.status!=='ok'){
-      showToast('Gagal simpan ke cloud: '+(result.error||'Server error'),'err');
-    }
+    if(result.status!=='ok')showToast('Gagal simpan ke cloud: '+(result.error||'Server error'),'err');
   }catch(e){console.error('Save cloud error:',e);}
 }
 
-// ---------- RENDER: OVERVIEW ----------
+// ---------- RENDER ----------
+function renderAll(){
+  renderOverview();
+  renderProducts();
+  renderCosts();
+  renderSheetSales();
+  renderFinance();
+  renderMarquee();
+}
+function renderMarquee(){
+  var tot=getTotals();
+  var tModal=getTotalModal();
+  var hasil=tot.rp-tModal;
+  var sisa=0;
+  for(var i=0;i<products.length;i++)sisa+=getRemainingStock(products[i]);
+  var txt=' ✦ VJ PARFUM ✦  TOTAL BAHT: '+fBaht(tot.baht)+'  ✦  DOLLAR: '+fUsd(tot.usd)+'  ✦  RUPIAH: '+fRp(tot.rp)+'  ✦  SISA STOK: '+sisa+' BOTOL  ✦  TOTAL MODAL: '+fRp(tModal)+'  ✦  HASIL: '+(hasil>=0?'+':'-')+fRp(Math.abs(hasil))+'  ✦ ';
+  set('marqueeText1',txt);
+  set('marqueeText2',txt);
+}
 function renderOverview(){
   var tAwal=0,tSold=0,tSisa=0;
   for(var i=0;i<products.length;i++){
@@ -922,7 +1014,6 @@ function renderOverview(){
   }
   set('sVarian',products.length);
   set('sTotalAwal',tAwal);set('sSold',tSold);set('sStok',tSisa);
-
   var tot=getTotals();
   set('sBahtTot',fBaht(tot.baht));
   set('sUsdTot',fUsd(tot.usd));
@@ -933,29 +1024,25 @@ function renderOverview(){
 
   renderMonthlyChart();
 
-  // Chart sisa stok
   var c1=document.getElementById('cStock');
   if(chartStock)chartStock.destroy();
   chartStock=new Chart(c1.getContext('2d'),{
     type:'bar',
     data:{labels:products.map(function(p){return p.name;}),
       datasets:[{label:'Sisa Stok',data:products.map(function(p){return getRemainingStock(p);}),
-        backgroundColor:'rgba(59,130,246,.6)',borderColor:'rgba(59,130,246,1)',borderWidth:1,borderRadius:4,maxBarThickness:32}]},
+        backgroundColor:'rgba(59,130,246,.65)',borderColor:'rgba(59,130,246,1)',borderWidth:1,borderRadius:5,maxBarThickness:32}]},
     options:baseChartOpts()
   });
-
-  // Chart penjualan per varian
   var c2=document.getElementById('cSales');
   if(chartSales)chartSales.destroy();
   chartSales=new Chart(c2.getContext('2d'),{
     type:'bar',
     data:{labels:products.map(function(p){return p.name;}),
       datasets:[{label:'Terjual',data:products.map(function(p){return getTotalSold(p);}),
-        backgroundColor:'rgba(201,168,76,.65)',borderColor:'rgba(201,168,76,1)',borderWidth:1,borderRadius:4,maxBarThickness:32}]},
+        backgroundColor:'rgba(201,168,76,.7)',borderColor:'rgba(201,168,76,1)',borderWidth:1,borderRadius:5,maxBarThickness:32}]},
     options:baseChartOpts()
   });
 
-  // Stok menipis
   var lowList=document.getElementById('lowStockList');
   lowList.innerHTML='';
   var hasLow=false;
@@ -971,7 +1058,6 @@ function renderOverview(){
   }
   document.getElementById('lowStockCard').style.display=hasLow?'block':'none';
 
-  // Penjualan terakhir
   var rec=document.getElementById('recentSheetSales');
   if(sheetSales.length===0){
     rec.innerHTML='<div class="empty-state">Belum ada data. Klik <b>Sync</b> untuk mengambil dari Sheet.</div>';
@@ -998,12 +1084,10 @@ function baseChartOpts(){
   return{responsive:true,maintainAspectRatio:false,
     plugins:{legend:{display:false}},
     scales:{
-      x:{grid:{display:false},ticks:{color:'#8fa3bf',autoSkip:true,maxRotation:65,minRotation:0,font:{size:10}}},
+      x:{grid:{display:false},ticks:{color:'#8fa3bf',autoSkip:true,maxRotation:65,font:{size:10}}},
       y:{beginAtZero:true,grid:{color:'rgba(255,255,255,.06)'},ticks:{color:'#8fa3bf',callback:function(v){return fmtShort(v);},font:{size:10}}}
     }};
 }
-
-// ---------- RENDER: GRAFIK BULANAN ----------
 function renderMonthlyChart(){
   var data=getMonthlySales();
   var canvas=document.getElementById('cMonthly');
@@ -1026,7 +1110,7 @@ function renderMonthlyChart(){
     data:{
       labels:data.map(function(d){return d.label;}),
       datasets:[{label:'Penjualan (Rp)',data:data.map(function(d){return Math.round(d.rp);}),
-        backgroundColor:grad,borderRadius:7,borderSkipped:false,maxBarThickness:58}]
+        backgroundColor:grad,borderRadius:8,borderSkipped:false,maxBarThickness:58}]
     },
     options:{
       responsive:true,maintainAspectRatio:false,
@@ -1044,7 +1128,6 @@ function renderMonthlyChart(){
   });
 }
 
-// ---------- RENDER: VARIAN ----------
 function renderProducts(){
   set('pTotalVarian',products.length);
   var tAwal=0,tSisa=0;
@@ -1057,14 +1140,17 @@ function renderProducts(){
   for(var j=0;j<products.length;j++){
     var p=products[j];
     if(src&&p.name.toLowerCase().indexOf(src)<0)continue;
+    var awal=p.stockAwal||0;
     var sisa=getRemainingStock(p);
     var badge=sisa<=0?'badge-out':(sisa<=5?'badge-low':'badge-ok');
+    var pct=awal>0?Math.max(0,Math.min(100,sisa/awal*100)):0;
+    var barColor=pct>50?'linear-gradient(90deg,#3b82f6,#60a5fa)':(pct>20?'linear-gradient(90deg,#f59e0b,#fb923c)':'linear-gradient(90deg,#ef4444,#f87171)');
     var tr=document.createElement('tr');
     tr.innerHTML='<td>'+(j+1)+'</td>'+
       '<td style="font-weight:600;color:#fff">'+esc(p.name)+'</td>'+
-      '<td>'+(p.stockAwal||0)+'</td>'+
+      '<td>'+awal+'</td>'+
       '<td>'+getTotalSold(p)+'</td>'+
-      '<td><span class="badge '+badge+'">'+sisa+'</span></td>'+
+      '<td><span class="badge '+badge+'">'+sisa+'</span><div class="mini-bar"><div style="width:'+pct+'%;background:'+barColor+'"></div></div></td>'+
       '<td><button class="btn-outline" onclick="openEditProd('+j+')" style="padding:5px 10px;font-size:11px"><i class="fas fa-edit"></i></button> '+
       '<button class="btn-danger-sm" onclick="openDelVar('+j+')" style="padding:5px 10px;font-size:11px"><i class="fas fa-trash"></i></button></td>';
     tbody.appendChild(tr);
@@ -1086,30 +1172,29 @@ function openDelVar(i){
   },'Ya, Hapus');
 }
 
-// ---------- RENDER: MODAL / BIAYA ----------
 function renderCosts(){
   var tModal=getTotalModal();
   var tot=getTotals();
-  var tPenj=tot.rp;
-  var hasil=tPenj-tModal;
+  var hasil=tot.rp-tModal;
 
+  set('mCount',modalEntries.length+' catatan');
   set('mTotal',fRp(tModal));
-  set('mPenjualan',fRp(tPenj));
-  set('mUntungLabel',hasil>=0?'Untung':'Rugi');
+  set('mPenjualan',fRp(tot.rp));
+  set('mUntungLabel',hasil>=0?'Hasil (Untung)':'Hasil (Rugi)');
   var hEl=document.getElementById('mUntung');
-  hEl.textContent=(hasil<0?'-':'')+fRp(Math.abs(hasil));
+  hEl.textContent=(hasil<0?'-':'+')+fRp(Math.abs(hasil));
   hEl.style.color=hasil>=0?'var(--success)':'var(--danger)';
   var card=document.getElementById('mHasilCard');
   card.classList.toggle('hasil-plus',hasil>=0);
   card.classList.toggle('hasil-minus',hasil<0);
 
-  var pct=tModal>0?Math.min(100,tPenj/tModal*100):(tPenj>0?100:0);
+  var pct=tModal>0?Math.min(100,tot.rp/tModal*100):(tot.rp>0?100:0);
   document.getElementById('mProgFill').style.width=pct+'%';
-  set('mProgText','Penjualan Rp '+fRp(tPenj)+' dari modal '+fRp(tModal)+' ('+pct.toFixed(1)+'% modal sudah kembali)');
+  set('mProgText','Penjualan Rp '+fRp(tot.rp)+' dari modal '+fRp(tModal)+' ('+pct.toFixed(1)+'% modal sudah kembali)');
 
   var list=document.getElementById('modalEntriesList');
   if(modalEntries.length===0){
-    list.innerHTML='<div class="empty-state">Belum ada catatan modal.<br>Tambahkan lewat form di atas.</div>';
+    list.innerHTML='<div class="empty-state"><i class="fas fa-wallet" style="font-size:22px;display:block;margin-bottom:8px;opacity:.6"></i>Belum ada catatan modal.<br>Tambahkan lewat form di atas.</div>';
     return;
   }
   list.innerHTML='';
@@ -1119,7 +1204,7 @@ function renderCosts(){
       var el=document.createElement('div');
       el.className='entry-card';
 
-      // Thumbnail bukti transfer (SELALU kelihatan kalau ada)
+      // ==== THUMBNAIL GAMBAR (SELALU DITAMPILKAN) ====
       var thumb;
       if(m.image&&/^data:image\//.test(m.image)){
         thumb=document.createElement('img');
@@ -1130,13 +1215,14 @@ function renderCosts(){
         thumb.onerror=function(){
           var d=document.createElement('div');
           d.className='entry-thumb entry-thumb-empty';
-          d.title='Gambar rusa/terpotong (data lama)';
-          d.innerHTML='<i class="fas fa-image"></i>';
+          d.title='Gambar lama rusak (terpotong sebelumnya) — klik tombol kamera untuk upload ulang';
+          d.innerHTML='<i class="fas fa-image" style="opacity:.6"></i>';
           thumb.replaceWith(d);
         };
       }else{
         thumb=document.createElement('div');
         thumb.className='entry-thumb entry-thumb-empty';
+        thumb.title='Belum ada bukti transfer';
         thumb.innerHTML='<i class="fas fa-receipt"></i>';
       }
 
@@ -1146,18 +1232,44 @@ function renderCosts(){
         '<div class="entry-note">'+esc(m.note||'(tanpa keterangan)')+'</div>'+
         '<div class="entry-amt">'+fRp(m.amount)+'</div>';
 
+      // ==== AKSI: GANTI GAMBAR (📷) + HAPUS ====
       var act=document.createElement('div');
-      var del=document.createElement('button');
-      del.className='btn-danger-sm';
-      del.innerHTML='<i class="fas fa-trash"></i>';
-      del.onclick=function(){
+      act.className='entry-actions';
+
+      var camBtn=document.createElement('button');
+      camBtn.className='btn-outline';
+      camBtn.style.padding='6px 9px';
+      camBtn.title='Upload / ganti bukti transfer';
+      camBtn.innerHTML='<i class="fas fa-camera"></i>';
+      camBtn.onclick=function(){
+        var inp=document.createElement('input');
+        inp.type='file';inp.accept='image/*';
+        inp.onchange=async function(){
+          var f=inp.files[0];if(!f)return;
+          showOverlay('Memproses gambar...');
+          var img=await compressImage(f);
+          hideOverlay();
+          if(!img){showToast('Gambar gagal diproses','err');return;}
+          modalEntries[idx].image=img;
+          saveAndSync();renderAll();
+          showToast('Bukti transfer disimpan','ok');
+        };
+        inp.click();
+      };
+      act.appendChild(camBtn);
+
+      var delBtn=document.createElement('button');
+      delBtn.className='btn-danger-sm';
+      delBtn.style.padding='6px 9px';
+      delBtn.innerHTML='<i class="fas fa-trash"></i>';
+      delBtn.onclick=function(){
         askConfirm('Hapus catatan modal <b>'+esc(m.note||fRp(m.amount))+'</b>?',function(){
           modalEntries.splice(idx,1);
           saveAndSync();renderAll();
           showToast('Catatan modal dihapus','ok');
         },'Ya, Hapus');
       };
-      act.appendChild(del);
+      act.appendChild(delBtn);
 
       el.appendChild(thumb);el.appendChild(info);el.appendChild(act);
       list.appendChild(el);
@@ -1165,13 +1277,8 @@ function renderCosts(){
   }
 }
 
-// ---------- RENDER: PENJUALAN (SHEET) ----------
 function renderSheetSales(){
   var tot=getTotals();
-  var bottles=0;
-  for(var i=0;i<sheetSales.length;i++){
-    if(sheetSales[i])bottles+=parseSheetSale(sheetSales[i]).qty;
-  }
   set('shCount',sheetSales.length);
   set('shBaht',fBaht(tot.baht));
   set('shUsd',fUsd(tot.usd));
@@ -1213,7 +1320,6 @@ function showSaleDetail(i){
   openModal('mSaleDetail');
 }
 
-// ---------- RENDER: KEUANGAN ----------
 function renderFinance(){
   var tModal=getTotalModal();
   var tot=getTotals();
@@ -1223,7 +1329,7 @@ function renderFinance(){
   set('fPenjualan',fRp(tot.rp));
   set('fHasilLabel',hasil>=0?'Hasil (Untung)':'Hasil (Rugi)');
   var h=document.getElementById('fHasil');
-  h.textContent=(hasil<0?'-':'')+fRp(Math.abs(hasil));
+  h.textContent=(hasil<0?'-':'+')+fRp(Math.abs(hasil));
   h.style.color=hasil>=0?'var(--success)':'var(--danger)';
   var card=document.getElementById('fHasilCard');
   card.classList.toggle('hasil-plus',hasil>=0);
@@ -1237,7 +1343,6 @@ function renderFinance(){
   set('fUsd',fUsd(tot.usd));
   set('fRp',fRp(tot.rp));
 
-  // Tabel per varian
   var tbody=document.getElementById('tFin');
   tbody.innerHTML='';
   var tAwal=0,tSold=0,tSisa=0,tRp=0;
@@ -1252,7 +1357,6 @@ function renderFinance(){
   }
   set('tfAwal',tAwal);set('tfSold',tSold);set('tfSisa',tSisa);set('tfRp',fRp(tRp));
 
-  // Chart
   var ctx=document.getElementById('cProfit').getContext('2d');
   if(chartProfit)chartProfit.destroy();
   var grad=ctx.createLinearGradient(0,0,0,300);
@@ -1262,20 +1366,11 @@ function renderFinance(){
     type:'bar',
     data:{labels:products.map(function(p){return p.name;}),
       datasets:[{label:'Penjualan (Rp)',data:products.map(function(p){return Math.round(getPenjualanRpVarian(p.name));}),
-        backgroundColor:grad,borderRadius:4,maxBarThickness:36}]},
+        backgroundColor:grad,borderRadius:5,maxBarThickness:36}]},
     options:baseChartOpts()
   });
 }
 
-function renderAll(){
-  renderOverview();
-  renderProducts();
-  renderCosts();
-  renderSheetSales();
-  renderFinance();
-}
-
-// ---------- EKSPOR / IMPOR / RESET ----------
 function exportData(){
   var data={products:products,history:history,modals:modalEntries,sheetSales:sheetSales,exportedAt:new Date().toISOString()};
   var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
@@ -1287,9 +1382,9 @@ function exportData(){
   showToast('Data diekspor','ok');
 }
 
-// ============================================================
-//  WIRING EVENT
-// ============================================================
+/* ============================================================
+   WIRING EVENT
+   ============================================================ */
 document.getElementById('loginBtn').addEventListener('click',doLogin);
 document.getElementById('passToggleBtn').addEventListener('click',togglePassVis);
 ['loginUser','loginPass'].forEach(function(id){
@@ -1298,7 +1393,6 @@ document.getElementById('passToggleBtn').addEventListener('click',togglePassVis)
 document.getElementById('btnLogout').addEventListener('click',doLogout);
 document.getElementById('btnSync').addEventListener('click',syncSheet);
 
-// Tab navigasi
 document.querySelectorAll('.tab-btn').forEach(function(btn){
   btn.addEventListener('click',function(){
     document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
@@ -1309,7 +1403,6 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){
   });
 });
 
-// Tutup modal
 document.querySelectorAll('.closeModal').forEach(function(b){
   b.addEventListener('click',function(){closeModal(b.getAttribute('data-id'));});
 });
@@ -1323,8 +1416,11 @@ document.addEventListener('keydown',function(e){
     document.querySelectorAll('.modal-bg.show').forEach(function(m){m.classList.remove('show');});
   }
 });
+// Sync otomatis saat aplikasi dibuka lagi (biar data HP & web selalu sama)
+document.addEventListener('visibilitychange',function(){
+  if(document.visibilityState==='visible'&&document.documentElement.classList.contains('logged-in')&&!isSyncing)syncSheet();
+});
 
-// Varian
 document.getElementById('srcProd').addEventListener('input',renderProducts);
 document.getElementById('btnAddVar').addEventListener('click',function(){openModal('mAddVariant');});
 document.getElementById('btnSaveAddVar').addEventListener('click',function(){
@@ -1347,14 +1443,12 @@ document.getElementById('btnSaveProdEdit').addEventListener('click',function(){
   showToast('Stok awal diperbarui','ok');
 });
 
-// Konfirmasi generik
 document.getElementById('btnConfirmYes').addEventListener('click',function(){
   closeModal('mConfirm');
   var cb=confirmCb;confirmCb=null;
   if(cb)cb();
 });
 
-// Modal (biaya)
 document.getElementById('btnClearAllModals').addEventListener('click',function(){
   askConfirm('Hapus <b>SEMUA</b> catatan modal? Tidak bisa dibatalkan.',function(){
     modalEntries=[];
@@ -1400,7 +1494,6 @@ document.getElementById('btnSaveModal').addEventListener('click',async function(
   showToast('Catatan modal tersimpan','ok');
 });
 
-// Keuangan: ekspor/impor/reset
 document.getElementById('btnExport').addEventListener('click',exportData);
 document.getElementById('btnOpenImport').addEventListener('click',function(){openModal('mImport');});
 document.getElementById('btnDoImport').addEventListener('click',function(){
@@ -1425,6 +1518,38 @@ document.getElementById('btnReset').addEventListener('click',function(){
     showToast('Semua data direset','ok');
   },'Ya, Reset');
 });
+
+// ---------- BACKGROUND & DECOR ----------
+(function(){
+  // background login — JELAS, tanpa blur
+  var login=document.getElementById('loginScreen');
+  if(LOGIN_BG_URL){
+    var img=new Image();
+    img.onload=function(){
+      login.style.backgroundImage="linear-gradient(180deg,rgba(11,18,32,.28),rgba(11,18,32,.45) 55%,rgba(11,18,32,.75)),url('"+LOGIN_BG_URL+"')";
+    };
+    img.src=LOGIN_BG_URL;
+  }
+  // background dashboard (opsional)
+  if(DASH_BG_URL){
+    document.body.style.backgroundImage="linear-gradient(rgba(11,18,32,.8),rgba(11,18,32,.88)),url('"+DASH_BG_URL+"')";
+    document.body.style.backgroundSize='cover';
+    document.body.style.backgroundPosition='center';
+    document.body.style.backgroundAttachment='fixed';
+  }
+  // partikel emas di login
+  for(var i=0;i<10;i++){
+    var s=document.createElement('div');
+    s.className='spark';
+    s.style.left=(Math.random()*100)+'%';
+    s.style.bottom='-10px';
+    var size=2+Math.random()*4;
+    s.style.width=size+'px';s.style.height=size+'px';
+    s.style.animationDuration=(7+Math.random()*10)+'s';
+    s.style.animationDelay=(Math.random()*8)+'s';
+    login.appendChild(s);
+  }
+})();
 
 // ---------- START ----------
 try{
