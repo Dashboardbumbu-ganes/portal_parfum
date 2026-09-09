@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0b1220">
-<title>VJ PARFUM — Dashboard Penjualan</title>
+<meta name="theme-color" content="#0f1930">
+<title>VJ PARFUME — Dashboard Pendataan</title>
 
 <script>
 try{
@@ -19,63 +19,63 @@ html.logged-in #loginScreen{display:none!important}
 html.logged-in #dashboardScreen{display:block!important}
 </style>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
 <style>
 :root{
-  --bg-primary:#0b1220; --bg-secondary:#131c31; --bg-card:#121b2f;
-  --gold:#c9a84c; --gold-light:#e8cd7a; --gold-dark:#9a7b2e; --gold-soft:rgba(201,168,76,.14);
-  --text-primary:#f1f5f9; --text-secondary:#cbd5e1; --text-muted:#8fa3bf;
-  --border:#253354; --border-2:#33425f;
-  --danger:#f87171; --danger-soft:rgba(239,68,68,.14);
-  --success:#34d399; --success-soft:rgba(16,185,129,.14);
-  --info:#60a5fa;  --info-soft:rgba(59,130,246,.14);
-  --warn:#fb923c;  --warn-soft:rgba(249,115,22,.14);
+  --bg-primary:#0f1930; --bg-secondary:#1a2947;
+  --gold:#c9a84c; --gold-light:#e8cd7a; --gold-dark:#9a7b2e; --gold-soft:rgba(201,168,76,.16);
+  --text-primary:#f4f7fc; --text-secondary:#d3dfee; --text-muted:#a2b3d1;
+  --border:#33456b; --border-2:#42547c;
+  --danger:#f87171; --danger-soft:rgba(239,68,68,.15);
+  --success:#34d399; --success-soft:rgba(16,185,129,.15);
+  --info:#60a5fa;  --info-soft:rgba(59,130,246,.15);
+  --warn:#fb923c;  --warn-soft:rgba(249,115,22,.15);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:'DM Sans',system-ui,sans-serif;color:var(--text-primary);
-  min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased;overflow-x:hidden;
-  background-color:#0b1220;
+  min-height:100vh;font-size:15px;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-color:#0f1930;
   background-image:
-    radial-gradient(rgba(201,168,76,.05) 1px, transparent 1.6px),
-    radial-gradient(1000px 500px at 85% -5%, rgba(201,168,76,.13), transparent 60%),
-    radial-gradient(900px 500px at -5% 110%, rgba(59,130,246,.10), transparent 60%),
-    linear-gradient(180deg,#0c1424,#111c36 55%,#0b1220);
+    radial-gradient(rgba(201,168,76,.06) 1px, transparent 1.6px),
+    radial-gradient(1000px 500px at 85% -5%, rgba(201,168,76,.15), transparent 60%),
+    radial-gradient(900px 500px at -5% 110%, rgba(99,155,255,.13), transparent 60%),
+    linear-gradient(180deg,#13213c,#1b2b4c 55%,#101c34);
   background-size:26px 26px,auto,auto,auto;
   background-attachment:fixed;
 }
 img{display:block;max-width:100%}
 button{font-family:inherit}
-::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:var(--bg-secondary)}
-::-webkit-scrollbar-thumb{background:#3d4f73;border-radius:3px}
+::-webkit-scrollbar-thumb{background:#4a5d88;border-radius:3px}
 .font-display{font-family:'Playfair Display',serif}
 
-/* ============ LOGIN — BACKGROUND FULL JELAS (TANPA OVERLAY) ============ */
+/* ============ LOGIN — BACKGROUND FULL JELAS ============ */
 #loginScreen{
   min-height:100vh;align-items:center;justify-content:center;padding:20px;position:relative;overflow:hidden;
-  background-color:#0b1220;
+  background-color:#0f1930;
   background-size:cover;background-position:center;background-repeat:no-repeat;
 }
 .login-card{
   position:relative;z-index:2;
-  background:linear-gradient(160deg,rgba(15,23,40,.93),rgba(9,14,26,.95));
+  background:linear-gradient(160deg,rgba(18,27,46,.94),rgba(11,17,31,.95));
   backdrop-filter:blur(14px);
-  border:1px solid rgba(201,168,76,.55);
-  border-radius:26px;padding:42px 34px;width:100%;max-width:410px;
-  box-shadow:0 25px 70px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.07), 0 0 55px rgba(201,168,76,.15);
+  border:1px solid rgba(201,168,76,.6);
+  border-radius:26px;padding:44px 36px;width:100%;max-width:420px;
+  box-shadow:0 25px 70px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.08), 0 0 55px rgba(201,168,76,.16);
 }
 .login-card::before{
   content:'';position:absolute;top:0;left:26px;right:26px;height:2px;border-radius:2px;
   background:linear-gradient(90deg,transparent,var(--gold-light),var(--gold),var(--gold-light),transparent);
 }
 .login-logo{
-  position:relative;width:94px;height:94px;border-radius:50%;background:#fff;
+  position:relative;width:96px;height:96px;border-radius:50%;background:#fff;
   display:flex;align-items:center;justify-content:center;margin:0 auto 20px;overflow:hidden;
-  border:3px solid var(--gold);box-shadow:0 0 30px rgba(201,168,76,.6);
+  border:3px solid var(--gold);box-shadow:0 0 32px rgba(201,168,76,.65);
 }
 .login-logo::before{
   content:'';position:absolute;inset:-9px;border-radius:50%;
@@ -97,56 +97,56 @@ button{font-family:inherit}
 
 /* ============ FORM ============ */
 .input-field{
-  background:rgba(11,18,32,.8);border:1px solid var(--border);border-radius:11px;padding:12px 14px;
-  color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;width:100%;transition:all .25s;outline:none;
+  background:rgba(15,25,48,.85);border:1px solid var(--border);border-radius:11px;padding:12px 14px;
+  color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;width:100%;transition:all .25s;outline:none;
 }
 .input-field:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.18)}
 .input-field::placeholder{color:var(--text-muted)}
 textarea.input-field{resize:vertical;min-height:110px}
 
 /* ============ BUTTONS ============ */
-.btn-gold{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#0a0a0a;font-weight:700;border:none;border-radius:11px;padding:12px 20px;cursor:pointer;transition:all .25s;font-size:14px;width:100%;box-shadow:0 5px 20px rgba(201,168,76,.35)}
+.btn-gold{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#0a0a0a;font-weight:700;border:none;border-radius:11px;padding:13px 20px;cursor:pointer;transition:all .25s;font-size:15px;width:100%;box-shadow:0 5px 20px rgba(201,168,76,.35)}
 .btn-gold:hover{background:linear-gradient(135deg,var(--gold),var(--gold-light));transform:translateY(-1px);box-shadow:0 8px 26px rgba(201,168,76,.5)}
 .btn-gold:disabled{opacity:.6;cursor:wait;transform:none}
 .btn-gold::after{content:'';position:absolute;top:0;left:-80%;width:40%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);animation:shine 3.5s ease infinite}
 @keyframes shine{0%{left:-80%}55%{left:130%}100%{left:130%}}
-.btn-outline{background:transparent;color:var(--gold-light);border:1px solid var(--gold-dark);border-radius:9px;padding:8px 14px;cursor:pointer;transition:all .25s;font-weight:600;font-size:12px;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.btn-outline{background:transparent;color:var(--gold-light);border:1px solid var(--gold-dark);border-radius:9px;padding:9px 14px;cursor:pointer;transition:all .25s;font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
 .btn-outline:hover{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#000;border-color:var(--gold)}
-.btn-danger-sm{background:var(--danger-soft);color:var(--danger);border:1px solid rgba(239,68,68,.35);border-radius:9px;padding:7px 13px;cursor:pointer;transition:all .25s;font-weight:600;font-size:12px;display:inline-flex;align-items:center;gap:6px}
+.btn-danger-sm{background:var(--danger-soft);color:var(--danger);border:1px solid rgba(239,68,68,.35);border-radius:9px;padding:8px 13px;cursor:pointer;transition:all .25s;font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:6px}
 .btn-danger-sm:hover{background:#ef4444;color:#fff}
-.btn-success-sm{background:var(--success-soft);color:var(--success);border:1px solid rgba(16,185,129,.35);border-radius:9px;padding:8px 14px;cursor:pointer;transition:all .25s;font-weight:600;font-size:12px;display:inline-flex;align-items:center;gap:6px}
+.btn-success-sm{background:var(--success-soft);color:var(--success);border:1px solid rgba(16,185,129,.35);border-radius:9px;padding:9px 14px;cursor:pointer;transition:all .25s;font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:6px}
 .btn-success-sm:hover{background:#10b981;color:#fff}
 
-/* ============ HEADER + MARQUEE (KATA-KATA BAIK) ============ */
-.app-header{background:rgba(11,18,32,.95);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);box-shadow:0 2px 14px rgba(0,0,0,.4)}
+/* ============ HEADER + MARQUEE ============ */
+.app-header{background:rgba(15,25,48,.96);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);box-shadow:0 2px 14px rgba(0,0,0,.4)}
 .app-header::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold-light),var(--gold),transparent)}
-.header-inner{max-width:1400px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.header-logo{width:40px;height:40px;border-radius:11px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--gold-dark);background:#fff;box-shadow:0 0 16px rgba(201,168,76,.3)}
+.header-inner{max-width:1400px;margin:0 auto;padding:11px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.header-logo{width:42px;height:42px;border-radius:11px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--gold-dark);background:#fff;box-shadow:0 0 16px rgba(201,168,76,.35)}
 .header-logo img{width:100%;height:100%;object-fit:cover}
 .marquee-bar{background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light),var(--gold),var(--gold-dark));overflow:hidden}
-.marquee-track{display:flex;white-space:nowrap;width:max-content;animation:marq 30s linear infinite}
-.marquee-track span{padding:8px 0;font-size:12.5px;font-weight:700;color:#0b1220;letter-spacing:1.2px;text-transform:uppercase}
+.marquee-track{display:flex;white-space:nowrap;width:max-content;animation:marq 32s linear infinite}
+.marquee-track span{padding:9px 0;font-size:14.5px;font-weight:700;color:#0b1220;letter-spacing:.4px}
 .marquee-bar:hover .marquee-track{animation-play-state:paused}
 @keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-.tab-nav{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;margin:16px 0}
+.tab-nav{display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;margin:18px 0}
 .tab-nav::-webkit-scrollbar{display:none}
-.tab-btn{padding:9px 16px;border-radius:11px;font-weight:600;font-size:12px;cursor:pointer;transition:all .25s;border:1px solid transparent;background:linear-gradient(165deg,rgba(24,35,60,.95),rgba(15,24,42,.95));color:var(--text-secondary);white-space:nowrap;flex-shrink:0;display:inline-flex;align-items:center;gap:6px}
+.tab-btn{padding:10px 18px;border-radius:12px;font-weight:600;font-size:13.5px;cursor:pointer;transition:all .25s;border:1px solid transparent;background:linear-gradient(165deg,rgba(35,49,80,.97),rgba(25,37,63,.97));color:var(--text-secondary);white-space:nowrap;flex-shrink:0;display:inline-flex;align-items:center;gap:7px}
 .tab-btn:hover{color:var(--gold-light);border-color:var(--border-2)}
-.tab-btn.active{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#000;border-color:var(--gold);box-shadow:0 4px 14px rgba(201,168,76,.4)}
+.tab-btn.active{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#000;border-color:var(--gold);box-shadow:0 4px 14px rgba(201,168,76,.45)}
 .tab-section{display:none}
 .tab-section.active{display:block;animation:fadeUp .3s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-/* ============ CARDS ============ */
+/* ============ CARDS (TERANG) ============ */
 .card{
-  position:relative;background:linear-gradient(165deg,rgba(24,35,60,.96),rgba(15,24,42,.96));
-  border:1px solid #2a3a5e;border-radius:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05);
+  position:relative;background:linear-gradient(165deg,rgba(36,51,84,.98),rgba(26,39,66,.98));
+  border:1px solid var(--border);border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.06);
   transition:all .28s;overflow:hidden;
 }
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,rgba(201,168,76,.6) 50%,transparent 95%);opacity:0;transition:opacity .3s}
-.card:hover{border-color:rgba(201,168,76,.4);box-shadow:0 14px 38px rgba(0,0,0,.55),0 0 26px rgba(201,168,76,.1)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,rgba(201,168,76,.65) 50%,transparent 95%);opacity:0;transition:opacity .3s}
+.card:hover{border-color:rgba(201,168,76,.45);box-shadow:0 14px 38px rgba(0,0,0,.5),0 0 26px rgba(201,168,76,.12)}
 .card:hover::before{opacity:1}
 .stat-card,.money-card,.chart-card{transition:transform .28s, border-color .28s, box-shadow .28s}
 .stat-card:hover,.money-card:hover,.chart-card:hover{transform:translateY(-3px)}
@@ -160,128 +160,140 @@ textarea.input-field{resize:vertical;min-height:110px}
 @media(max-width:560px){.stat-grid.g2{grid-template-columns:1fr}}
 @media(max-width:380px){.stat-grid.g4,.stat-grid.g3{grid-template-columns:1fr}}
 
-.stat-card{padding:16px}
-.stat-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px;border:1px solid}
-.ico-gold{background:linear-gradient(135deg,rgba(201,168,76,.4),rgba(201,168,76,.08));color:var(--gold-light);border-color:rgba(201,168,76,.35)}
-.ico-blue{background:linear-gradient(135deg,rgba(59,130,246,.4),rgba(59,130,246,.08));color:#93c5fd;border-color:rgba(59,130,246,.35)}
-.ico-green{background:linear-gradient(135deg,rgba(16,185,129,.4),rgba(16,185,129,.08));color:#34d399;border-color:rgba(16,185,129,.35)}
-.ico-warn{background:linear-gradient(135deg,rgba(249,115,22,.4),rgba(249,115,22,.08));color:#fdba74;border-color:rgba(249,115,22,.35)}
-.ico-info{background:linear-gradient(135deg,rgba(96,165,250,.4),rgba(96,165,250,.08));color:#93c5fd;border-color:rgba(96,165,250,.35)}
-.big-number{font-size:25px;font-weight:800;line-height:1.1}
+.stat-card{padding:18px}
+.stat-ico{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:17px;margin-bottom:11px;border:1px solid}
+.ico-gold{background:linear-gradient(135deg,rgba(201,168,76,.42),rgba(201,168,76,.1));color:var(--gold-light);border-color:rgba(201,168,76,.38)}
+.ico-blue{background:linear-gradient(135deg,rgba(59,130,246,.42),rgba(59,130,246,.1));color:#93c5fd;border-color:rgba(59,130,246,.38)}
+.ico-green{background:linear-gradient(135deg,rgba(16,185,129,.42),rgba(16,185,129,.1));color:#34d399;border-color:rgba(16,185,129,.38)}
+.ico-warn{background:linear-gradient(135deg,rgba(249,115,22,.42),rgba(249,115,22,.1));color:#fdba74;border-color:rgba(249,115,22,.38)}
+.ico-info{background:linear-gradient(135deg,rgba(96,165,250,.42),rgba(96,165,250,.1));color:#93c5fd;border-color:rgba(96,165,250,.38)}
+.big-number{font-family:'Playfair Display',serif;font-size:29px;font-weight:800;line-height:1.1}
 .sisa-highlight{color:#93c5fd;text-shadow:0 0 16px rgba(59,130,246,.5)}
-.stat-sub{font-size:10px;color:var(--text-muted);margin-top:4px}
-.label-sm{font-size:10px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;font-weight:700;display:flex;align-items:center;gap:6px}
+.stat-sub{font-size:11.5px;color:var(--text-muted);margin-top:5px}
+.label-sm{font-size:11px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:7px;font-weight:700;display:flex;align-items:center;gap:6px}
 
-.money-card{padding:17px}
-.money-card::after{font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;right:15px;top:13px;font-size:36px;opacity:.13;pointer-events:none}
+.money-card{padding:19px}
+.money-card::after{font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;right:16px;top:14px;font-size:38px;opacity:.14;pointer-events:none}
 .money-card.b::after{content:'\f51e'}
 .money-card.r::after{content:'\f53a'}
 .money-card.g::after{content:'\f555'}
 .money-card.h::after{content:'\f201'}
-.money-value{font-size:22px;font-weight:800;line-height:1.2}
-.money-sub{font-size:10px;color:var(--text-muted);margin-top:5px}
-.money-card.b{background:linear-gradient(150deg,rgba(249,115,22,.18),rgba(15,24,42,.96));border-color:rgba(249,115,22,.45)}
-.money-card.b .money-value{color:#fdba74;text-shadow:0 0 16px rgba(249,115,22,.4)}
-.money-card.r{background:linear-gradient(150deg,rgba(59,130,246,.18),rgba(15,24,42,.96));border-color:rgba(59,130,246,.45)}
-.money-card.r .money-value{color:#7db8ff;text-shadow:0 0 16px rgba(59,130,246,.4)}
-.money-card.g{background:linear-gradient(150deg,rgba(201,168,76,.2),rgba(15,24,42,.96));border-color:rgba(201,168,76,.5)}
+.money-value{font-family:'Playfair Display',serif;font-size:26px;font-weight:800;line-height:1.15}
+.money-sub{font-size:11.5px;color:var(--text-muted);margin-top:6px}
+.money-card.b{background:linear-gradient(150deg,rgba(249,115,22,.2),rgba(26,39,66,.98));border-color:rgba(249,115,22,.48)}
+.money-card.b .money-value{color:#fdc07a;text-shadow:0 0 16px rgba(249,115,22,.4)}
+.money-card.r{background:linear-gradient(150deg,rgba(59,130,246,.2),rgba(26,39,66,.98));border-color:rgba(59,130,246,.48)}
+.money-card.r .money-value{color:#8ec2ff;text-shadow:0 0 16px rgba(59,130,246,.4)}
+.money-card.g{background:linear-gradient(150deg,rgba(201,168,76,.22),rgba(26,39,66,.98));border-color:rgba(201,168,76,.52)}
 .money-card.g .money-value{color:var(--gold-light)}
-.hasil-plus{background:linear-gradient(150deg,rgba(16,185,129,.2),rgba(15,24,42,.96))!important;border-color:rgba(16,185,129,.55)!important}
-.hasil-minus{background:linear-gradient(150deg,rgba(239,68,68,.2),rgba(15,24,42,.96))!important;border-color:rgba(239,68,68,.55)!important}
+.hasil-plus{background:linear-gradient(150deg,rgba(16,185,129,.22),rgba(26,39,66,.98))!important;border-color:rgba(16,185,129,.58)!important}
+.hasil-minus{background:linear-gradient(150deg,rgba(239,68,68,.22),rgba(26,39,66,.98))!important;border-color:rgba(239,68,68,.58)!important}
 
 .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:800px){.chart-row{grid-template-columns:1fr}}
-.chart-card{padding:16px}
-.chart-title{font-size:11.5px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px;font-weight:700;flex-wrap:wrap}
+.chart-card{padding:18px}
+.chart-title{font-size:13px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:13px;display:flex;align-items:center;gap:8px;font-weight:700;flex-wrap:wrap}
 .chart-title i{color:var(--gold)}
-.chart-badge{font-size:9px;background:var(--gold-soft);color:var(--gold-light);padding:2px 9px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;margin-left:auto;border:1px solid rgba(201,168,76,.25)}
+.chart-badge{font-size:9.5px;background:var(--gold-soft);color:var(--gold-light);padding:3px 10px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;margin-left:auto;border:1px solid rgba(201,168,76,.28)}
 
-/* ============ TABEL (PENJUALAN RAPI) ============ */
+/* ============ KARTU OWNER (KAS VJ PARFUME) ============ */
+.owner-card{
+  display:flex;align-items:center;gap:18px;padding:20px 22px;
+  background:linear-gradient(135deg,rgba(201,168,76,.24),rgba(26,39,66,.98));
+  border:1px solid rgba(201,168,76,.55);
+}
+.owner-ico{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));display:flex;align-items:center;justify-content:center;color:#0b1220;font-size:20px;box-shadow:0 0 22px rgba(201,168,76,.5);flex-shrink:0}
+.owner-names{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold-light);line-height:1.25}
+.owner-amp{color:var(--text-muted);font-size:16px;font-family:'DM Sans',sans-serif}
+.owner-sub{font-size:11.5px;color:var(--text-muted);margin-top:3px}
+
+/* ============ TABEL (PENJUALAN — WARNANYA VARIASI) ============ */
 .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.dtable{width:100%;border-collapse:separate;border-spacing:0;min-width:620px}
-.dtable thead th{background:linear-gradient(180deg,#233352,#1a2740);color:var(--gold-light);font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:1px;padding:12px 14px;text-align:left;border-bottom:2px solid rgba(201,168,76,.35);white-space:nowrap}
-.dtable tbody td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:12.5px;vertical-align:middle}
-.dtable tbody tr:nth-child(even){background:rgba(255,255,255,.025)}
+.dtable{width:100%;border-collapse:separate;border-spacing:0;min-width:640px}
+.dtable thead th{background:linear-gradient(180deg,#31446c,#263757);color:var(--gold-light);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:1px;padding:13px 15px;text-align:left;border-bottom:2px solid rgba(201,168,76,.4);white-space:nowrap}
+.dtable tbody td{padding:13px 15px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:middle}
+.dtable tbody tr:nth-child(even){background:rgba(255,255,255,.03)}
 .dtable tbody tr{transition:background .2s}
-.dtable tbody tr:hover{background:rgba(201,168,76,.08)}
-.dtable tfoot td{padding:12px 14px;font-weight:700;font-size:12.5px;color:var(--gold-light);background:linear-gradient(180deg,#233352,#1a2740);border-top:2px solid rgba(201,168,76,.35)}
+.dtable tbody tr:hover{background:rgba(201,168,76,.09)}
+.dtable tfoot td{padding:13px 15px;font-weight:700;font-size:14px;color:var(--gold-light);background:linear-gradient(180deg,#31446c,#263757);border-top:2px solid rgba(201,168,76,.4)}
 .dtable td:first-child{color:var(--gold-light);font-weight:700}
-.sales-table{min-width:700px}
-.tgl{font-weight:700;color:#fff;font-size:12px;white-space:nowrap}
-.tgl-time{font-size:10px;color:var(--text-muted);margin-top:2px}
-.varian-cell{font-weight:600;color:#fff}
-.total-cell{font-weight:800;font-size:12.5px;white-space:nowrap}
-.total-cell.t-baht{color:#fdba74}
-.total-cell.t-rp{color:#7db8ff}
-.scroll-hint{display:none;font-size:10px;color:var(--text-muted);padding:10px 14px 12px;gap:6px;align-items:center}
+.sales-table{min-width:720px}
+.tgl{font-weight:700;color:#fff;font-size:14px;white-space:nowrap}
+.tgl-time{font-size:11.5px;color:var(--text-muted);margin-top:2px}
+.varian-cell{font-weight:600;color:#fff;font-size:14.5px}
+.total-cell{font-family:'Playfair Display',serif;font-weight:800;font-size:15.5px;white-space:nowrap}
+.total-cell.t-baht{color:#fdc07a}
+.total-cell.t-rp{color:#8ec2ff}
+.scroll-hint{display:none;font-size:11.5px;color:var(--text-muted);padding:11px 15px 13px;gap:6px;align-items:center}
 @media(max-width:700px){.scroll-hint{display:flex}}
-.mini-bar{width:74px;height:5px;background:rgba(255,255,255,.09);border-radius:99px;margin-top:5px;overflow:hidden}
+.mini-bar{width:76px;height:6px;background:rgba(255,255,255,.1);border-radius:99px;margin-top:5px;overflow:hidden}
 .mini-bar>div{height:100%;border-radius:99px;transition:width .5s}
 
-.badge{display:inline-flex;align-items:center;padding:3px 11px;border-radius:7px;font-size:11px;font-weight:700}
-.badge-ok{background:linear-gradient(135deg,rgba(59,130,246,.35),rgba(59,130,246,.1));color:#93c5fd;border:1px solid rgba(59,130,246,.4)}
-.badge-low{background:linear-gradient(135deg,rgba(249,115,22,.35),rgba(249,115,22,.1));color:#fdba74;border:1px solid rgba(249,115,22,.4)}
-.badge-out{background:linear-gradient(135deg,rgba(239,68,68,.35),rgba(239,68,68,.1));color:#fca5a5;border:1px solid rgba(239,68,68,.4)}
+.badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:700}
+.badge-qty{background:linear-gradient(135deg,rgba(16,185,129,.4),rgba(16,185,129,.1));color:#34d399;border:1px solid rgba(16,185,129,.45)}
+.badge-ok{background:linear-gradient(135deg,rgba(59,130,246,.4),rgba(59,130,246,.1));color:#93c5fd;border:1px solid rgba(59,130,246,.45)}
+.badge-low{background:linear-gradient(135deg,rgba(249,115,22,.4),rgba(249,115,22,.1));color:#fdba74;border:1px solid rgba(249,115,22,.45)}
+.badge-out{background:linear-gradient(135deg,rgba(239,68,68,.4),rgba(239,68,68,.1));color:#fca5a5;border:1px solid rgba(239,68,68,.45)}
 .badge-wrap{display:flex;flex-wrap:wrap;gap:7px}
-.curr-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 11px;border-radius:99px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
-.pill-baht{background:var(--warn-soft);color:#fdba74;border:1px solid rgba(249,115,22,.35)}
-.pill-rp{background:var(--info-soft);color:#93c5fd;border:1px solid rgba(59,130,246,.35)}
+.curr-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 13px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.pill-baht{background:var(--warn-soft);color:#fdc07a;border:1px solid rgba(249,115,22,.4)}
+.pill-rp{background:var(--info-soft);color:#93c5fd;border:1px solid rgba(59,130,246,.4)}
 
-/* ============ DAFTAR TERBARU (RINGKASAN) ============ */
-.sale-item{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);transition:background .2s}
-.sale-item:hover{background:rgba(201,168,76,.07)}
+/* ============ DAFTAR TERBARU ============ */
+.sale-item{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:13px 15px;border-bottom:1px solid var(--border);transition:background .2s}
+.sale-item:hover{background:rgba(201,168,76,.08)}
 .sale-item:last-child{border-bottom:none}
-.sale-date{font-size:10.5px;color:var(--text-muted);margin-bottom:2px}
-.sale-name{font-size:13px;font-weight:600;color:#fff}
+.sale-date{font-size:11.5px;color:var(--text-muted);margin-bottom:2px}
+.sale-name{font-size:14.5px;font-weight:600;color:#fff}
 .sale-item-mid{display:flex;gap:6px;align-items:center}
-.sale-total{font-size:13.5px;font-weight:800;text-align:right}
-.sale-total.t-baht{color:#fdba74}.sale-total.t-rp{color:#7db8ff}
+.sale-total{font-family:'Playfair Display',serif;font-size:16px;font-weight:800;text-align:right}
+.sale-total.t-baht{color:#fdc07a}.sale-total.t-rp{color:#8ec2ff}
 
-/* ============ ENTRY MODAL (RAPI + BERJARAK) ============ */
+/* ============ ENTRY MODAL ============ */
 .entry-card{
-  display:grid;grid-template-columns:84px 1fr auto;gap:18px;align-items:center;
-  background:linear-gradient(165deg,rgba(24,35,60,.96),rgba(15,24,42,.96));
-  border:1px solid #2a3a5e;border-left:3px solid var(--gold);
-  border-radius:16px;padding:16px 18px;margin-bottom:12px;transition:all .25s;position:relative;
+  display:grid;grid-template-columns:88px 1fr auto;gap:18px;align-items:center;
+  background:linear-gradient(165deg,rgba(36,51,84,.98),rgba(26,39,66,.98));
+  border:1px solid var(--border);border-left:3px solid var(--gold);
+  border-radius:16px;padding:17px 19px;margin-bottom:12px;transition:all .25s;position:relative;
 }
-.entry-card:hover{border-color:rgba(201,168,76,.4);box-shadow:0 8px 24px rgba(0,0,0,.45)}
-.entry-thumb{width:84px;height:84px;border-radius:12px;object-fit:cover;border:1px solid var(--gold-dark);cursor:zoom-in;background:#fff;transition:transform .2s,box-shadow .2s}
-.entry-thumb:hover{transform:scale(1.06);box-shadow:0 0 18px rgba(201,168,76,.4)}
-.entry-thumb-empty{display:flex;align-items:center;justify-content:center;background:var(--bg-secondary);color:var(--text-muted);font-size:26px;cursor:default;border:1px dashed var(--border-2)}
-.entry-date{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.entry-note{font-size:14px;font-weight:600;color:#fff;margin-bottom:7px;line-height:1.4}
-.entry-amt{font-size:16.5px;font-weight:800;color:var(--gold-light)}
+.entry-card:hover{border-color:rgba(201,168,76,.45);box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.entry-thumb{width:88px;height:88px;border-radius:12px;object-fit:cover;border:1px solid var(--gold-dark);cursor:zoom-in;background:#fff;transition:transform .2s,box-shadow .2s}
+.entry-thumb:hover{transform:scale(1.06);box-shadow:0 0 18px rgba(201,168,76,.45)}
+.entry-thumb-empty{display:flex;align-items:center;justify-content:center;background:var(--bg-secondary);color:var(--text-muted);font-size:27px;cursor:default;border:1px dashed var(--border-2)}
+.entry-date{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.entry-note{font-size:15.5px;font-weight:600;color:#fff;margin-bottom:8px;line-height:1.4}
+.entry-amt{font-family:'Playfair Display',serif;font-size:19px;font-weight:800;color:var(--gold-light)}
 .entry-actions{display:flex;gap:7px}
-@media(max-width:480px){.entry-card{grid-template-columns:64px 1fr;gap:12px}.entry-thumb,.entry-thumb-empty{width:64px;height:64px}.entry-actions{grid-column:1/-1;justify-content:flex-end}}
+@media(max-width:480px){.entry-card{grid-template-columns:66px 1fr;gap:12px}.entry-thumb,.entry-thumb-empty{width:66px;height:66px}.entry-actions{grid-column:1/-1;justify-content:flex-end}}
 
 /* ============ PROGRESS ============ */
-.prog{height:11px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;border:1px solid var(--border)}
+.prog{height:12px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden;border:1px solid var(--border)}
 .prog>div{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light));transition:width .7s ease;width:0%}
 
 /* ============ LAIN-LAIN ============ */
-.empty-state{padding:26px 16px;text-align:center;color:var(--text-muted);font-size:12px;border:1px dashed var(--border-2);border-radius:12px;line-height:1.8;background:rgba(255,255,255,.015)}
+.empty-state{padding:28px 16px;text-align:center;color:var(--text-muted);font-size:13px;border:1px dashed var(--border-2);border-radius:12px;line-height:1.8;background:rgba(255,255,255,.02)}
 .flex-between{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .flex-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .mt8{margin-top:8px}.mt12{margin-top:12px}.mb12{margin-bottom:12px}.mb16{margin-bottom:16px}
-.muted{color:var(--text-muted)}.small{font-size:11px}
-.sec-title{font-size:18px;font-weight:700;display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;position:relative;padding-bottom:9px}
-.sec-title i{color:var(--gold);font-size:15px}
-.sec-title::after{content:'';position:absolute;left:0;bottom:0;width:64px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--gold-light),var(--gold-dark))}
-.kv{display:grid;grid-template-columns:150px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.muted{color:var(--text-muted)}.small{font-size:12px}
+.sec-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;display:flex;align-items:center;gap:11px;position:relative;padding-bottom:10px}
+.sec-title i{color:var(--gold);font-size:16px}
+.sec-title::after{content:'';position:absolute;left:0;bottom:0;width:68px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--gold-light),var(--gold-dark))}
+.kv{display:grid;grid-template-columns:160px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid var(--border);font-size:14px}
 .kv:last-child{border-bottom:none}
 .kv-k{color:var(--text-muted);font-weight:600}
 .kv-v{color:#fff;word-break:break-word}
 @media(max-width:480px){.kv{grid-template-columns:1fr;gap:2px}}
 
 /* ============ MODAL DIALOG ============ */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(7px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-bg{position:fixed;inset:0;background:rgba(5,10,20,.8);backdrop-filter:blur(7px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
 .modal-bg.show{display:flex}
-.modal-box{background:linear-gradient(165deg,rgba(24,35,60,.98),rgba(15,24,42,.98));border:1px solid rgba(201,168,76,.4);border-radius:19px;max-width:500px;width:100%;max-height:88vh;overflow-y:auto;padding:24px;animation:mSlide .28s ease;box-shadow:0 20px 60px rgba(0,0,0,.65)}
+.modal-box{background:linear-gradient(165deg,rgba(36,51,84,.99),rgba(26,39,66,.99));border:1px solid rgba(201,168,76,.45);border-radius:19px;max-width:520px;width:100%;max-height:88vh;overflow-y:auto;padding:26px;animation:mSlide .28s ease;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 @keyframes mSlide{from{transform:translateY(22px);opacity:0}to{transform:translateY(0);opacity:1}}
 
 /* ============ TOAST ============ */
 .toast-box{position:fixed;top:16px;right:16px;z-index:300;display:flex;flex-direction:column;gap:8px}
-.toast{padding:12px 16px;border-radius:11px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:9px;min-width:235px;color:#fff;box-shadow:0 8px 30px rgba(0,0,0,.55);animation:tIn .3s ease,tOut .3s ease 2.7s forwards;border:1px solid rgba(255,255,255,.15)}
+.toast{padding:13px 16px;border-radius:11px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:9px;min-width:240px;color:#fff;box-shadow:0 8px 30px rgba(0,0,0,.55);animation:tIn .3s ease,tOut .3s ease 2.7s forwards;border:1px solid rgba(255,255,255,.15)}
 .toast-ok{background:linear-gradient(135deg,#059669,#047857)}
 .toast-err{background:linear-gradient(135deg,#dc2626,#b91c1c)}
 .toast-inf{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
@@ -290,7 +302,7 @@ textarea.input-field{resize:vertical;min-height:110px}
 
 /* ============ PREVIEW GAMBAR ============ */
 #imgPreviewOverlay{position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9999;display:none;justify-content:center;align-items:center;cursor:zoom-out;padding:20px}
-#imgPreviewLarge{max-width:100%;max-height:100%;border-radius:12px;object-fit:contain;box-shadow:0 0 70px rgba(0,0,0,.9);border:1px solid rgba(201,168,76,.4)}
+#imgPreviewLarge{max-width:100%;max-height:100%;border-radius:12px;object-fit:contain;box-shadow:0 0 70px rgba(0,0,0,.9);border:1px solid rgba(201,168,76,.45)}
 @media(max-width:640px){#lastSync{display:none}}
 </style>
 </head>
@@ -298,12 +310,12 @@ textarea.input-field{resize:vertical;min-height:110px}
 
 <div id="imgPreviewOverlay" onclick="closeImgPreview()">
   <img id="imgPreviewLarge" src="" alt="Preview bukti transfer">
-  <div style="position:absolute;bottom:16px;left:0;right:0;text-align:center;color:var(--text-muted);font-size:11px">Klik di mana saja untuk menutup</div>
+  <div style="position:absolute;bottom:16px;left:0;right:0;text-align:center;color:var(--text-muted);font-size:11.5px">Klik di mana saja untuk menutup</div>
 </div>
 
 <div class="toast-box" id="toastBox"></div>
 
-<!-- ================= LOGIN (BACKGROUND FULL JELAS) ================= -->
+<!-- ================= LOGIN ================= -->
 <div id="loginScreen">
   <div class="login-card">
     <div class="login-logo">
@@ -311,25 +323,25 @@ textarea.input-field{resize:vertical;min-height:110px}
            onerror="this.style.display='none';document.getElementById('loginFallback').style.display='flex'">
       <div class="logo-fallback" id="loginFallback"><i class="fas fa-spray-can-sparkles"></i></div>
     </div>
-    <h1 class="font-display gold-shimmer" style="font-size:28px;font-weight:900;text-align:center;letter-spacing:3px;margin-bottom:4px">VJ PARFUM</h1>
-    <p style="text-align:center;color:var(--text-secondary);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:26px">Dashboard Penjualan</p>
+    <h1 class="font-display gold-shimmer" style="font-size:30px;font-weight:900;text-align:center;letter-spacing:3px;margin-bottom:4px">VJ PARFUM</h1>
+    <p style="text-align:center;color:var(--text-secondary);font-size:11.5px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:26px">Dashboard Penjualan</p>
     <div style="display:flex;flex-direction:column;gap:14px">
       <div>
-        <label style="font-size:10.5px;color:var(--gold-light);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:1.2px;font-weight:600">Username</label>
+        <label style="font-size:11px;color:var(--gold-light);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:1.2px;font-weight:600">Username</label>
         <div style="position:relative">
-          <i class="fas fa-user" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px"></i>
+          <i class="fas fa-user" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px"></i>
           <input type="text" class="input-field" id="loginUser" placeholder="Masukkan username" style="padding-left:37px" autocomplete="username">
         </div>
       </div>
       <div>
-        <label style="font-size:10.5px;color:var(--gold-light);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:1.2px;font-weight:600">Password</label>
+        <label style="font-size:11px;color:var(--gold-light);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:1.2px;font-weight:600">Password</label>
         <div style="position:relative">
-          <i class="fas fa-lock" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px"></i>
+          <i class="fas fa-lock" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:14px"></i>
           <input type="password" class="input-field" id="loginPass" placeholder="Masukkan password" style="padding-left:37px" autocomplete="current-password">
           <button type="button" id="passToggleBtn" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer"><i class="fas fa-eye"></i></button>
         </div>
       </div>
-      <div id="loginError" style="display:none;background:var(--danger-soft);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:9px 12px;color:var(--danger);font-size:12px;text-align:center"></div>
+      <div id="loginError" style="display:none;background:var(--danger-soft);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:9px 12px;color:var(--danger);font-size:13px;text-align:center"></div>
       <button class="btn-gold" id="loginBtn"><i class="fas fa-right-to-bracket" style="margin-right:6px"></i>Masuk</button>
     </div>
   </div>
@@ -339,39 +351,39 @@ textarea.input-field{resize:vertical;min-height:110px}
 <div id="dashboardScreen">
   <header class="app-header">
     <div class="header-inner">
-      <div style="display:flex;align-items:center;gap:11px">
+      <div style="display:flex;align-items:center;gap:12px">
         <div class="header-logo">
           <img src="https://lh3.googleusercontent.com/d/1HxxcX_oSPAAWBAzeZ4qGYzFc-iXW6QIO" alt="Logo"
-               onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-spray-can-sparkles\' style=\'color:var(--gold);font-size:16px\'></i>'">
+               onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-spray-can-sparkles\' style=\'color:var(--gold);font-size:17px\'></i>'">
         </div>
         <div style="min-width:0">
-          <h1 class="font-display gold-shimmer" style="font-size:18px;font-weight:900;letter-spacing:2px">VJ PARFUM</h1>
-          <p style="font-size:9px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase" id="headerDate"></p>
+          <h1 class="font-display gold-shimmer" style="font-size:19px;font-weight:900;letter-spacing:2px">VJ PARFUM</h1>
+          <p style="font-size:10px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase" id="headerDate"></p>
         </div>
       </div>
       <div class="flex-row" style="flex-shrink:0">
-        <a class="btn-outline" href="https://docs.google.com/spreadsheets/d/1C_aVqFUws8GsIaW1VW9vBjMiUWmJy4Y2qu_BHZYv6ac" target="_blank" rel="noopener" style="padding:6px 11px;font-size:11px"><i class="fas fa-table"></i> Sheet</a>
-        <button class="btn-outline" id="btnSync" style="padding:6px 11px;font-size:11px"><i class="fas fa-cloud-arrow-down" id="syncIcon"></i> <span id="syncText">Sync</span></button>
-        <span style="font-size:11px;color:var(--text-secondary)" id="headerUser"></span>
+        <a class="btn-outline" href="https://docs.google.com/spreadsheets/d/1C_aVqFUws8GsIaW1VW9vBjMiUWmJy4Y2qu_BHZYv6ac" target="_blank" rel="noopener" style="padding:7px 12px;font-size:12px"><i class="fas fa-table"></i> Sheet</a>
+        <button class="btn-outline" id="btnSync" style="padding:7px 12px;font-size:12px"><i class="fas fa-cloud-arrow-down" id="syncIcon"></i> <span id="syncText">Sync</span></button>
+        <span style="font-size:12px;color:var(--text-secondary)" id="headerUser"></span>
         <span class="small muted" id="lastSync"></span>
         <button class="btn-danger-sm" id="btnLogout"><i class="fas fa-sign-out-alt"></i> Keluar</button>
       </div>
     </div>
   </header>
 
-  <!-- TULISAN BERJALAN — KATA-KATA BAIK -->
+  <!-- TULISAN BERJALAN -->
   <div class="marquee-bar"><div class="marquee-track">
-    <span>✦ Selamat Datang ✦ Semoga Usahanya Selalu Lancar ✦ Rezeki Berlimpah ✦ Untung Melimpah ✦ Penjualan Laku Terus ✦&nbsp;</span>
-    <span>✦ Selamat Datang ✦ Semoga Usahanya Selalu Lancar ✦ Rezeki Berlimpah ✦ Untung Melimpah ✦ Penjualan Laku Terus ✦&nbsp;</span>
+    <span>👑✨ VJ PARFUME ✨👑 &nbsp;|&nbsp; 📋 DASHBOARD PENDATAAN &nbsp;|&nbsp; 💎 DATA AKURAT &nbsp;|&nbsp; 📦 STOK TERKONTROL &nbsp;|&nbsp; 📝 PENDATAAN RAPI &nbsp;|&nbsp; 🚀 KERJA LANCAR &nbsp;|&nbsp; 💰 REZEKI BERLIMPAH &nbsp;|&nbsp; 🌟 SUKSES SELALU ✨ &nbsp;</span>
+    <span>👑✨ VJ PARFUME ✨👑 &nbsp;|&nbsp; 📋 DASHBOARD PENDATAAN &nbsp;|&nbsp; 💎 DATA AKURAT &nbsp;|&nbsp; 📦 STOK TERKONTROL &nbsp;|&nbsp; 📝 PENDATAAN RAPI &nbsp;|&nbsp; 🚀 KERJA LANCAR &nbsp;|&nbsp; 💰 REZEKI BERLIMPAH &nbsp;|&nbsp; 🌟 SUKSES SELALU ✨ &nbsp;</span>
   </div></div>
 
-  <main style="max-width:1400px;margin:0 auto;padding:16px 16px 50px;position:relative;z-index:1">
+  <main style="max-width:1400px;margin:0 auto;padding:18px 16px 50px;position:relative;z-index:1">
     <nav class="tab-nav" id="tabNav">
       <button class="tab-btn active" data-tab="overview"><i class="fas fa-chart-pie"></i> Ringkasan</button>
       <button class="tab-btn" data-tab="products"><i class="fas fa-flask"></i> Varian</button>
       <button class="tab-btn" data-tab="costs"><i class="fas fa-wallet"></i> Modal</button>
       <button class="tab-btn" data-tab="sales"><i class="fas fa-receipt"></i> Penjualan</button>
-      <button class="tab-btn" data-tab="finance"><i class="fas fa-coins"></i> Keuangan</button>
+      <button class="tab-btn" data-tab="finance"><i class="fas fa-crown"></i> Kas VJ Parfume</button>
     </nav>
 
     <!-- ============ RINGKASAN ============ -->
@@ -389,17 +401,17 @@ textarea.input-field{resize:vertical;min-height:110px}
       </div>
 
       <div class="card chart-card mb16">
-        <h3 class="chart-title"><i class="fas fa-chart-line"></i> Grafik Penjualan per Bulan <span class="chart-badge">dari Google Sheet</span></h3>
-        <div style="position:relative;height:280px"><canvas id="cMonthly"></canvas></div>
+        <h3 class="chart-title"><i class="fas fa-chart-line"></i> Grafik Penjualan per Bulan <span class="chart-badge">dari Google Sheet • bulan kosong turun ke 0</span></h3>
+        <div style="position:relative;height:300px"><canvas id="cMonthly"></canvas></div>
         <div class="empty-state" id="monthlyEmpty" style="display:none">Belum ada data penjualan dari Sheet.<br>Klik tombol <b>Sync</b> di atas untuk mengambil data.</div>
       </div>
 
       <div class="chart-row mb16">
-        <div class="card chart-card"><h3 class="chart-title"><i class="fas fa-warehouse"></i> Sisa Stok per Varian</h3><div style="position:relative;height:250px"><canvas id="cStock"></canvas></div></div>
-        <div class="card chart-card"><h3 class="chart-title"><i class="fas fa-cart-shopping"></i> Penjualan per Varian</h3><div style="position:relative;height:250px"><canvas id="cSales"></canvas></div></div>
+        <div class="card chart-card"><h3 class="chart-title"><i class="fas fa-warehouse"></i> Sisa Stok per Varian</h3><div style="position:relative;height:260px"><canvas id="cStock"></canvas></div></div>
+        <div class="card chart-card"><h3 class="chart-title"><i class="fas fa-cart-shopping"></i> Penjualan per Varian</h3><div style="position:relative;height:260px"><canvas id="cSales"></canvas></div></div>
       </div>
 
-      <div class="card mb16" id="lowStockCard" style="display:none;padding:16px">
+      <div class="card mb16" id="lowStockCard" style="display:none;padding:18px">
         <h3 class="chart-title" style="color:var(--danger)"><i class="fas fa-triangle-exclamation" style="color:var(--danger)"></i> Stok Menipis / Habis</h3>
         <div id="lowStockList" class="badge-wrap"></div>
       </div>
@@ -415,18 +427,18 @@ textarea.input-field{resize:vertical;min-height:110px}
       <div class="flex-between mb16">
         <h2 class="sec-title"><i class="fas fa-flask"></i> Daftar Varian</h2>
         <div class="flex-row">
-          <input type="text" class="input-field" id="srcProd" placeholder="Cari varian..." style="width:180px">
+          <input type="text" class="input-field" id="srcProd" placeholder="Cari varian..." style="width:190px">
           <button class="btn-success-sm" id="btnAddVar"><i class="fas fa-plus"></i> Tambah Varian</button>
         </div>
       </div>
       <div class="stat-grid g3 mb16">
-        <div class="card stat-card" style="text-align:center"><div class="stat-ico ico-gold" style="margin:0 auto 10px"><i class="fas fa-flask"></i></div><div class="label-sm">Total Varian</div><div class="big-number" style="color:var(--gold-light)" id="pTotalVarian">0</div></div>
-        <div class="card stat-card" style="text-align:center"><div class="stat-ico ico-blue" style="margin:0 auto 10px"><i class="fas fa-boxes-packing"></i></div><div class="label-sm">Total Botol Awal</div><div class="big-number" style="color:var(--info)" id="pTotalAwal">0</div></div>
-        <div class="card stat-card" style="text-align:center"><div class="stat-ico ico-info" style="margin:0 auto 10px"><i class="fas fa-warehouse"></i></div><div class="label-sm">Sisa Stok Semua</div><div class="big-number sisa-highlight" id="pTotalSisa">0</div></div>
+        <div class="card stat-card" style="text-align:center"><div class="stat-ico ico-gold" style="margin:0 auto 11px"><i class="fas fa-flask"></i></div><div class="label-sm">Total Varian</div><div class="big-number" style="color:var(--gold-light)" id="pTotalVarian">0</div></div>
+        <div class="card stat-card" style="text-align:center"><div class="stat-ico ico-blue" style="margin:0 auto 11px"><i class="fas fa-boxes-packing"></i></div><div class="label-sm">Total Botol Awal</div><div class="big-number" style="color:var(--info)" id="pTotalAwal">0</div></div>
+        <div class="card stat-card" style="text-align:center"><div class="stat-ico ico-info" style="margin:0 auto 11px"><i class="fas fa-warehouse"></i></div><div class="label-sm">Sisa Stok Semua</div><div class="big-number sisa-highlight" id="pTotalSisa">0</div></div>
       </div>
       <div class="card table-wrap">
         <table class="dtable">
-          <thead><tr><th>No</th><th>Varian</th><th>Awal (Manual)</th><th>Terjual</th><th>Sisa (Otomatis)</th><th style="width:115px">Aksi</th></tr></thead>
+          <thead><tr><th>No</th><th>Varian</th><th>Awal (Manual)</th><th>Terjual</th><th>Sisa (Otomatis)</th><th style="width:120px">Aksi</th></tr></thead>
           <tbody id="tProd"></tbody>
         </table>
         <div class="scroll-hint"><i class="fas fa-arrows-left-right"></i> Geser tabel ke samping untuk lihat semua kolom</div>
@@ -449,18 +461,18 @@ textarea.input-field{resize:vertical;min-height:110px}
         <div class="prog mt12"><div id="mProgFill"></div></div>
         <div class="small muted mt8" id="mProgText">-</div>
       </div>
-      <div class="card mb16" style="padding:20px">
-        <h3 class="chart-title" style="margin-bottom:14px"><i class="fas fa-circle-plus"></i> Tambah Catatan Modal</h3>
+      <div class="card mb16" style="padding:22px">
+        <h3 class="chart-title" style="margin-bottom:15px"><i class="fas fa-circle-plus"></i> Tambah Catatan Modal</h3>
         <div style="display:flex;flex-direction:column;gap:13px">
           <div><label class="label-sm">Nominal Modal (Rp)</label><input type="text" class="input-field" id="modalInput" placeholder="Contoh: 500,000" oninput="formatNumber(this)"></div>
           <div><label class="label-sm">Keterangan</label><input type="text" class="input-field" id="modalNote" placeholder="Contoh: Modal bulan Juli"></div>
           <div>
             <label class="label-sm">Bukti Transfer (opsional)</label>
-            <label class="btn-outline" style="display:flex;justify-content:center;padding:11px;cursor:pointer;position:relative;overflow:hidden">
+            <label class="btn-outline" style="display:flex;justify-content:center;padding:12px;cursor:pointer;position:relative;overflow:hidden">
               <i class="fas fa-image"></i> Pilih Gambar Bukti Transfer
               <input type="file" id="modalFile" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer">
             </label>
-            <img id="previewModalImg" src="" alt="Preview" style="display:none;max-height:120px;border-radius:11px;border:1px solid var(--gold-dark);margin-top:10px;cursor:zoom-in;object-fit:contain;background:#fff">
+            <img id="previewModalImg" src="" alt="Preview" style="display:none;max-height:130px;border-radius:11px;border:1px solid var(--gold-dark);margin-top:10px;cursor:zoom-in;object-fit:contain;background:#fff">
             <p class="small muted mt8"><i class="fas fa-circle-info"></i> Gambar disimpan dalam beberapa bagian supaya tidak rusak — pasti tampil.</p>
           </div>
           <button class="btn-gold" id="btnSaveModal"><i class="fas fa-save"></i> Simpan Catatan Modal</button>
@@ -473,23 +485,23 @@ textarea.input-field{resize:vertical;min-height:110px}
       <div id="modalEntriesList"></div>
     </section>
 
-    <!-- ============ PENJUALAN (TABEL RAPI) ============ -->
+    <!-- ============ PENJUALAN ============ -->
     <section class="tab-section" id="tab-sales">
       <h2 class="sec-title mb16"><i class="fas fa-receipt"></i> Rekap Penjualan (Google Sheet)</h2>
       <div class="stat-grid g4 mb16">
         <div class="card stat-card" style="text-align:center"><div class="label-sm">Transaksi</div><div class="big-number" style="color:var(--gold-light)" id="shCount">0</div></div>
         <div class="card stat-card" style="text-align:center"><div class="label-sm">Botol Terjual</div><div class="big-number" style="color:var(--success)" id="shBottles">0</div></div>
-        <div class="card stat-card" style="text-align:center"><div class="label-sm">Total Baht</div><div class="big-number" style="color:#fdba74;font-size:19px" id="shBaht">0</div></div>
-        <div class="card stat-card" style="text-align:center"><div class="label-sm">Total Rupiah</div><div class="big-number" style="color:#7db8ff;font-size:19px" id="shRp">Rp 0</div></div>
+        <div class="card stat-card" style="text-align:center"><div class="label-sm">Total Baht</div><div class="big-number" style="color:#fdc07a;font-size:22px" id="shBaht">0</div></div>
+        <div class="card stat-card" style="text-align:center"><div class="label-sm">Total Rupiah</div><div class="big-number" style="color:#8ec2ff;font-size:22px" id="shRp">Rp 0</div></div>
       </div>
       <div class="card table-wrap">
-        <div style="padding:16px 16px 12px">
+        <div style="padding:18px 18px 13px">
           <h3 class="chart-title" style="margin-bottom:0"><i class="fas fa-cloud"></i> Semua Pencatatan dari Sheet <span class="chart-badge">klik baris = detail</span></h3>
         </div>
         <table class="dtable sales-table">
           <thead>
             <tr>
-              <th style="width:46px">No</th>
+              <th style="width:48px">No</th>
               <th>Tanggal</th>
               <th>Nama Varian</th>
               <th>Jumlah</th>
@@ -499,14 +511,25 @@ textarea.input-field{resize:vertical;min-height:110px}
           </thead>
           <tbody id="sheetSalesBody"></tbody>
         </table>
-        <div class="empty-state" id="sheetSalesEmpty" style="display:none;margin:14px">Belum ada data penjualan dari Sheet.<br>Klik <b>Sync</b> di header untuk mengambil data.</div>
+        <div class="empty-state" id="sheetSalesEmpty" style="display:none;margin:15px">Belum ada data penjualan dari Sheet.<br>Klik <b>Sync</b> di header untuk mengambil data.</div>
         <div class="scroll-hint"><i class="fas fa-arrows-left-right"></i> Geser tabel ke samping untuk lihat semua kolom</div>
       </div>
     </section>
 
-    <!-- ============ KEUANGAN ============ -->
+    <!-- ============ KAS VJ PARFUME ============ -->
     <section class="tab-section" id="tab-finance">
-      <h2 class="sec-title mb16"><i class="fas fa-coins"></i> Laporan Keuangan</h2>
+      <h2 class="sec-title mb16"><i class="fas fa-crown"></i> Kas VJ Parfume</h2>
+
+      <!-- OWNER -->
+      <div class="card owner-card mb16">
+        <div class="owner-ico"><i class="fas fa-crown"></i></div>
+        <div style="min-width:0">
+          <div class="label-sm" style="margin-bottom:4px">Owner</div>
+          <div class="owner-names">Ganes Prakas <span class="owner-amp">&amp;</span> Pijai Kumar</div>
+          <div class="owner-sub">Laporan keuangan lengkap — modal, penjualan &amp; hasil</div>
+        </div>
+      </div>
+
       <div class="stat-grid g3 mb16">
         <div class="card money-card g"><div class="label-sm">Total Modal</div><div class="money-value" id="fModal">Rp 0</div></div>
         <div class="card money-card r"><div class="label-sm">Total Penjualan (Rupiah)</div><div class="money-value" id="fPenjualan">Rp 0</div></div>
@@ -520,12 +543,12 @@ textarea.input-field{resize:vertical;min-height:110px}
       <div class="card chart-card mb16">
         <h3 class="chart-title"><i class="fas fa-globe"></i> Pendapatan per Mata Uang</h3>
         <div class="stat-grid g2">
-          <div style="text-align:center;padding:15px;background:linear-gradient(150deg,rgba(249,115,22,.18),transparent);border:1px solid rgba(249,115,22,.35);border-radius:12px"><div style="font-size:10px;color:#fdba74;font-weight:700;letter-spacing:1px;margin-bottom:6px">BAHT</div><div style="font-size:18px;font-weight:800;color:#fdba74" id="fBaht">0</div></div>
-          <div style="text-align:center;padding:15px;background:linear-gradient(150deg,rgba(59,130,246,.18),transparent);border:1px solid rgba(59,130,246,.35);border-radius:12px"><div style="font-size:10px;color:#93c5fd;font-weight:700;letter-spacing:1px;margin-bottom:6px">RUPIAH</div><div style="font-size:18px;font-weight:800;color:#93c5fd" id="fRp">Rp 0</div></div>
+          <div style="text-align:center;padding:17px;background:linear-gradient(150deg,rgba(249,115,22,.2),transparent);border:1px solid rgba(249,115,22,.4);border-radius:13px"><div style="font-size:11px;color:#fdc07a;font-weight:700;letter-spacing:1.5px;margin-bottom:7px">BAHT</div><div class="money-value" style="font-size:23px;color:#fdc07a" id="fBaht">0</div></div>
+          <div style="text-align:center;padding:17px;background:linear-gradient(150deg,rgba(59,130,246,.2),transparent);border:1px solid rgba(59,130,246,.4);border-radius:13px"><div style="font-size:11px;color:#93c5fd;font-weight:700;letter-spacing:1.5px;margin-bottom:7px">RUPIAH</div><div class="money-value" style="font-size:23px;color:#8ec2ff" id="fRp">Rp 0</div></div>
         </div>
       </div>
       <div class="card table-wrap mb16">
-        <table class="dtable" style="min-width:640px">
+        <table class="dtable" style="min-width:660px">
           <thead><tr><th>Varian</th><th>Awal</th><th>Terjual</th><th>Sisa</th><th>Total Penjualan (Rp setara)</th></tr></thead>
           <tbody id="tFin"></tbody>
           <tfoot><tr><td>TOTAL</td><td id="tfAwal">0</td><td id="tfSold">0</td><td id="tfSisa">0</td><td id="tfRp">Rp 0</td></tr></tfoot>
@@ -534,7 +557,7 @@ textarea.input-field{resize:vertical;min-height:110px}
       </div>
       <div class="card chart-card mb16">
         <h3 class="chart-title"><i class="fas fa-chart-column"></i> Penjualan per Varian (Rp setara)</h3>
-        <div style="position:relative;height:300px"><canvas id="cProfit"></canvas></div>
+        <div style="position:relative;height:310px"><canvas id="cProfit"></canvas></div>
       </div>
       <div class="flex-row">
         <button class="btn-outline" id="btnExport"><i class="fas fa-download"></i> Ekspor Data</button>
@@ -547,7 +570,7 @@ textarea.input-field{resize:vertical;min-height:110px}
 
 <!-- ================= MODALS ================= -->
 <div class="modal-bg" id="mAddVariant"><div class="modal-box">
-  <div class="flex-between" style="margin-bottom:16px"><h3 class="font-display" style="font-size:17px;font-weight:700">Tambah Varian Baru</h3><button class="closeModal" data-id="mAddVariant" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:17px"><i class="fas fa-xmark"></i></button></div>
+  <div class="flex-between" style="margin-bottom:16px"><h3 class="font-display" style="font-size:18px;font-weight:700">Tambah Varian Baru</h3><button class="closeModal" data-id="mAddVariant" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px"><i class="fas fa-xmark"></i></button></div>
   <div style="display:flex;flex-direction:column;gap:12px">
     <div><label class="label-sm">Nama Varian</label><input type="text" class="input-field" id="avName" placeholder="Contoh: CHANEL NO.5"></div>
     <div><label class="label-sm">Jumlah Botol Awal (Manual)</label><input type="number" class="input-field" id="avBottles" min="0" value="0"></div>
@@ -556,7 +579,7 @@ textarea.input-field{resize:vertical;min-height:110px}
 </div></div>
 
 <div class="modal-bg" id="mEditProd"><div class="modal-box">
-  <div class="flex-between" style="margin-bottom:16px"><h3 class="font-display" style="font-size:17px;font-weight:700">Edit Stok Awal Varian</h3><button class="closeModal" data-id="mEditProd" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:17px"><i class="fas fa-xmark"></i></button></div>
+  <div class="flex-between" style="margin-bottom:16px"><h3 class="font-display" style="font-size:18px;font-weight:700">Edit Stok Awal Varian</h3><button class="closeModal" data-id="mEditProd" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px"><i class="fas fa-xmark"></i></button></div>
   <input type="hidden" id="epIdx">
   <div style="display:flex;flex-direction:column;gap:12px">
     <div><label class="label-sm">Nama Varian</label><input type="text" class="input-field" id="epName" readonly></div>
@@ -565,10 +588,10 @@ textarea.input-field{resize:vertical;min-height:110px}
   </div>
 </div></div>
 
-<div class="modal-bg" id="mConfirm"><div class="modal-box" style="text-align:center;max-width:390px">
+<div class="modal-bg" id="mConfirm"><div class="modal-box" style="text-align:center;max-width:400px">
   <div style="width:54px;height:54px;border-radius:50%;background:var(--danger-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;border:1px solid rgba(239,68,68,.3)"><i class="fas fa-triangle-exclamation" style="color:var(--danger);font-size:21px"></i></div>
-  <h3 class="font-display" style="font-size:17px;font-weight:700;margin-bottom:8px">Konfirmasi</h3>
-  <p id="confirmMsg" style="color:var(--text-secondary);font-size:12.5px;margin-bottom:18px;line-height:1.6">-</p>
+  <h3 class="font-display" style="font-size:18px;font-weight:700;margin-bottom:8px">Konfirmasi</h3>
+  <p id="confirmMsg" style="color:var(--text-secondary);font-size:13.5px;margin-bottom:18px;line-height:1.6">-</p>
   <div class="flex-row" style="justify-content:center">
     <button class="btn-outline closeModal" data-id="mConfirm">Batal</button>
     <button class="btn-danger-sm" id="btnConfirmYes" style="padding:9px 18px">Ya, Lanjut</button>
@@ -576,19 +599,19 @@ textarea.input-field{resize:vertical;min-height:110px}
 </div></div>
 
 <div class="modal-bg" id="mImport"><div class="modal-box">
-  <div class="flex-between" style="margin-bottom:16px"><h3 class="font-display" style="font-size:17px;font-weight:700">Impor Data</h3><button class="closeModal" data-id="mImport" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:17px"><i class="fas fa-xmark"></i></button></div>
+  <div class="flex-between" style="margin-bottom:16px"><h3 class="font-display" style="font-size:18px;font-weight:700">Impor Data</h3><button class="closeModal" data-id="mImport" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px"><i class="fas fa-xmark"></i></button></div>
   <div style="margin-bottom:12px"><label class="label-sm">Paste JSON</label><textarea class="input-field" id="impJson" rows="7" placeholder="Paste data JSON hasil ekspor..."></textarea></div>
   <button class="btn-gold" id="btnDoImport"><i class="fas fa-upload"></i> Impor</button>
 </div></div>
 
 <div class="modal-bg" id="mSaleDetail"><div class="modal-box">
-  <div class="flex-between" style="margin-bottom:14px"><h3 class="font-display" style="font-size:17px;font-weight:700">Detail Penjualan</h3><button class="closeModal" data-id="mSaleDetail" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:17px"><i class="fas fa-xmark"></i></button></div>
+  <div class="flex-between" style="margin-bottom:14px"><h3 class="font-display" style="font-size:18px;font-weight:700">Detail Penjualan</h3><button class="closeModal" data-id="mSaleDetail" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px"><i class="fas fa-xmark"></i></button></div>
   <div id="saleDetailBody"></div>
 </div></div>
 
 <script>
 /* ============================================================
-   VJ PARFUM — Frontend v4 (Baht & Rupiah, tanpa loading)
+   VJ PARFUME — Frontend v5
    ============================================================ */
 
 // ---------- KONFIG ----------
@@ -744,7 +767,7 @@ function validateModalEntries(arr){
   return out;
 }
 
-// ---------- PARSER SHEET (HANYA BAHT & RUPIAH) ----------
+// ---------- PARSER SHEET (BAHT & RUPIAH) ----------
 function parseSheetDate(s){
   var raw=s['Timestamp']||s['Date']||s['Tanggal']||s['Waktu']||'';
   if(!raw)return null;
@@ -830,22 +853,39 @@ function getPenjualanRpVarian(name){
   }
   return rp;
 }
+
+// ---------- GRAFIK BULANAN: BULAN BERURUTAN SAMPAI BULAN INI (GAYA SAHAM) ----------
+// Bulan ada penjualan -> garis naik. Bulan kosong -> garis TURUN ke 0.
 function getMonthlySales(){
-  var map={};
   var bulan=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  var map={};
+  var minY=null,minM=null,maxY=null,maxM=null;
   for(var i=0;i<sheetSales.length;i++){
     var s=sheetSales[i];if(!s)continue;
     var dt=parseSheetDate(s);if(!dt)continue;
-    var key=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0');
+    var y=dt.getFullYear(),m=dt.getMonth();
+    var key=y+'-'+String(m+1).padStart(2,'0');
     if(!map[key])map[key]={key:key,qty:0,rp:0,count:0};
     var p=parseSheetSale(s);
     map[key].qty+=p.qty;map[key].rp+=p.amountRp;map[key].count++;
+    if(minY===null||y<minY||(y===minY&&m<minM)){minY=y;minM=m;}
+    if(maxY===null||y>maxY||(y===maxY&&m>maxM)){maxY=y;maxM=m;}
   }
-  var arr=Object.keys(map).map(function(k){return map[k];});
-  arr.sort(function(a,b){return a.key<b.key?-1:1;});
-  for(var j=0;j<arr.length;j++){
-    var parts=arr[j].key.split('-');
-    arr[j].label=bulan[parseInt(parts[1],10)-1]+' '+parts[0];
+  if(minY===null)return[];
+  // sertakan bulan SEKARANG (kalau bulan ini belum ada penjualan, garis turun ke 0)
+  var now=new Date();
+  var nowY=now.getFullYear(),nowM=now.getMonth();
+  if(nowY>maxY||(nowY===maxY&&nowM>maxM)){maxY=nowY;maxM=nowM;}
+  // susun bulan berurutan (maks 24 bulan, biar rapi)
+  var arr=[];
+  var y=minY,m=minM,guard=0;
+  while((y<maxY||(y===maxY&&m<=maxM))&&guard<24){
+    var key=y+'-'+String(m+1).padStart(2,'0');
+    var d=map[key]||{key:key,qty:0,rp:0,count:0};
+    d.label=bulan[m]+' '+String(y).slice(2);
+    arr.push(d);
+    m++;if(m>11){m=0;y++;}
+    guard++;
   }
   return arr;
 }
@@ -883,8 +923,8 @@ function initDashboard(){
     document.getElementById('headerDate').textContent=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   }catch(e){}
   loadDataLocal();
-  renderAll();       // langsung tampil instan — TANPA loading
-  syncSheet(true);   // sync diam-diam di belakang
+  renderAll();
+  syncSheet(true);
 }
 
 // ---------- STORAGE ----------
@@ -909,7 +949,7 @@ function saveDataLocal(){
 }
 function saveAndSync(){saveDataLocal();saveToCloud();}
 
-// ---------- CLOUD SYNC (SENYAP, TANPA LOADING PENUH) ----------
+// ---------- CLOUD SYNC (SENYAP) ----------
 function syncSheet(silent){
   if(isSyncing)return Promise.resolve();
   isSyncing=true;
@@ -996,7 +1036,7 @@ function renderOverview(){
     type:'bar',
     data:{labels:products.map(function(p){return p.name;}),
       datasets:[{label:'Sisa Stok',data:products.map(function(p){return getRemainingStock(p);}),
-        backgroundColor:'rgba(59,130,246,.65)',borderColor:'rgba(59,130,246,1)',borderWidth:1,borderRadius:5,maxBarThickness:32}]},
+        backgroundColor:'rgba(96,165,250,.7)',borderColor:'rgba(96,165,250,1)',borderWidth:1,borderRadius:5,maxBarThickness:32}]},
     options:baseChartOpts()
   });
   var c2=document.getElementById('cSales');
@@ -1005,7 +1045,7 @@ function renderOverview(){
     type:'bar',
     data:{labels:products.map(function(p){return p.name;}),
       datasets:[{label:'Terjual',data:products.map(function(p){return getTotalSold(p);}),
-        backgroundColor:'rgba(201,168,76,.7)',borderColor:'rgba(201,168,76,1)',borderWidth:1,borderRadius:5,maxBarThickness:32}]},
+        backgroundColor:'rgba(232,205,122,.75)',borderColor:'rgba(232,205,122,1)',borderWidth:1,borderRadius:5,maxBarThickness:32}]},
     options:baseChartOpts()
   });
 
@@ -1039,7 +1079,7 @@ function renderOverview(){
         var amt=p.curr==='baht'?fBaht(p.amount):fRp(p.amount);
         row.innerHTML=
           '<div><div class="sale-date">'+(dt?fDateTime(dt):'-')+'</div><div class="sale-name">'+esc(sheetVarianOf(s)||'-')+'</div></div>'+
-          '<div class="sale-item-mid"><span class="badge badge-ok">'+p.qty+'x</span><span class="curr-pill pill-'+p.curr+'">'+(p.curr==='baht'?LABEL_LOKAL:'Rupiah')+'</span></div>'+
+          '<div class="sale-item-mid"><span class="badge badge-qty">'+p.qty+'x</span><span class="curr-pill pill-'+p.curr+'">'+(p.curr==='baht'?LABEL_LOKAL:'Rupiah')+'</span></div>'+
           '<div class="sale-total t-'+p.curr+'">'+amt+'</div>';
         rec.appendChild(row);
       })(sheetSales[n]);
@@ -1050,12 +1090,12 @@ function baseChartOpts(){
   return{responsive:true,maintainAspectRatio:false,
     plugins:{legend:{display:false}},
     scales:{
-      x:{grid:{display:false},ticks:{color:'#8fa3bf',autoSkip:true,maxRotation:65,font:{size:10}}},
-      y:{beginAtZero:true,grid:{color:'rgba(255,255,255,.06)'},ticks:{color:'#8fa3bf',callback:function(v){return fmtShort(v);},font:{size:10}}}
+      x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#a2b3d1',autoSkip:true,maxRotation:65,font:{size:11}}},
+      y:{beginAtZero:true,grid:{color:'rgba(255,255,255,.07)'},ticks:{color:'#a2b3d1',callback:function(v){return fmtShort(v);},font:{size:11}}}
     }};
 }
 
-// ---------- GRAFIK GARIS (GAYA SAHAM: NAIK-TURUN) ----------
+// ---------- GRAFIK GARIS NAIK-TURUN (ALA SAHAM) ----------
 function renderMonthlyChart(){
   var data=getMonthlySales();
   var canvas=document.getElementById('cMonthly');
@@ -1070,8 +1110,8 @@ function renderMonthlyChart(){
   emptyBox.style.display='none';
   if(chartMonthly)chartMonthly.destroy();
   var ctx=canvas.getContext('2d');
-  var fillGrad=ctx.createLinearGradient(0,0,0,280);
-  fillGrad.addColorStop(0,'rgba(232,205,122,.40)');
+  var fillGrad=ctx.createLinearGradient(0,0,0,300);
+  fillGrad.addColorStop(0,'rgba(232,205,122,.42)');
   fillGrad.addColorStop(1,'rgba(232,205,122,0)');
   chartMonthly=new Chart(ctx,{
     type:'line',
@@ -1082,14 +1122,14 @@ function renderMonthlyChart(){
         data:data.map(function(d){return Math.round(d.rp);}),
         borderColor:'#e8cd7a',
         backgroundColor:fillGrad,
-        borderWidth:3,
-        tension:.4,
+        borderWidth:3.5,
+        tension:.35,
         fill:true,
-        pointRadius:5,
-        pointHoverRadius:9,
+        pointRadius:6,
+        pointHoverRadius:10,
         pointBackgroundColor:'#e8cd7a',
-        pointBorderColor:'#0b1220',
-        pointBorderWidth:2
+        pointBorderColor:'#0f1930',
+        pointBorderWidth:2.5
       }]
     },
     options:{
@@ -1098,12 +1138,14 @@ function renderMonthlyChart(){
       plugins:{
         legend:{display:false},
         tooltip:{
-          backgroundColor:'rgba(11,18,32,.95)',
-          borderColor:'rgba(201,168,76,.5)',
+          backgroundColor:'rgba(15,25,48,.96)',
+          borderColor:'rgba(201,168,76,.55)',
           borderWidth:1,
           titleColor:'#e8cd7a',
-          bodyColor:'#f1f5f9',
-          padding:11,
+          titleFont:{size:13,weight:'700'},
+          bodyColor:'#f4f7fc',
+          bodyFont:{size:12.5},
+          padding:12,
           callbacks:{
             label:function(c){
               var d=data[c.dataIndex];
@@ -1113,8 +1155,8 @@ function renderMonthlyChart(){
         }
       },
       scales:{
-        x:{grid:{display:false},ticks:{color:'#8fa3bf',font:{size:11}}},
-        y:{beginAtZero:true,grid:{color:'rgba(255,255,255,.06)'},ticks:{color:'#8fa3bf',callback:function(v){return fmtShort(v);}}}
+        x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#a2b3d1',font:{size:12}}},
+        y:{beginAtZero:true,grid:{color:'rgba(255,255,255,.07)'},ticks:{color:'#a2b3d1',callback:function(v){return fmtShort(v);},font:{size:11}}}
       }
     }
   });
@@ -1143,8 +1185,8 @@ function renderProducts(){
       '<td>'+awal+'</td>'+
       '<td>'+getTotalSold(p)+'</td>'+
       '<td><span class="badge '+badge+'">'+sisa+'</span><div class="mini-bar"><div style="width:'+pct+'%;background:'+barColor+'"></div></div></td>'+
-      '<td><button class="btn-outline" onclick="openEditProd('+j+')" style="padding:5px 10px;font-size:11px"><i class="fas fa-edit"></i></button> '+
-      '<button class="btn-danger-sm" onclick="openDelVar('+j+')" style="padding:5px 10px;font-size:11px"><i class="fas fa-trash"></i></button></td>';
+      '<td><button class="btn-outline" onclick="openEditProd('+j+')" style="padding:6px 11px;font-size:12px"><i class="fas fa-edit"></i></button> '+
+      '<button class="btn-danger-sm" onclick="openDelVar('+j+')" style="padding:6px 11px;font-size:12px"><i class="fas fa-trash"></i></button></td>';
     tbody.appendChild(tr);
   }
 }
@@ -1185,7 +1227,7 @@ function renderCosts(){
 
   var list=document.getElementById('modalEntriesList');
   if(modalEntries.length===0){
-    list.innerHTML='<div class="empty-state"><i class="fas fa-wallet" style="font-size:22px;display:block;margin-bottom:8px;opacity:.6"></i>Belum ada catatan modal.<br>Tambahkan lewat form di atas.</div>';
+    list.innerHTML='<div class="empty-state"><i class="fas fa-wallet" style="font-size:24px;display:block;margin-bottom:8px;opacity:.6"></i>Belum ada catatan modal.<br>Tambahkan lewat form di atas.</div>';
     return;
   }
   list.innerHTML='';
@@ -1227,7 +1269,7 @@ function renderCosts(){
 
       var camBtn=document.createElement('button');
       camBtn.className='btn-outline';
-      camBtn.style.padding='7px 10px';
+      camBtn.style.padding='8px 11px';
       camBtn.title='Upload / ganti bukti transfer';
       camBtn.innerHTML='<i class="fas fa-camera"></i>';
       camBtn.onclick=function(){
@@ -1248,7 +1290,7 @@ function renderCosts(){
 
       var delBtn=document.createElement('button');
       delBtn.className='btn-danger-sm';
-      delBtn.style.padding='7px 10px';
+      delBtn.style.padding='8px 11px';
       delBtn.innerHTML='<i class="fas fa-trash"></i>';
       delBtn.onclick=function(){
         askConfirm('Hapus catatan modal <b>'+esc(m.note||fRp(m.amount))+'</b>?',function(){
@@ -1265,7 +1307,7 @@ function renderCosts(){
   }
 }
 
-// ---------- TABEL PENJUALAN (FORMAT RAPI) ----------
+// ---------- TABEL PENJUALAN ----------
 function renderSheetSales(){
   var tot=getTotals();
   var bottles=0;
@@ -1297,11 +1339,11 @@ function renderSheetSales(){
         ?'<div class="tgl">'+dt.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})+'</div><div class="tgl-time">'+dt.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+'</div>'
         :'-';
       var totalTxt=p.curr==='baht'?fBaht(p.amount):fRp(p.amount);
-      var setara=p.curr==='baht'?'<div class="small muted" style="text-align:right;white-space:nowrap;margin-top:2px">≈ '+fRp(p.amountRp)+'</div>':'';
+      var setara=p.curr==='baht'?'<div class="small muted" style="text-align:right;white-space:nowrap;margin-top:3px">≈ '+fRp(p.amountRp)+'</div>':'';
       tr.innerHTML='<td>'+(idx+1)+'</td>'+
         '<td>'+tglHtml+'</td>'+
         '<td class="varian-cell">'+esc(sheetVarianOf(s)||'-')+'</td>'+
-        '<td><span class="badge badge-ok">'+p.qty+' botol</span></td>'+
+        '<td><span class="badge badge-qty">'+p.qty+' botol</span></td>'+
         '<td><span class="curr-pill pill-'+p.curr+'">'+(p.curr==='baht'?LABEL_LOKAL:'Rupiah')+'</span></td>'+
         '<td style="text-align:right"><span class="total-cell t-'+p.curr+'">'+totalTxt+'</span>'+setara+'</td>';
       tr.addEventListener('click',function(){showSaleDetail(idx);});
@@ -1321,6 +1363,7 @@ function showSaleDetail(i){
   openModal('mSaleDetail');
 }
 
+// ---------- KAS VJ PARFUME ----------
 function renderFinance(){
   var tModal=getTotalModal();
   var tot=getTotals();
@@ -1351,14 +1394,14 @@ function renderFinance(){
     var rp=getPenjualanRpVarian(p.name);
     tAwal+=awal;tSold+=sold;tSisa+=sisa;tRp+=rp;
     var tr=document.createElement('tr');
-    tr.innerHTML='<td style="font-weight:600;color:#fff">'+esc(p.name)+'</td><td>'+awal+'</td><td>'+sold+'</td><td>'+sisa+'</td><td style="color:var(--gold-light);font-weight:700">'+fRp(rp)+'</td>';
+    tr.innerHTML='<td style="font-weight:600;color:#fff">'+esc(p.name)+'</td><td>'+awal+'</td><td>'+sold+'</td><td>'+sisa+'</td><td style="color:var(--gold-light);font-weight:700;font-family:\'Playfair Display\',serif;font-size:15px">'+fRp(rp)+'</td>';
     tbody.appendChild(tr);
   }
   set('tfAwal',tAwal);set('tfSold',tSold);set('tfSisa',tSisa);set('tfRp',fRp(tRp));
 
   var ctx=document.getElementById('cProfit').getContext('2d');
   if(chartProfit)chartProfit.destroy();
-  var grad=ctx.createLinearGradient(0,0,0,300);
+  var grad=ctx.createLinearGradient(0,0,0,310);
   grad.addColorStop(0,'rgba(232,205,122,.95)');
   grad.addColorStop(1,'rgba(154,123,46,.2)');
   chartProfit=new Chart(ctx,{
@@ -1514,23 +1557,20 @@ document.getElementById('btnReset').addEventListener('click',function(){
   },'Ya, Reset');
 });
 
-// ---------- BACKGROUND LOGIN FULL JELAS (TANPA OVERLAY GELAP) ----------
+// ---------- BACKGROUND LOGIN FULL JELAS ----------
 (function(){
   var login=document.getElementById('loginScreen');
   if(LOGIN_BG_URL){
     var img=new Image();
-    img.onload=function(){
-      login.style.backgroundImage="url('"+LOGIN_BG_URL+"')"; // full jelas, tanpa lapisan gelap
-    };
+    img.onload=function(){login.style.backgroundImage="url('"+LOGIN_BG_URL+"')";};
     img.src=LOGIN_BG_URL;
   }
   if(DASH_BG_URL){
-    document.body.style.backgroundImage="linear-gradient(rgba(11,18,32,.8),rgba(11,18,32,.88)),url('"+DASH_BG_URL+"')";
+    document.body.style.backgroundImage="linear-gradient(rgba(15,25,48,.82),rgba(15,25,48,.9)),url('"+DASH_BG_URL+"')";
     document.body.style.backgroundSize='cover';
     document.body.style.backgroundPosition='center';
     document.body.style.backgroundAttachment='fixed';
   }
-  // partikel emas melayang
   for(var i=0;i<10;i++){
     var s=document.createElement('div');
     s.className='spark';
