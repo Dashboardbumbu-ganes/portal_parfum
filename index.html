@@ -408,7 +408,6 @@ select.input-field{cursor:pointer}
       <div id="loginError" style="display:none;background:var(--danger-soft);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:9px 12px;color:var(--danger);font-size:13px;text-align:center"></div>
       <button class="btn-gold" id="loginBtn"><i class="fas fa-right-to-bracket" style="margin-right:6px"></i>Masuk</button>
     </div>
-    <p style="text-align:center;font-size:9px;color:var(--text-muted);margin-top:16px;letter-spacing:2px">VERSI 12</p>
   </div>
 </div>
 
@@ -424,7 +423,7 @@ select.input-field{cursor:pointer}
         <div style="min-width:0">
           <div style="display:flex;align-items:center;gap:8px">
             <h1 class="font-display gold-shimmer" style="font-size:19px;font-weight:900;letter-spacing:2px">VJ PARFUM</h1>
-            <span class="ver-badge">v12</span>
+            <span class="ver-badge">v13</span>
           </div>
           <p style="font-size:10px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase" id="headerDate"></p>
         </div>
@@ -558,7 +557,10 @@ select.input-field{cursor:pointer}
       </div>
       <div class="flex-between mb12">
         <h3 class="chart-title" style="margin-bottom:0"><i class="fas fa-list"></i> Riwayat Catatan Modal</h3>
-        <button class="btn-danger-sm" id="btnClearAllModals"><i class="fas fa-trash"></i> Hapus Semua</button>
+        <div class="flex-row">
+          <button class="btn-outline" id="btnFullPull" title="Samakan data browser ini dengan data server (semua catatan + gambar)"><i class="fas fa-cloud-arrow-down"></i> Tarik Penuh dari Server</button>
+          <button class="btn-danger-sm" id="btnClearAllModals"><i class="fas fa-trash"></i> Hapus Semua</button>
+        </div>
       </div>
       <div id="modalEntriesList"></div>
     </section>
@@ -727,9 +729,10 @@ select.input-field{cursor:pointer}
 
 <script>
 /* ============================================================
-   VJ PARFUME — Frontend v12
-   Fix: sync TIDAK PERNAH menghapus catatan modal & gambar bukti
-        (termasuk data yang diketik manual langsung di Sheet)
+   VJ PARFUME — Frontend v13
+   Baru: TOMBOL "TARIK PENUH DARI SERVER" — browser/perangkat
+   mana pun bisa dipaksa sama persis dengan data server (semua
+   catatan modal + semua gambar bukti transfer langsung muncul).
    ============================================================ */
 
 // ---------- KONFIG ----------
@@ -737,9 +740,9 @@ var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3qQHJ8Vqv13goaL
 var LOGIN_BG_URL = 'https://lh3.googleusercontent.com/d/1biMn45dAjep1fot3jrZaZ5Yw33ytUh62';
 var DASH_BG_URL  = '';
 
-// SETIAP UPDATE FILE: naikkan angka ini (11 → 12 → 13 ...)
+// SETIAP UPDATE FILE: naikkan angka ini (12 → 13 → 14 ...)
 // Aplikasi HP akan OTOMATIS deteksi & muat versi baru (cache terlewati)
-var APP_VERSION = '12';
+var APP_VERSION = '13';
 
 var PRICE_RP   = 200000;   // harga 1 botol dalam Rupiah
 var PRICE_BAHT = 400000;   // ← harga 1 botol dalam Baht — UBAH ANGKA INI kalau beda
@@ -968,6 +971,17 @@ function mergeModalEntries(localArr,cloudArr){
   return{list:out,serverMissing:serverMissing};
 }
 
+// ★ buang catatan modal yang memang sudah dihapus sengaja di aplikasi
+function filterDeleted(cModals,cDel){
+  if(!Array.isArray(cDel)||cDel.length===0)return cModals;
+  var delMap={};
+  for(var d=0;d<cDel.length;d++){
+    if(cDel[d]&&cDel[d].id!==undefined&&String(cDel[d].id)!=='')delMap[String(cDel[d].id)]=true;
+  }
+  if(Object.keys(delMap).length===0)return cModals;
+  return cModals.filter(function(m){return !(m&&m.id!==undefined&&delMap[String(m.id)]);});
+}
+
 // ---------- PARSER SHEET ----------
 function parseSheetDate(s){
   var raw=s['Timestamp']||s['Date']||s['Tanggal']||s['Waktu']||'';
@@ -1175,6 +1189,29 @@ function fetchAll(timeoutMs){
       throw e;
     });
 }
+function postPayload(payload){
+  var ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
+  var timer=ctrl?setTimeout(function(){ctrl.abort();},45000):null;
+  return fetch(APPS_SCRIPT_URL,{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify(payload),
+    signal:ctrl?ctrl.signal:undefined
+  })
+  .then(function(r){if(timer)clearTimeout(timer);return r.text();})
+  .then(function(txt){
+    var result;
+    try{result=JSON.parse(txt);}
+    catch(e){throw new Error('Respon server tidak valid');}
+    if(!result||result.status!=='ok')throw new Error((result&&result.error)||'Server error');
+    return result;
+  })
+  .catch(function(e){
+    if(timer)clearTimeout(timer);
+    if(e&&e.name==='AbortError')throw new Error('Koneksi terlalu lama (timeout)');
+    throw e;
+  });
+}
 
 // ---------- CLOUD SYNC (★ ANTI HILANG DATA) ----------
 function syncSheet(silent,isRetry){
@@ -1197,16 +1234,7 @@ function syncSheet(silent,isRetry){
       if(cSales.length>0)sheetSales=cSales;
 
       // ★ buang catatan modal yang memang sudah dihapus sengaja di aplikasi
-      var cDel=Array.isArray(data.deleted)?data.deleted:[];
-      if(cDel.length>0){
-        var delMap={};
-        for(var d=0;d<cDel.length;d++){
-          if(cDel[d]&&cDel[d].id!==undefined&&String(cDel[d].id)!=='')delMap[String(cDel[d].id)]=true;
-        }
-        if(Object.keys(delMap).length>0){
-          cModals=cModals.filter(function(m){return !(m&&m.id!==undefined&&delMap[String(m.id)]);});
-        }
-      }
+      cModals=filterDeleted(cModals,Array.isArray(data.deleted)?data.deleted:[]);
 
       // ★★★ SELALU GABUNG catatan modal lokal + server (SEMUA kondisi).
       // Data modal yang diketik manual langsung di Sheet masuk ke aplikasi
@@ -1249,6 +1277,78 @@ function syncSheet(silent,isRetry){
     .finally(function(){
       icon.className='fas fa-cloud-arrow-down';
       if(!silent)text.textContent='Sync';
+      isSyncing=false;
+    });
+}
+
+// ★★★ TARIK PENUH DARI SERVER ★★★
+// Langkah 1: gabungkan data lokal + server lalu KIRIM (catatan lokal &
+//   gambar bukti yang cuma ada di browser ini ikut naik ke server).
+// Langkah 2: tarik ulang lalu JADIKAN data server sebagai data browser ini.
+// Hasil: browser/perangkat mana pun menampilkan data & gambar yang sama.
+function fullResync(){
+  if(isSyncing)return;
+  isSyncing=true;
+  var icon=document.getElementById('syncIcon');
+  var text=document.getElementById('syncText');
+  icon.className='fas fa-sync-alt sync-spin';
+  text.textContent='Tarik Penuh...';
+  fetchAll(25000)
+    .then(function(data){
+      if(data.error)throw new Error(data.error);
+      var cProds=Array.isArray(data.products)?data.products:[];
+      var cHist=Array.isArray(data.history)?data.history:[];
+      var cBagi=Array.isArray(data.bagiHasil)?data.bagiHasil:[];
+      var cModals=validateModalEntries(Array.isArray(data.modals)?data.modals:(Array.isArray(data.modalEntries)?data.modalEntries:[]));
+      cModals=filterDeleted(cModals,Array.isArray(data.deleted)?data.deleted:[]);
+
+      // gabung dulu supaya catatan & gambar lokal ikut naik ke server
+      var mMerged=mergeModalEntries(modalEntries,cModals);
+      var payload={
+        action:'saveAll',
+        products:(cProds.length>0?cProds:(Array.isArray(products)?products:[])),
+        history:(cHist.length>0?cHist:(Array.isArray(history)?history:[])),
+        modals:mMerged.list.map(splitImageForSave),
+        bagiHasil:(cBagi.length>0?cBagi:(Array.isArray(bagiHasil)?bagiHasil:[])),
+        meta:{lastModified:Date.now()}
+      };
+      // setelah kirim berhasil → tarik ulang hasil akhirnya
+      return postPayload(payload).then(function(){return fetchAll(25000);});
+    })
+    .then(function(data2){
+      if(data2.error)throw new Error(data2.error);
+      var cProds=Array.isArray(data2.products)?data2.products:[];
+      var cHist=Array.isArray(data2.history)?data2.history:[];
+      var cModals=validateModalEntries(Array.isArray(data2.modals)?data2.modals:(Array.isArray(data2.modalEntries)?data2.modalEntries:[]));
+      cModals=filterDeleted(cModals,Array.isArray(data2.deleted)?data2.deleted:[]);
+      var cBagi=validateBagiHasil(Array.isArray(data2.bagiHasil)?data2.bagiHasil:[]);
+      var cSales=Array.isArray(data2.sheetSales)?data2.sheetSales:[];
+
+      // ★ data server = kebenaran penuh untuk browser ini
+      if(cProds.length>0)products=cProds;
+      if(cHist.length>0)history=cHist;
+      modalEntries=cModals;
+      if(cBagi.length>0)bagiHasil=cBagi;
+      if(cSales.length>0)sheetSales=cSales;
+
+      // samakan waktu lokal dengan server supaya tidak ada dorongan data lama
+      var cloudTime=Number(data2.meta&&data2.meta.lastModified)||0;
+      dirty=cloudTime||Date.now();
+      try{localStorage.setItem('vj_dirty',String(dirty));}catch(e){}
+
+      saveDataLocal();
+      renderAll();
+      hideSyncWarn();
+      set('lastSync','✓ '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
+      showToast('Data & gambar ditarik penuh dari server — '+modalEntries.length+' catatan modal','ok');
+    })
+    .catch(function(e){
+      showSyncWarn();
+      showToast('Tarik penuh gagal: '+e.message,'err');
+    })
+    .finally(function(){
+      icon.className='fas fa-cloud-arrow-down';
+      text.textContent='Sync';
       isSyncing=false;
     });
 }
@@ -1544,9 +1644,9 @@ function renderCosts(){
 
   var list=document.getElementById('modalEntriesList');
   if(modalEntries.length===0){
-    list.innerHTML='<div class="empty-state"><i class="fas fa-cloud-arrow-down" style="font-size:24px;display:block;margin-bottom:8px;opacity:.6"></i>Belum ada catatan modal di perangkat ini.<br>Data tersimpan di server — tarik dulu supaya muncul.<br><button class="btn-outline" id="btnEmptySyncModal" style="margin-top:12px"><i class="fas fa-cloud-arrow-down"></i> Tarik Data dari Server</button></div>';
+    list.innerHTML='<div class="empty-state"><i class="fas fa-cloud-arrow-down" style="font-size:24px;display:block;margin-bottom:8px;opacity:.6"></i>Belum ada catatan modal di perangkat ini.<br>Data tersimpan di server — tarik dulu supaya muncul.<br><button class="btn-outline" id="btnEmptySyncModal" style="margin-top:12px"><i class="fas fa-cloud-arrow-down"></i> Tarik Penuh dari Server</button></div>';
     var eb=document.getElementById('btnEmptySyncModal');
-    if(eb)eb.addEventListener('click',function(){syncSheet(false);});
+    if(eb)eb.addEventListener('click',function(){fullResync();});
     return;
   }
   list.innerHTML='';
@@ -1828,6 +1928,9 @@ document.getElementById('passToggleBtn').addEventListener('click',togglePassVis)
 });
 document.getElementById('btnLogout').addEventListener('click',doLogout);
 document.getElementById('btnSync').addEventListener('click',function(){syncSheet(false);});
+
+// ★ TARIK PENUH DARI SERVER
+document.getElementById('btnFullPull').addEventListener('click',fullResync);
 
 // ZOOM
 document.getElementById('zoomOutBtn').addEventListener('click',function(){uiZoom-=0.1;applyZoom();});
