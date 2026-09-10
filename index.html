@@ -2,14 +2,12 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- pinch zoom aktif + bisa diperkecil/diperbesar -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f1930">
-
-<!-- ===== ANTI CACHE: file baru selalu diambil, bukan versi lama dari HP ===== -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-
 <title>VJ PARFUME — Dashboard Pendataan</title>
 
 <script>
@@ -59,30 +57,19 @@ button{font-family:inherit}
 ::-webkit-scrollbar-thumb{background:#4a5d88;border-radius:3px}
 .font-display{font-family:'Playfair Display',serif}
 
-/* ============ ANGKA BERLAMPU ============ */
 .num-gold{color:#fcd97a;text-shadow:0 0 10px rgba(232,205,122,.6),0 0 30px rgba(232,205,122,.3)}
 .num-blue{color:#8ec2ff;text-shadow:0 0 10px rgba(96,165,250,.6),0 0 30px rgba(96,165,250,.3)}
 .num-green{color:#4ade9f;text-shadow:0 0 10px rgba(16,185,129,.6),0 0 30px rgba(16,185,129,.3)}
-.num-pink{color:#f9a8d4;text-shadow:0 0 10px rgba(244,114,182,.6),0 0 30px rgba(244,114,182,.3)}
 .num-purple{color:#c4b5fd;text-shadow:0 0 10px rgba(167,139,250,.6),0 0 30px rgba(167,139,250,.3)}
-.num-teal{color:#5eead4;text-shadow:0 0 10px rgba(45,212,191,.6),0 0 30px rgba(45,212,191,.3)}
 .num-orange{color:#fdc07a;text-shadow:0 0 10px rgba(251,146,60,.6),0 0 30px rgba(251,146,60,.3)}
-.num-red{color:#fca5a5;text-shadow:0 0 10px rgba(248,113,113,.6),0 0 30px rgba(248,113,113,.3)}
 
 .tint-gold{background:linear-gradient(150deg,rgba(201,168,76,.17),rgba(26,39,66,.98))!important;border-color:rgba(201,168,76,.5)!important}
-.tint-gold:hover{box-shadow:0 14px 38px rgba(0,0,0,.5),0 0 34px rgba(201,168,76,.25)!important}
 .tint-blue{background:linear-gradient(150deg,rgba(59,130,246,.17),rgba(26,39,66,.98))!important;border-color:rgba(59,130,246,.5)!important}
-.tint-blue:hover{box-shadow:0 14px 38px rgba(0,0,0,.5),0 0 34px rgba(59,130,246,.25)!important}
 .tint-green{background:linear-gradient(150deg,rgba(16,185,129,.17),rgba(26,39,66,.98))!important;border-color:rgba(16,185,129,.5)!important}
-.tint-green:hover{box-shadow:0 14px 38px rgba(0,0,0,.5),0 0 34px rgba(16,185,129,.25)!important}
 .tint-purple{background:linear-gradient(150deg,rgba(167,139,250,.17),rgba(26,39,66,.98))!important;border-color:rgba(167,139,250,.5)!important}
-.tint-purple:hover{box-shadow:0 14px 38px rgba(0,0,0,.5),0 0 34px rgba(167,139,250,.25)!important}
 .tint-pink{background:linear-gradient(150deg,rgba(244,114,182,.15),rgba(26,39,66,.98))!important;border-color:rgba(244,114,182,.45)!important}
-.tint-pink:hover{box-shadow:0 14px 38px rgba(0,0,0,.5),0 0 34px rgba(244,114,182,.22)!important}
 .tint-teal{background:linear-gradient(150deg,rgba(45,212,191,.15),rgba(26,39,66,.98))!important;border-color:rgba(45,212,191,.45)!important}
-.tint-teal:hover{box-shadow:0 14px 38px rgba(0,0,0,.5),0 0 34px rgba(45,212,191,.22)!important}
 
-/* ============ LOGIN ============ */
 #loginScreen{
   min-height:100vh;align-items:center;justify-content:center;padding:20px;position:relative;overflow:hidden;
   background-color:#0f1930;
@@ -123,7 +110,6 @@ button{font-family:inherit}
   animation:floatUp linear infinite}
 @keyframes floatUp{0%{transform:translateY(0) scale(.7);opacity:0}12%{opacity:1}85%{opacity:.7}100%{transform:translateY(-105vh) scale(1.2);opacity:0}}
 
-/* ============ FORM ============ */
 .input-field{
   background:rgba(15,25,48,.85);border:1px solid var(--border);border-radius:11px;padding:12px 14px;
   color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;width:100%;transition:border-color .25s,box-shadow .25s;outline:none;
@@ -133,7 +119,6 @@ button{font-family:inherit}
 textarea.input-field{resize:vertical;min-height:110px}
 select.input-field{cursor:pointer}
 
-/* ============ BUTTONS ============ */
 .btn-gold{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#0a0a0a;font-weight:700;border:none;border-radius:11px;padding:13px 20px;cursor:pointer;transition:transform .2s,box-shadow .2s;font-size:15px;width:100%;box-shadow:0 5px 20px rgba(201,168,76,.4)}
 .btn-gold:hover{background:linear-gradient(135deg,var(--gold),var(--gold-light));transform:translateY(-1px);box-shadow:0 8px 26px rgba(201,168,76,.55)}
 .btn-gold:disabled{opacity:.6;cursor:wait;transform:none}
@@ -146,34 +131,39 @@ select.input-field{cursor:pointer}
 .btn-success-sm{background:var(--success-soft);color:var(--success);border:1px solid rgba(16,185,129,.35);border-radius:9px;padding:9px 14px;cursor:pointer;transition:all .2s;font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:6px}
 .btn-success-sm:hover{background:#10b981;color:#fff}
 
-/* ============ HEADER + MARQUEE ============ */
 .app-header{background:rgba(15,25,48,.98);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;box-shadow:0 2px 14px rgba(0,0,0,.4)}
 .app-header::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold-light),var(--gold),transparent);box-shadow:0 0 12px rgba(232,205,122,.5)}
 .header-inner{max-width:1400px;margin:0 auto;padding:11px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .header-logo{width:42px;height:42px;border-radius:11px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--gold-dark);background:#fff;box-shadow:0 0 16px rgba(201,168,76,.4)}
 .header-logo img{width:100%;height:100%;object-fit:cover}
+.ver-badge{font-size:9px;font-weight:800;color:#0b1220;background:linear-gradient(135deg,var(--gold),var(--gold-light));padding:2px 8px;border-radius:99px;letter-spacing:.5px;flex-shrink:0;box-shadow:0 0 10px rgba(201,168,76,.4)}
+
+/* ===== ZOOM (perkecil/perbesar tampilan) ===== */
+.zoom-ctrl{display:flex;align-items:center;background:rgba(15,25,48,.7);border:1px solid var(--border);border-radius:99px;padding:2px;flex-shrink:0}
+.zoom-btn{width:27px;height:27px;border-radius:50%;border:none;background:transparent;color:var(--gold-light);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .2s}
+.zoom-btn:hover{background:var(--gold-soft);color:var(--gold-light)}
+.zoom-val{font-size:10px;font-weight:700;color:var(--text-muted);min-width:36px;text-align:center;user-select:none}
+
 .marquee-bar{background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light),var(--gold),var(--gold-dark));overflow:hidden;box-shadow:0 2px 14px rgba(201,168,76,.35)}
 .marquee-track{display:flex;white-space:nowrap;width:max-content;animation:marq 32s linear infinite}
 .marquee-track span{padding:9px 0;font-size:14.5px;font-weight:700;color:#0b1220;letter-spacing:.4px}
-.marquee-bar:hover .marquee-track{animation-play-state:paused}
 @keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* ============ BAR PERINGATAN SYNC GAGAL ============ */
-.sync-warn{display:none;align-items:center;gap:10px;padding:11px 16px;background:rgba(239,68,68,.16);border-bottom:1px solid rgba(239,68,68,.4);color:#fca5a5;font-size:12.5px;font-weight:600;cursor:pointer}
+.sync-warn{display:none;align-items:center;gap:10px;padding:11px 16px;background:rgba(249,115,22,.16);border-bottom:1px solid rgba(249,115,22,.4);color:#fdc07a;font-size:12.5px;font-weight:600;cursor:pointer}
 .sync-warn.show{display:flex}
-.sync-warn i{font-size:14px}
 .sync-warn u{text-decoration:underline;color:#fcd97a}
+
+.sync-spin{animation:spin 1s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 .tab-nav{display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;margin:18px 0}
 .tab-nav::-webkit-scrollbar{display:none}
 .tab-btn{padding:10px 18px;border-radius:12px;font-weight:600;font-size:13.5px;cursor:pointer;transition:all .2s;border:1px solid transparent;background:linear-gradient(165deg,rgba(35,49,80,.97),rgba(25,37,63,.97));color:var(--text-secondary);white-space:nowrap;flex-shrink:0;display:inline-flex;align-items:center;gap:7px}
-.tab-btn:hover{color:var(--gold-light);border-color:var(--border-2)}
 .tab-btn.active{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#000;border-color:var(--gold);box-shadow:0 4px 16px rgba(201,168,76,.5)}
 .tab-section{display:none}
 .tab-section.active{display:block;animation:fadeUp .25s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* ============ CARDS ============ */
 .card{
   position:relative;background:linear-gradient(165deg,rgba(36,51,84,.98),rgba(26,39,66,.98));
   border:1px solid var(--border);border-radius:18px;
@@ -226,7 +216,6 @@ select.input-field{cursor:pointer}
 .chart-title i{color:var(--gold)}
 .chart-badge{font-size:9.5px;background:var(--gold-soft);color:var(--gold-light);padding:3px 10px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;margin-left:auto;border:1px solid rgba(201,168,76,.28)}
 
-/* ============ OWNER ============ */
 .owner-card{
   display:flex;align-items:center;gap:18px;padding:20px 22px;
   background:linear-gradient(135deg,rgba(201,168,76,.26),rgba(26,39,66,.98));
@@ -238,7 +227,6 @@ select.input-field{cursor:pointer}
 .owner-amp{color:var(--text-muted);font-size:16px;font-family:'DM Sans',sans-serif}
 .owner-sub{font-size:11.5px;color:var(--text-muted);margin-top:3px}
 
-/* ============ BAGI HASIL ============ */
 .bh-box{text-align:center;padding:13px 10px;border-radius:13px;background:rgba(10,17,32,.5);border:1px solid var(--border)}
 .bh-label{font-size:10.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:700}
 .bh-val{font-family:'Playfair Display',serif;font-size:19px;font-weight:800}
@@ -254,7 +242,7 @@ select.input-field{cursor:pointer}
 .split-amt{font-family:'Playfair Display',serif;font-size:17px;font-weight:800;margin-top:2px}
 .split-amt.gold{color:#fcd97a;text-shadow:0 0 10px rgba(232,205,122,.45)}
 .split-amt.blue{color:#8ec2ff;text-shadow:0 0 10px rgba(59,130,246,.45)}
-.split-vs{font-size:12px;font-weight:800;color:var(--gold-light);letter-spacing:1px;text-shadow:0 0 10px rgba(232,205,122,.4)}
+.split-vs{font-size:12px;font-weight:800;color:var(--gold-light);letter-spacing:1px}
 .bagi-card{
   display:grid;grid-template-columns:46px 1fr auto;gap:14px;align-items:center;
   background:linear-gradient(165deg,rgba(36,51,84,.98),rgba(26,39,66,.98));
@@ -267,13 +255,11 @@ select.input-field{cursor:pointer}
 .bagi-actions{display:flex;gap:6px;margin-top:6px;justify-content:flex-end}
 @media(max-width:480px){.bagi-card{grid-template-columns:46px 1fr}.bagi-card>div:last-child{grid-column:1/-1;text-align:right}}
 
-/* ============ TABEL ============ */
 .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .dtable{width:100%;border-collapse:separate;border-spacing:0;min-width:640px}
 .dtable thead th{background:linear-gradient(180deg,#31446c,#263757);color:var(--gold-light);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:1px;padding:13px 15px;text-align:left;border-bottom:2px solid rgba(201,168,76,.4);white-space:nowrap;text-shadow:0 0 9px rgba(232,205,122,.35)}
 .dtable tbody td{padding:13px 15px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:middle}
 .dtable tbody tr:nth-child(even){background:rgba(255,255,255,.03)}
-.dtable tbody tr{transition:background .15s}
 .dtable tbody tr:hover{background:rgba(201,168,76,.09)}
 .sales-table{min-width:720px}
 .tgl{font-weight:700;color:#fff;font-size:14px;white-space:nowrap}
@@ -297,7 +283,6 @@ select.input-field{cursor:pointer}
 .pill-baht{background:var(--warn-soft);color:#fdc07a;border:1px solid rgba(249,115,22,.4);text-shadow:0 0 8px rgba(249,115,22,.35)}
 .pill-rp{background:var(--info-soft);color:#93c5fd;border:1px solid rgba(59,130,246,.4);text-shadow:0 0 8px rgba(59,130,246,.35)}
 
-/* ============ DAFTAR TERBARU ============ */
 .sale-item{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:13px 15px;border-bottom:1px solid var(--border);transition:background .15s}
 .sale-item:hover{background:rgba(201,168,76,.08)}
 .sale-item:last-child{border-bottom:none}
@@ -308,14 +293,12 @@ select.input-field{cursor:pointer}
 .sale-total.t-baht{color:#fdc07a;text-shadow:0 0 10px rgba(249,115,22,.4)}
 .sale-total.t-rp{color:#8ec2ff;text-shadow:0 0 10px rgba(59,130,246,.4)}
 
-/* ============ ENTRY MODAL ============ */
 .entry-card{
   display:grid;grid-template-columns:88px 1fr auto;gap:18px;align-items:center;
   background:linear-gradient(165deg,rgba(36,51,84,.98),rgba(26,39,66,.98));
   border:1px solid var(--border);border-left:3px solid var(--gold);
   border-radius:16px;padding:17px 19px;margin-bottom:12px;
 }
-.entry-card:hover{border-color:rgba(201,168,76,.45);box-shadow:0 8px 24px rgba(0,0,0,.45)}
 .entry-thumb{width:88px;height:88px;border-radius:12px;object-fit:cover;border:1px solid var(--gold-dark);cursor:zoom-in;background:#fff;transition:transform .15s}
 .entry-thumb:hover{transform:scale(1.06)}
 .entry-thumb-empty{display:flex;align-items:center;justify-content:center;background:var(--bg-secondary);color:var(--text-muted);font-size:27px;cursor:default;border:1px dashed var(--border-2)}
@@ -325,11 +308,9 @@ select.input-field{cursor:pointer}
 .entry-actions{display:flex;gap:7px}
 @media(max-width:480px){.entry-card{grid-template-columns:66px 1fr;gap:12px}.entry-thumb,.entry-thumb-empty{width:66px;height:66px}.entry-actions{grid-column:1/-1;justify-content:flex-end}}
 
-/* ============ PROGRESS ============ */
 .prog{height:12px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden;border:1px solid var(--border)}
 .prog>div{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light));box-shadow:0 0 12px rgba(232,205,122,.5);transition:width .7s ease;width:0%}
 
-/* ============ LAIN-LAIN ============ */
 .empty-state{padding:28px 16px;text-align:center;color:var(--text-muted);font-size:13px;border:1px dashed var(--border-2);border-radius:12px;line-height:1.8;background:rgba(255,255,255,.02)}
 .flex-between{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .flex-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -344,25 +325,48 @@ select.input-field{cursor:pointer}
 .kv-v{color:#fff;word-break:break-word}
 @media(max-width:480px){.kv{grid-template-columns:1fr;gap:2px}}
 
-/* ============ MODAL DIALOG ============ */
 .modal-bg{position:fixed;inset:0;background:rgba(5,10,20,.82);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
 .modal-bg.show{display:flex}
 .modal-box{background:linear-gradient(165deg,rgba(36,51,84,.99),rgba(26,39,66,.99));border:1px solid rgba(201,168,76,.45);border-radius:19px;max-width:520px;width:100%;max-height:88vh;overflow-y:auto;padding:26px;animation:mSlide .25s ease;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 @keyframes mSlide{from{transform:translateY(22px);opacity:0}to{transform:translateY(0);opacity:1}}
 
-/* ============ TOAST ============ */
 .toast-box{position:fixed;top:16px;right:16px;z-index:300;display:flex;flex-direction:column;gap:8px}
-.toast{padding:13px 16px;border-radius:11px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:9px;min-width:240px;color:#fff;box-shadow:0 8px 30px rgba(0,0,0,.55);animation:tIn .25s ease,tOut .3s ease 2.7s forwards;border:1px solid rgba(255,255,255,.15)}
+.toast{padding:13px 16px;border-radius:11px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:9px;min-width:240px;color:#fff;box-shadow:0 8px 30px rgba(0,0,0,.55);animation:tIn .25s ease,tOut .3s ease 3.2s forwards;border:1px solid rgba(255,255,255,.15)}
 .toast-ok{background:linear-gradient(135deg,#059669,#047857)}
 .toast-err{background:linear-gradient(135deg,#dc2626,#b91c1c)}
 .toast-inf{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
 @keyframes tIn{from{transform:translateX(110%);opacity:0}to{transform:translateX(0);opacity:1}}
 @keyframes tOut{to{transform:translateX(110%);opacity:0}}
 
-/* ============ PREVIEW GAMBAR ============ */
 #imgPreviewOverlay{position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9999;display:none;justify-content:center;align-items:center;cursor:zoom-out;padding:20px}
 #imgPreviewLarge{max-width:100%;max-height:100%;border-radius:12px;object-fit:contain;box-shadow:0 0 70px rgba(0,0,0,.9);border:1px solid rgba(201,168,76,.45)}
 @media(max-width:640px){#lastSync{display:none}}
+
+/* ===== TAMPILAN HP LEBIH RAPIK & CANTIK ===== */
+@media(max-width:600px){
+  body{font-size:14px}
+  main{padding:14px 12px 40px}
+  .stat-card{padding:14px}
+  .stat-ico{width:38px;height:38px;font-size:15px;margin-bottom:8px;border-radius:11px}
+  .big-number{font-size:24px}
+  .money-card{padding:15px}
+  .money-value{font-size:22px}
+  .money-card::after{font-size:30px;right:12px;top:11px}
+  .chart-card{padding:14px}
+  .sec-title{font-size:18px}
+  .tab-btn{padding:9px 14px;font-size:12.5px}
+  .tab-nav{margin:14px 0}
+  .dtable tbody td{padding:10px 12px;font-size:13px}
+  .dtable thead th{padding:10px 12px;font-size:10.5px}
+  .entry-card{padding:13px 14px;gap:14px;border-radius:14px}
+  .entry-note{font-size:14px}
+  .entry-amt{font-size:17px}
+  .owner-card{padding:16px;gap:13px}
+  .owner-names{font-size:19px}
+  .owner-ico{width:44px;height:44px;font-size:18px}
+  .login-card{padding:36px 26px}
+  .marquee-track span{font-size:13px;padding:8px 0}
+}
 </style>
 </head>
 <body>
@@ -403,6 +407,7 @@ select.input-field{cursor:pointer}
       <div id="loginError" style="display:none;background:var(--danger-soft);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:9px 12px;color:var(--danger);font-size:13px;text-align:center"></div>
       <button class="btn-gold" id="loginBtn"><i class="fas fa-right-to-bracket" style="margin-right:6px"></i>Masuk</button>
     </div>
+    <p style="text-align:center;font-size:9px;color:var(--text-muted);margin-top:16px;letter-spacing:2px">VERSI 10</p>
   </div>
 </div>
 
@@ -416,11 +421,20 @@ select.input-field{cursor:pointer}
                onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fas fa-spray-can-sparkles\' style=\'color:var(--gold);font-size:17px\'></i>'">
         </div>
         <div style="min-width:0">
-          <h1 class="font-display gold-shimmer" style="font-size:19px;font-weight:900;letter-spacing:2px">VJ PARFUM</h1>
+          <div style="display:flex;align-items:center;gap:8px">
+            <h1 class="font-display gold-shimmer" style="font-size:19px;font-weight:900;letter-spacing:2px">VJ PARFUM</h1>
+            <span class="ver-badge">v10</span>
+          </div>
           <p style="font-size:10px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase" id="headerDate"></p>
         </div>
       </div>
       <div class="flex-row" style="flex-shrink:0">
+        <!-- ZOOM: perkecil / perbesar tampilan -->
+        <div class="zoom-ctrl" title="Perkecil / perbesar tampilan">
+          <button class="zoom-btn" id="zoomOutBtn"><i class="fas fa-minus"></i></button>
+          <span class="zoom-val" id="zoomVal">100%</span>
+          <button class="zoom-btn" id="zoomInBtn"><i class="fas fa-plus"></i></button>
+        </div>
         <a class="btn-outline" href="https://docs.google.com/spreadsheets/d/1C_aVqFUws8GsIaW1VW9vBjMiUWmJy4Y2qu_BHZYv6ac" target="_blank" rel="noopener" style="padding:7px 12px;font-size:12px"><i class="fas fa-table"></i> Sheet</a>
         <button class="btn-outline" id="btnSync" style="padding:7px 12px;font-size:12px"><i class="fas fa-cloud-arrow-down" id="syncIcon"></i> <span id="syncText">Sync</span></button>
         <span style="font-size:12px;color:var(--text-secondary)" id="headerUser"></span>
@@ -430,16 +444,14 @@ select.input-field{cursor:pointer}
     </div>
   </header>
 
-  <!-- TULISAN BERJALAN -->
   <div class="marquee-bar"><div class="marquee-track">
     <span>👑✨ VJ PARFUME ✨👑 &nbsp;|&nbsp; 📋 DASHBOARD PENDATAAN &nbsp;|&nbsp; 💎 DATA AKURAT &nbsp;|&nbsp; 📦 STOK TERKONTROL &nbsp;|&nbsp; 📝 PENDATAAN RAPI &nbsp;|&nbsp; 🚀 KERJA LANCAR &nbsp;|&nbsp; 💰 REZEKI BERLIMPAH &nbsp;|&nbsp; 🌟 SUKSES SELALU ✨ &nbsp;</span>
     <span>👑✨ VJ PARFUME ✨👑 &nbsp;|&nbsp; 📋 DASHBOARD PENDATAAN &nbsp;|&nbsp; 💎 DATA AKURAT &nbsp;|&nbsp; 📦 STOK TERKONTROL &nbsp;|&nbsp; 📝 PENDATAAN RAPI &nbsp;|&nbsp; 🚀 KERJA LANCAR &nbsp;|&nbsp; 💰 REZEKI BERLIMPAH &nbsp;|&nbsp; 🌟 SUKSES SELALU ✨ &nbsp;</span>
   </div></div>
 
-  <!-- BAR PERINGATAN kalau data gagal ditarik -->
   <div class="sync-warn" id="syncWarn" onclick="syncSheet(false)">
     <i class="fas fa-triangle-exclamation"></i>
-    <span>Data mungkin belum terbaru dari server — <u>ketuk di sini untuk tarik data</u></span>
+    <span>Data aman di perangkat — pengiriman ke server tertunda. <u>Ketuk untuk kirim ulang</u></span>
   </div>
 
   <main style="max-width:1400px;margin:0 auto;padding:18px 16px 50px;position:relative;z-index:1">
@@ -538,7 +550,7 @@ select.input-field{cursor:pointer}
               <input type="file" id="modalFile" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer">
             </label>
             <img id="previewModalImg" src="" alt="Preview" style="display:none;max-height:130px;border-radius:11px;border:1px solid var(--gold-dark);margin-top:10px;cursor:zoom-in;object-fit:contain;background:#fff">
-            <p class="small muted mt8"><i class="fas fa-circle-info"></i> Gambar disimpan dalam beberapa bagian supaya tidak rusak — pasti tampil.</p>
+            <p class="small muted mt8"><i class="fas fa-circle-info"></i> Foto dikompres otomatis — cepat terkirim, pasti tampil.</p>
           </div>
           <button class="btn-gold" id="btnSaveModal"><i class="fas fa-save"></i> Simpan Catatan Modal</button>
         </div>
@@ -600,8 +612,9 @@ select.input-field{cursor:pointer}
         <div class="card money-card h" id="fHasilCard"><div class="label-sm">Hasil</div><div class="money-value" id="fHasil" style="color:var(--success)">Rp 0</div><div class="money-sub">Penjualan Rp − Modal</div></div>
       </div>
 
+      <!-- HARGA PER BOTOL (Rp & Baht) -->
       <div class="stat-grid g3 mb16">
-        <div class="card stat-card tint-purple"><div class="stat-ico ico-purple"><i class="fas fa-tags"></i></div><div class="label-sm">Harga Jual / Botol</div><div class="big-number num-purple" style="font-size:21px" id="kHargaBotol">-</div><div class="stat-sub">rupiah &amp; baht</div></div>
+        <div class="card stat-card tint-purple"><div class="stat-ico ico-purple"><i class="fas fa-tags"></i></div><div class="label-sm">Harga Jual / Botol</div><div class="big-number num-purple" style="font-size:20px" id="kHargaBotol">-</div><div class="stat-sub">rupiah &amp; baht</div></div>
         <div class="card stat-card tint-green"><div class="stat-ico ico-green"><i class="fas fa-wine-bottle"></i></div><div class="label-sm">Botol Terjual</div><div class="big-number num-green" id="kBotol">0</div><div class="stat-sub">semua varian</div></div>
         <div class="card stat-card tint-gold"><div class="stat-ico ico-gold"><i class="fas fa-coins"></i></div><div class="label-sm">Untung / Botol</div><div class="big-number num-gold" style="font-size:23px" id="kUntungBotol">Rp 0</div><div class="stat-sub">hasil ÷ botol terjual</div></div>
       </div>
@@ -620,7 +633,6 @@ select.input-field{cursor:pointer}
         </div>
       </div>
 
-      <!-- BAGI HASIL -->
       <div class="card chart-card tint-pink mb16">
         <h3 class="chart-title"><i class="fas fa-hand-holding-dollar"></i> Bagi Hasil <span class="chart-badge">Ganes 50% • Pijai 50%</span></h3>
         <div class="stat-grid g3">
@@ -714,7 +726,8 @@ select.input-field{cursor:pointer}
 
 <script>
 /* ============================================================
-   VJ PARFUME — Frontend v7 (Anti-Cache & Sync Andal)
+   VJ PARFUME — Frontend v10
+   Baru: AUTO-UPDATE (cache otomatis), ZOOM tampilan, harga baht
    ============================================================ */
 
 // ---------- KONFIG ----------
@@ -722,16 +735,16 @@ var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3qQHJ8Vqv13goaL
 var LOGIN_BG_URL = 'https://lh3.googleusercontent.com/d/1biMn45dAjep1fot3jrZaZ5Yw33ytUh62';
 var DASH_BG_URL  = '';
 
-// NAIKKAN ANGKA INI SETIAP KALI UPDATE FILE (v7 → v8 → v9 ...)
-// Otomatis: app mendeteksi versi baru & langsung tarik data segar dari server
-var APP_VERSION = '7';
+// SETIAP UPDATE FILE: naikkan angka ini (10 → 11 → 12 ...)
+// Aplikasi HP akan OTOMATIS deteksi & muat versi baru (cache terlewati)
+var APP_VERSION = '10';
 
-var PRICE_BAHT = 45000;
-var PRICE_RP   = 200000;
+var PRICE_RP   = 200000;   // harga 1 botol dalam Rupiah
+var PRICE_BAHT = 400000;   // ← harga 1 botol dalam Baht — UBAH ANGKA INI kalau beda
 var LABEL_LOKAL = 'Baht';
 
 var IMG_CHUNK = 44000;
-var IMG_MAX   = 130000;
+var IMG_MAX   = 88000;
 
 var PALETTE = ['#fbbf24','#f472b6','#a78bfa','#34d399','#60a5fa','#fb923c','#2dd4bf','#f87171'];
 function rowColor(i){return PALETTE[i%PALETTE.length];}
@@ -753,16 +766,30 @@ var DEFAULT_PRODUCTS = [
 // ---------- STATE ----------
 var products=[], history=[], modalEntries=[], bagiHasil=[], sheetSales=[];
 var chartMonthly=null, chartStock=null, chartSales=null;
-var isSyncing=false, confirmCb=null;
-var versionChanged=false, lastVisibilitySync=0;
+var isSyncing=false, confirmCb=null, versionChanged=false, lastVisibilitySync=0;
 
-// deteksi versi baru (auto "clear cache" internal)
+var dirty=0;
 try{
+  dirty=Number(localStorage.getItem('vj_dirty')||0)||0;
   if(localStorage.getItem('vj_app_version')!==APP_VERSION){
     versionChanged=true;
     localStorage.setItem('vj_app_version',APP_VERSION);
   }
 }catch(e){}
+function markDirty(){
+  dirty=Date.now();
+  try{localStorage.setItem('vj_dirty',String(dirty));}catch(e){}
+}
+
+// ---------- ZOOM TAMPILAN (perkecil/perbesar) ----------
+var uiZoom=1;
+try{uiZoom=Number(localStorage.getItem('vj_zoom'))||1;}catch(e){}
+function applyZoom(){
+  uiZoom=Math.max(0.7,Math.min(1.4,Math.round(uiZoom*100)/100));
+  document.body.style.zoom=uiZoom;
+  set('zoomVal',Math.round(uiZoom*100)+'%');
+  try{localStorage.setItem('vj_zoom',String(uiZoom));}catch(e){}
+}
 
 // ---------- HELPERS ----------
 function fRp(n){return 'Rp '+Math.round(n||0).toLocaleString('en-US');}
@@ -793,7 +820,7 @@ function showToast(msg,type){
   var icon=type==='ok'?'fa-circle-check':type==='err'?'fa-circle-xmark':'fa-circle-info';
   t.innerHTML='<i class="fas '+icon+'"></i><span>'+esc(msg)+'</span>';
   box.appendChild(t);
-  setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},3300);
+  setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},3400);
 }
 function showSyncWarn(){var w=document.getElementById('syncWarn');if(w)w.classList.add('show');}
 function hideSyncWarn(){var w=document.getElementById('syncWarn');if(w)w.classList.remove('show');}
@@ -821,7 +848,7 @@ function closeImgPreview(){
 function compressImage(file){
   return new Promise(function(resolve){
     if(!file){resolve('');return;}
-    var steps=[{w:900,q:.75},{w:720,q:.62},{w:560,q:.52},{w:430,q:.42},{w:320,q:.34},{w:240,q:.26},{w:170,q:.2}];
+    var steps=[{w:760,q:.62},{w:600,q:.52},{w:470,q:.44},{w:360,q:.36},{w:260,q:.28},{w:180,q:.22}];
     var img=new Image();
     var reader=new FileReader();
     reader.onload=function(e){
@@ -841,7 +868,7 @@ function compressImage(file){
       ctx.fillStyle='#ffffff';ctx.fillRect(0,0,w,h);
       ctx.drawImage(img,0,0,w,h);
       var url=c.toDataURL('image/jpeg',st.q);
-      if(url.length<=IMG_MAX||w<=170){resolve(url);}else{run(i+1);}
+      if(url.length<=IMG_MAX||w<=180){resolve(url);}else{run(i+1);}
     }
   });
 }
@@ -907,7 +934,7 @@ function validateBagiHasil(arr){
   return out;
 }
 
-// ---------- PARSER SHEET (BAHT & RUPIAH) ----------
+// ---------- PARSER SHEET ----------
 function parseSheetDate(s){
   var raw=s['Timestamp']||s['Date']||s['Tanggal']||s['Waktu']||'';
   if(!raw)return null;
@@ -983,7 +1010,7 @@ function getTotalModal(){
   return t;
 }
 
-// ---------- GRAFIK BULANAN (BULAN BERURUT, ALA SAHAM) ----------
+// ---------- GRAFIK BULANAN ----------
 function getMonthlySales(){
   var bulan=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
   var map={};
@@ -1079,20 +1106,21 @@ function saveDataLocal(){
     localStorage.setItem('vj_sheetsales_v3',JSON.stringify(sheetSales));
   }catch(e){showToast('Penyimpanan lokal penuh — data tetap aman di server','err');}
 }
-function saveAndSync(){saveDataLocal();saveToCloud();}
+function saveAndSync(){
+  markDirty();
+  saveDataLocal();
+  saveToCloud();
+}
 
-// ---------- FETCH DENGAN TIMEOUT + ANTI-CACHE ----------
+// ---------- FETCH DENGAN TIMEOUT ----------
 function fetchAll(timeoutMs){
-  var url=APPS_SCRIPT_URL+'?action=getAll&t='+Date.now(); // stempel waktu → tidak bisa ter-cache
+  var url=APPS_SCRIPT_URL+'?action=getAll&t='+Date.now();
   var ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
   var timer=ctrl?setTimeout(function(){ctrl.abort();},timeoutMs||20000):null;
   var opts={cache:'no-store'};
   if(ctrl)opts.signal=ctrl.signal;
   return fetch(url,opts)
-    .then(function(r){
-      if(timer)clearTimeout(timer);
-      return r.text();
-    })
+    .then(function(r){if(timer)clearTimeout(timer);return r.text();})
     .then(function(txt){
       var data;
       try{data=JSON.parse(txt);}
@@ -1106,7 +1134,7 @@ function fetchAll(timeoutMs){
     });
 }
 
-// ---------- CLOUD SYNC (timeout + auto retry + peringatan jelas) ----------
+// ---------- CLOUD SYNC (★ ANTI HILANG DATA) ----------
 function syncSheet(silent,isRetry){
   if(isSyncing)return Promise.resolve();
   isSyncing=true;
@@ -1122,15 +1150,25 @@ function syncSheet(silent,isRetry){
       var cModals=validateModalEntries(Array.isArray(data.modals)?data.modals:(Array.isArray(data.modalEntries)?data.modalEntries:[]));
       var cBagi=validateBagiHasil(Array.isArray(data.bagiHasil)?data.bagiHasil:[]);
       var cSales=Array.isArray(data.sheetSales)?data.sheetSales:[];
+      var cloudTime=Number(data.meta&&data.meta.lastModified)||0;
+
       if(cSales.length>0)sheetSales=cSales;
-      if(cProds.length>0)products=cProds;
-      else if(products.length>0)saveToCloud();
-      if(cHist.length>0)history=cHist;
-      else if(history.length>0)saveToCloud();
-      if(cModals.length>0)modalEntries=cModals;
-      else if(modalEntries.length>0)saveToCloud();
-      if(cBagi.length>0)bagiHasil=cBagi;
-      else if(bagiHasil.length>0)saveToCloud();
+
+      if(dirty>cloudTime){
+        saveToCloud();
+      }else if(cloudTime>0){
+        products=cProds;
+        history=cHist;
+        modalEntries=cModals;
+        bagiHasil=cBagi;
+      }else{
+        var needPush=false;
+        if(cProds.length>0)products=cProds;else if(products.length>0)needPush=true;
+        if(cHist.length>0)history=cHist;else if(history.length>0)needPush=true;
+        if(cModals.length>0)modalEntries=cModals;else if(modalEntries.length>0)needPush=true;
+        if(cBagi.length>0)bagiHasil=cBagi;else if(bagiHasil.length>0)needPush=true;
+        if(needPush){markDirty();saveToCloud();}
+      }
       saveDataLocal();
       renderAll();
       hideSyncWarn();
@@ -1139,7 +1177,6 @@ function syncSheet(silent,isRetry){
     })
     .catch(function(e){
       if(!isRetry){
-        // COBA ULANG OTOMATIS 1x dalam 3 detik (diam-diam)
         setTimeout(function(){
           if(!isSyncing)syncSheet(silent,true);
         },3000);
@@ -1154,27 +1191,59 @@ function syncSheet(silent,isRetry){
       isSyncing=false;
     });
 }
-async function saveToCloud(){
-  try{
-    var modalsChunks=modalEntries.map(splitImageForSave);
-    var response=await fetch(APPS_SCRIPT_URL,{
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body:JSON.stringify({
-        action:'saveAll',
-        products:Array.isArray(products)?products:[],
-        history:Array.isArray(history)?history:[],
-        modals:modalsChunks,
-        bagiHasil:Array.isArray(bagiHasil)?bagiHasil:[]
-      })
-    });
-    var result=await response.json();
-    if(result.status!=='ok')showToast('Gagal simpan ke cloud: '+(result.error||'Server error'),'err');
-  }catch(e){
-    console.error('Save cloud error:',e);
-    showToast('Gagal simpan ke server — cek koneksi lalu klik Sync','err');
-  }
+
+// ★ SIMPAN KE SERVER: antrian + timeout + kirim ulang otomatis
+var saveInFlight=false, saveQueued=false, pendingPush=false, pushFailNotified=false;
+function saveToCloud(){
+  if(!document.documentElement.classList.contains('logged-in'))return;
+  if(saveInFlight){saveQueued=true;return;}
+  saveInFlight=true;
+  var modalsChunks=modalEntries.map(splitImageForSave);
+  var payload={
+    action:'saveAll',
+    products:Array.isArray(products)?products:[],
+    history:Array.isArray(history)?history:[],
+    modals:modalsChunks,
+    bagiHasil:Array.isArray(bagiHasil)?bagiHasil:[],
+    meta:{lastModified:dirty||Date.now()}
+  };
+  var ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
+  var timer=ctrl?setTimeout(function(){ctrl.abort();},45000):null;
+  fetch(APPS_SCRIPT_URL,{
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify(payload),
+    signal:ctrl?ctrl.signal:undefined
+  })
+  .then(function(r){if(timer)clearTimeout(timer);return r.text();})
+  .then(function(txt){
+    var result;
+    try{result=JSON.parse(txt);}
+    catch(e){throw new Error('Respon server tidak valid');}
+    if(!result||result.status!=='ok')throw new Error((result&&result.error)||'Server error');
+    pendingPush=false;
+    pushFailNotified=false;
+    hideSyncWarn();
+    set('lastSync','✓ '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
+    showToast('✓ Terkirim & tersimpan di server','ok');
+  })
+  .catch(function(e){
+    if(timer)clearTimeout(timer);
+    pendingPush=true;
+    if(!pushFailNotified){
+      pushFailNotified=true;
+      showToast('Data AMAN di HP — belum terkirim, dicoba otomatis','inf');
+    }
+    setTimeout(function(){if(pendingPush&&!saveInFlight)saveToCloud();},5000);
+  })
+  .finally(function(){
+    saveInFlight=false;
+    if(saveQueued){saveQueued=false;saveToCloud();}
+  });
 }
+setInterval(function(){
+  if(pendingPush&&!saveInFlight)saveToCloud();
+},30000);
 
 // ---------- RENDER ----------
 function renderAll(){
@@ -1266,7 +1335,6 @@ function baseChartOpts(){
     }};
 }
 
-// ---------- GRAFIK GARIS ALA SAHAM ----------
 function renderMonthlyChart(){
   var data=getMonthlySales();
   var canvas=document.getElementById('cMonthly');
@@ -1333,7 +1401,6 @@ function renderMonthlyChart(){
   });
 }
 
-// ---------- VARIAN ----------
 function renderProducts(){
   set('pTotalVarian',products.length);
   var tAwal=0,tSisa=0;
@@ -1379,7 +1446,6 @@ function openDelVar(i){
   },'Ya, Hapus');
 }
 
-// ---------- MODAL / BIAYA ----------
 function renderCosts(){
   var tModal=getTotalModal();
   var tot=getTotals();
@@ -1458,7 +1524,7 @@ function renderCosts(){
           var f=inp.files[0];if(!f)return;
           showToast('Memproses gambar...','inf');
           var img=await compressImage(f);
-          if(!img){showToast('Gambar gagal diproses','err');return;}
+          if(!img){showToast('Gambar gagal diproses — coba foto lain','err');return;}
           modalEntries[idx].image=img;
           saveAndSync();renderAll();
           showToast('Bukti transfer disimpan','ok');
@@ -1486,7 +1552,6 @@ function renderCosts(){
   }
 }
 
-// ---------- TABEL PENJUALAN ----------
 function renderSheetSales(){
   var tot=getTotals();
   var bottles=0;
@@ -1543,7 +1608,6 @@ function showSaleDetail(i){
   openModal('mSaleDetail');
 }
 
-// ---------- KAS VJ PARFUME ----------
 function renderFinance(){
   var tModal=getTotalModal();
   var tot=getTotals();
@@ -1651,6 +1715,35 @@ function exportData(){
 }
 
 /* ============================================================
+   AUTO-UPDATE (AUTO CLEAR CACHE UNTUK APLIKASI HP)
+   Aplikasi mengecek file terbaru di server secara diam-diam.
+   Kalau versinya beda → otomatis reload dengan file baru.
+   ============================================================ */
+function checkForUpdate(){
+  try{
+    if(location.protocol==='file:'||location.protocol==='about:')return;
+    var url=location.href.split('#')[0].split('?')[0]+'?t='+Date.now();
+    fetch(url,{cache:'no-store'})
+      .then(function(r){return r.text();})
+      .then(function(html){
+        var m=html.match(/APP_VERSION\s*=\s*['"]([^'"]+)['"]/);
+        if(m&&m[1]&&m[1]!==APP_VERSION){
+          showToast('🔄 Versi baru ditemukan — memperbarui...','inf');
+          setTimeout(function(){
+            location.replace(location.pathname+'?v='+encodeURIComponent(m[1]));
+          },900);
+        }
+      })
+      .catch(function(){});
+  }catch(e){}
+}
+setTimeout(checkForUpdate,4000);          // cek 4 detik setelah buka
+setInterval(checkForUpdate,600000);       // cek tiap 10 menit
+document.addEventListener('visibilitychange',function(){
+  if(document.visibilityState==='visible')setTimeout(checkForUpdate,1500);
+});
+
+/* ============================================================
    WIRING EVENT
    ============================================================ */
 document.getElementById('loginBtn').addEventListener('click',doLogin);
@@ -1660,6 +1753,11 @@ document.getElementById('passToggleBtn').addEventListener('click',togglePassVis)
 });
 document.getElementById('btnLogout').addEventListener('click',doLogout);
 document.getElementById('btnSync').addEventListener('click',function(){syncSheet(false);});
+
+// ZOOM
+document.getElementById('zoomOutBtn').addEventListener('click',function(){uiZoom-=0.1;applyZoom();});
+document.getElementById('zoomInBtn').addEventListener('click',function(){uiZoom+=0.1;applyZoom();});
+applyZoom();
 
 document.querySelectorAll('.tab-btn').forEach(function(btn){
   btn.addEventListener('click',function(){
@@ -1679,7 +1777,6 @@ document.querySelectorAll('.modal-bg').forEach(function(m){
 });
 document.getElementById('imgPreviewOverlay').addEventListener('click',closeImgPreview);
 
-// ---------- KUNCI F12 & KLIK KANAN ----------
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){
     closeImgPreview();
@@ -1695,20 +1792,17 @@ document.addEventListener('keydown',function(e){
 });
 document.addEventListener('contextmenu',function(e){e.preventDefault();});
 
-// ---------- AUTO SYNC: saat aplikasi dibuka lagi / koneksi balik ----------
 document.addEventListener('visibilitychange',function(){
   if(document.visibilityState==='visible'&&document.documentElement.classList.contains('logged-in')){
     var now=Date.now();
     if(now-lastVisibilitySync>30000&&!isSyncing){
       lastVisibilitySync=now;
-      syncSheet(true); // senyap, tanpa loading
+      syncSheet(true);
     }
   }
 });
 window.addEventListener('online',function(){
-  if(document.documentElement.classList.contains('logged-in')&&!isSyncing){
-    syncSheet(true);
-  }
+  if(document.documentElement.classList.contains('logged-in')&&!isSyncing)syncSheet(true);
 });
 
 document.getElementById('srcProd').addEventListener('input',renderProducts);
@@ -1756,7 +1850,7 @@ document.getElementById('modalFile').addEventListener('change',async function(){
     pv.onclick=function(){openImgPreview(img);};
   }else{
     pv.style.display='none';
-    showToast('Gambar gagal diproses','err');
+    showToast('Gambar gagal diproses — coba foto lain','err');
   }
 });
 document.getElementById('btnSaveModal').addEventListener('click',async function(){
@@ -1781,10 +1875,9 @@ document.getElementById('btnSaveModal').addEventListener('click',async function(
   pv.style.display='none';pv.removeAttribute('src');
   btn.disabled=false;
   btn.innerHTML='<i class="fas fa-save"></i> Simpan Catatan Modal';
-  showToast('Catatan modal tersimpan','ok');
+  showToast('Tersimpan di HP — mengirim ke server...','inf');
 });
 
-// BAGI HASIL
 document.getElementById('btnOpenBagi').addEventListener('click',function(){openModal('mBagi');});
 document.getElementById('btnSaveBagi').addEventListener('click',function(){
   var amt=parseInt((document.getElementById('bhJumlah').value||'').replace(/[^0-9]/g,''),10)||0;
