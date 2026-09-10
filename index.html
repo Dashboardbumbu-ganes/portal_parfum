@@ -407,7 +407,6 @@ select.input-field{cursor:pointer}
       <div id="loginError" style="display:none;background:var(--danger-soft);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:9px 12px;color:var(--danger);font-size:13px;text-align:center"></div>
       <button class="btn-gold" id="loginBtn"><i class="fas fa-right-to-bracket" style="margin-right:6px"></i>Masuk</button>
     </div>
-    <p style="text-align:center;font-size:9px;color:var(--text-muted);margin-top:16px;letter-spacing:2px">VERSI 10</p>
   </div>
 </div>
 
@@ -423,7 +422,7 @@ select.input-field{cursor:pointer}
         <div style="min-width:0">
           <div style="display:flex;align-items:center;gap:8px">
             <h1 class="font-display gold-shimmer" style="font-size:19px;font-weight:900;letter-spacing:2px">VJ PARFUM</h1>
-            <span class="ver-badge">v10</span>
+            <span class="ver-badge">v11</span>
           </div>
           <p style="font-size:10px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase" id="headerDate"></p>
         </div>
@@ -726,8 +725,9 @@ select.input-field{cursor:pointer}
 
 <script>
 /* ============================================================
-   VJ PARFUME — Frontend v10
+   VJ PARFUME — Frontend v11
    Baru: AUTO-UPDATE (cache otomatis), ZOOM tampilan, harga baht
+   Fix: sync TIDAK PERNAH menghapus catatan modal & gambar bukti
    ============================================================ */
 
 // ---------- KONFIG ----------
@@ -737,7 +737,7 @@ var DASH_BG_URL  = '';
 
 // SETIAP UPDATE FILE: naikkan angka ini (10 → 11 → 12 ...)
 // Aplikasi HP akan OTOMATIS deteksi & muat versi baru (cache terlewati)
-var APP_VERSION = '10';
+var APP_VERSION = '11';
 
 var PRICE_RP   = 200000;   // harga 1 botol dalam Rupiah
 var PRICE_BAHT = 400000;   // ← harga 1 botol dalam Baht — UBAH ANGKA INI kalau beda
@@ -871,9 +871,7 @@ function compressImage(file){
       if(url.length<=IMG_MAX||w<=180){resolve(url);}else{run(i+1);}
     }
   });
-}
-
-// ---------- PECAH & GABUNG GAMBAR ----------
+}// ---------- PECAH & GABUNG GAMBAR ----------
 function splitImageForSave(entry){
   var out={id:entry.id,date:entry.date,amount:entry.amount,note:entry.note};
   var img=entry.image||'';
@@ -932,6 +930,41 @@ function validateBagiHasil(arr){
     });
   }
   return out;
+}
+
+// ---------- ★ ANTI-HILANG: GABUNG CATATAN MODAL (LOKAL + SERVER) ----------
+// Dipakai saat sync: catatan modal & gambar bukti TIDAK PERNAH ditimpa /
+// dibuang oleh data dari server. Data lokal digabung dengan data server,
+// gambar bukti diambil dari versi yang memilikinya.
+function mergeModalEntries(localArr,cloudArr){
+  var localList=Array.isArray(localArr)?localArr:[];
+  var cloudList=Array.isArray(cloudArr)?cloudArr:[];
+  var out=[],byId={},bySig={},i,j,serverMissing=false;
+  function sig(m){return String(m.amount)+'|'+String(m.note||'')+'|'+String(m.date||'');}
+  // 1) masukkan semua data server
+  for(i=0;i<cloudList.length;i++){
+    var c=cloudList[i];
+    out.push(c);
+    byId[String(c.id)]=c;
+    bySig[sig(c)]=c;
+  }
+  // 2) gabungkan data lokal — entri lokal TIDAK PERNAH dibuang
+  for(j=0;j<localList.length;j++){
+    var l=localList[j];
+    var ex=byId[String(l.id)];
+    if(!ex)ex=bySig[sig(l)];
+    if(!ex){
+      // catatan lokal belum ada di server → pertahankan & tandai perlu dikirim ulang
+      out.push(l);
+      serverMissing=true;
+    }else if(l.image&&!ex.image){
+      // gambar bukti lokal dipertahankan kalau server tidak memilikinya
+      ex.image=l.image;
+      serverMissing=true;
+    }
+  }
+  out.sort(function(a,b){return new Date(a.date)-new Date(b.date);});
+  return{list:out,serverMissing:serverMissing};
 }
 
 // ---------- PARSER SHEET ----------
@@ -1098,13 +1131,24 @@ function loadDataLocal(){
   }
 }
 function saveDataLocal(){
+  // ★ PERBAIKAN: tiap jenis data disimpan TERPISAH — kalau penyimpanan HP
+  // penuh (misal karena banyak gambar bukti), catatan modal tetap tersimpan,
+  // bukan gagal semuanya seperti dulu.
+  try{localStorage.setItem('vj_products_v3',JSON.stringify(products));}catch(e){}
+  try{localStorage.setItem('vj_history_v3',JSON.stringify(history));}catch(e){}
   try{
-    localStorage.setItem('vj_products_v3',JSON.stringify(products));
-    localStorage.setItem('vj_history_v3',JSON.stringify(history));
     localStorage.setItem('vj_modals_v3',JSON.stringify(modalEntries));
-    localStorage.setItem('vj_bagihasil_v3',JSON.stringify(bagiHasil));
-    localStorage.setItem('vj_sheetsales_v3',JSON.stringify(sheetSales));
-  }catch(e){showToast('Penyimpanan lokal penuh — data tetap aman di server','err');}
+  }catch(e){
+    // penyimpanan penuh → simpan catatan modal TANPA gambar dulu supaya
+    // pencatatannya TIDAK hilang (gambar bukti tetap dikirim ke server)
+    try{
+      var noImg=modalEntries.map(function(m){return{id:m.id,date:m.date,amount:m.amount,note:m.note,image:''};});
+      localStorage.setItem('vj_modals_v3',JSON.stringify(noImg));
+      showToast('Penyimpanan HP hampir penuh — catatan modal aman, gambar bukti disimpan di server','err');
+    }catch(e2){}
+  }
+  try{localStorage.setItem('vj_bagihasil_v3',JSON.stringify(bagiHasil));}catch(e){}
+  try{localStorage.setItem('vj_sheetsales_v3',JSON.stringify(sheetSales));}catch(e){}
 }
 function saveAndSync(){
   markDirty();
@@ -1154,18 +1198,29 @@ function syncSheet(silent,isRetry){
 
       if(cSales.length>0)sheetSales=cSales;
 
+      // ★★★ PERBAIKAN ANTI-HILANG DATA MODAL ★★★
+      // Dulu: hasil sync bisa MENIMPA catatan modal lokal dengan data server
+      // yang kosong → catatan modal + gambar bukti ikut hilang.
+      // Sekarang: catatan modal lokal TIDAK PERNAH dibuang saat sync.
+      // Data lokal + data server digabung, dan kalau server belum punya
+      // catatan / gambarnya → otomatis dikirim ulang (Sheet diperbaiki).
       if(dirty>cloudTime){
+        // data lokal lebih baru → catatan modal lokal tetap utuh, kirim ke server
         saveToCloud();
       }else if(cloudTime>0){
         products=cProds;
         history=cHist;
-        modalEntries=cModals;
+        var mMerged=mergeModalEntries(modalEntries,cModals);
+        modalEntries=mMerged.list;
         bagiHasil=cBagi;
+        if(mMerged.serverMissing){markDirty();saveToCloud();}
       }else{
         var needPush=false;
         if(cProds.length>0)products=cProds;else if(products.length>0)needPush=true;
         if(cHist.length>0)history=cHist;else if(history.length>0)needPush=true;
-        if(cModals.length>0)modalEntries=cModals;else if(modalEntries.length>0)needPush=true;
+        var mMerged0=mergeModalEntries(modalEntries,cModals);
+        modalEntries=mMerged0.list;
+        if(mMerged0.serverMissing)needPush=true;
         if(cBagi.length>0)bagiHasil=cBagi;else if(bagiHasil.length>0)needPush=true;
         if(needPush){markDirty();saveToCloud();}
       }
@@ -1243,9 +1298,7 @@ function saveToCloud(){
 }
 setInterval(function(){
   if(pendingPush&&!saveInFlight)saveToCloud();
-},30000);
-
-// ---------- RENDER ----------
+},30000);// ---------- RENDER ----------
 function renderAll(){
   renderOverview();
   renderProducts();
