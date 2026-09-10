@@ -144,9 +144,10 @@ select.input-field{cursor:pointer}
 .zoom-btn:hover{background:var(--gold-soft);color:var(--gold-light)}
 .zoom-val{font-size:10px;font-weight:700;color:var(--text-muted);min-width:36px;text-align:center;user-select:none}
 
+/* ===== MARQUEE (tulisan berjalan) ===== */
 .marquee-bar{background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light),var(--gold),var(--gold-dark));overflow:hidden;box-shadow:0 2px 14px rgba(201,168,76,.35)}
-.marquee-track{display:flex;white-space:nowrap;width:max-content;animation:marq 32s linear infinite}
-.marquee-track span{padding:9px 0;font-size:14.5px;font-weight:700;color:#0b1220;letter-spacing:.4px}
+.marquee-track{display:flex;white-space:nowrap;width:max-content;animation:marq 22s linear infinite}
+.marquee-track span{padding:10px 0;font-family:'Playfair Display',serif;font-style:italic;font-size:16px;font-weight:700;color:#0b1220;letter-spacing:1.4px;text-shadow:0 1px 1px rgba(255,255,255,.45)}
 @keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 .sync-warn{display:none;align-items:center;gap:10px;padding:11px 16px;background:rgba(249,115,22,.16);border-bottom:1px solid rgba(249,115,22,.4);color:#fdc07a;font-size:12.5px;font-weight:600;cursor:pointer}
@@ -365,7 +366,7 @@ select.input-field{cursor:pointer}
   .owner-names{font-size:19px}
   .owner-ico{width:44px;height:44px;font-size:18px}
   .login-card{padding:36px 26px}
-  .marquee-track span{font-size:13px;padding:8px 0}
+  .marquee-track span{font-size:13.5px;padding:8px 0}
 }
 </style>
 </head>
@@ -407,6 +408,7 @@ select.input-field{cursor:pointer}
       <div id="loginError" style="display:none;background:var(--danger-soft);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:9px 12px;color:var(--danger);font-size:13px;text-align:center"></div>
       <button class="btn-gold" id="loginBtn"><i class="fas fa-right-to-bracket" style="margin-right:6px"></i>Masuk</button>
     </div>
+    <p style="text-align:center;font-size:9px;color:var(--text-muted);margin-top:16px;letter-spacing:2px">VERSI 12</p>
   </div>
 </div>
 
@@ -422,7 +424,7 @@ select.input-field{cursor:pointer}
         <div style="min-width:0">
           <div style="display:flex;align-items:center;gap:8px">
             <h1 class="font-display gold-shimmer" style="font-size:19px;font-weight:900;letter-spacing:2px">VJ PARFUM</h1>
-            <span class="ver-badge">v11</span>
+            <span class="ver-badge">v12</span>
           </div>
           <p style="font-size:10px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase" id="headerDate"></p>
         </div>
@@ -444,8 +446,8 @@ select.input-field{cursor:pointer}
   </header>
 
   <div class="marquee-bar"><div class="marquee-track">
-    <span>👑✨ VJ PARFUME ✨👑 &nbsp;|&nbsp; 📋 DASHBOARD PENDATAAN &nbsp;|&nbsp; 💎 DATA AKURAT &nbsp;|&nbsp; 📦 STOK TERKONTROL &nbsp;|&nbsp; 📝 PENDATAAN RAPI &nbsp;|&nbsp; 🚀 KERJA LANCAR &nbsp;|&nbsp; 💰 REZEKI BERLIMPAH &nbsp;|&nbsp; 🌟 SUKSES SELALU ✨ &nbsp;</span>
-    <span>👑✨ VJ PARFUME ✨👑 &nbsp;|&nbsp; 📋 DASHBOARD PENDATAAN &nbsp;|&nbsp; 💎 DATA AKURAT &nbsp;|&nbsp; 📦 STOK TERKONTROL &nbsp;|&nbsp; 📝 PENDATAAN RAPI &nbsp;|&nbsp; 🚀 KERJA LANCAR &nbsp;|&nbsp; 💰 REZEKI BERLIMPAH &nbsp;|&nbsp; 🌟 SUKSES SELALU ✨ &nbsp;</span>
+    <span>⭐⭐⭐ Semoga usaha VJ Parfume nya laris manis ⭐⭐⭐&nbsp;&nbsp;&nbsp;&nbsp;✦&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span>⭐⭐⭐ Semoga usaha VJ Parfume nya laris manis ⭐⭐⭐&nbsp;&nbsp;&nbsp;&nbsp;✦&nbsp;&nbsp;&nbsp;&nbsp;</span>
   </div></div>
 
   <div class="sync-warn" id="syncWarn" onclick="syncSheet(false)">
@@ -725,9 +727,9 @@ select.input-field{cursor:pointer}
 
 <script>
 /* ============================================================
-   VJ PARFUME — Frontend v11
-   Baru: AUTO-UPDATE (cache otomatis), ZOOM tampilan, harga baht
+   VJ PARFUME — Frontend v12
    Fix: sync TIDAK PERNAH menghapus catatan modal & gambar bukti
+        (termasuk data yang diketik manual langsung di Sheet)
    ============================================================ */
 
 // ---------- KONFIG ----------
@@ -735,9 +737,9 @@ var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3qQHJ8Vqv13goaL
 var LOGIN_BG_URL = 'https://lh3.googleusercontent.com/d/1biMn45dAjep1fot3jrZaZ5Yw33ytUh62';
 var DASH_BG_URL  = '';
 
-// SETIAP UPDATE FILE: naikkan angka ini (10 → 11 → 12 ...)
+// SETIAP UPDATE FILE: naikkan angka ini (11 → 12 → 13 ...)
 // Aplikasi HP akan OTOMATIS deteksi & muat versi baru (cache terlewati)
-var APP_VERSION = '11';
+var APP_VERSION = '12';
 
 var PRICE_RP   = 200000;   // harga 1 botol dalam Rupiah
 var PRICE_BAHT = 400000;   // ← harga 1 botol dalam Baht — UBAH ANGKA INI kalau beda
@@ -933,9 +935,8 @@ function validateBagiHasil(arr){
 }
 
 // ---------- ★ ANTI-HILANG: GABUNG CATATAN MODAL (LOKAL + SERVER) ----------
-// Dipakai saat sync: catatan modal & gambar bukti TIDAK PERNAH ditimpa /
-// dibuang oleh data dari server. Data lokal digabung dengan data server,
-// gambar bukti diambil dari versi yang memilikinya.
+// Catatan modal & gambar bukti TIDAK PERNAH ditimpa / dibuang oleh data
+// dari server. Gambar bukti terbaru dari aplikasi selalu dipakai.
 function mergeModalEntries(localArr,cloudArr){
   var localList=Array.isArray(localArr)?localArr:[];
   var cloudList=Array.isArray(cloudArr)?cloudArr:[];
@@ -954,11 +955,11 @@ function mergeModalEntries(localArr,cloudArr){
     var ex=byId[String(l.id)];
     if(!ex)ex=bySig[sig(l)];
     if(!ex){
-      // catatan lokal belum ada di server → pertahankan & tandai perlu dikirim ulang
+      // catatan lokal belum ada di server → pertahankan & tandai perlu dikirim
       out.push(l);
       serverMissing=true;
-    }else if(l.image&&!ex.image){
-      // gambar bukti lokal dipertahankan kalau server tidak memilikinya
+    }else if(l.image&&l.image!==ex.image){
+      // gambar bukti dari aplikasi selalu dipakai (upload/ganti bukti transfer)
       ex.image=l.image;
       serverMissing=true;
     }
@@ -1131,16 +1132,13 @@ function loadDataLocal(){
   }
 }
 function saveDataLocal(){
-  // ★ PERBAIKAN: tiap jenis data disimpan TERPISAH — kalau penyimpanan HP
-  // penuh (misal karena banyak gambar bukti), catatan modal tetap tersimpan,
-  // bukan gagal semuanya seperti dulu.
+  // tiap jenis data disimpan TERPISAH — kalau penyimpanan HP penuh,
+  // catatan modal tetap tersimpan (gambar darurat dibuang dulu).
   try{localStorage.setItem('vj_products_v3',JSON.stringify(products));}catch(e){}
   try{localStorage.setItem('vj_history_v3',JSON.stringify(history));}catch(e){}
   try{
     localStorage.setItem('vj_modals_v3',JSON.stringify(modalEntries));
   }catch(e){
-    // penyimpanan penuh → simpan catatan modal TANPA gambar dulu supaya
-    // pencatatannya TIDAK hilang (gambar bukti tetap dikirim ke server)
     try{
       var noImg=modalEntries.map(function(m){return{id:m.id,date:m.date,amount:m.amount,note:m.note,image:''};});
       localStorage.setItem('vj_modals_v3',JSON.stringify(noImg));
@@ -1150,10 +1148,10 @@ function saveDataLocal(){
   try{localStorage.setItem('vj_bagihasil_v3',JSON.stringify(bagiHasil));}catch(e){}
   try{localStorage.setItem('vj_sheetsales_v3',JSON.stringify(sheetSales));}catch(e){}
 }
-function saveAndSync(){
+function saveAndSync(opts){
   markDirty();
   saveDataLocal();
-  saveToCloud();
+  saveToCloud(opts);
 }
 
 // ---------- FETCH DENGAN TIMEOUT ----------
@@ -1198,29 +1196,37 @@ function syncSheet(silent,isRetry){
 
       if(cSales.length>0)sheetSales=cSales;
 
-      // ★★★ PERBAIKAN ANTI-HILANG DATA MODAL ★★★
-      // Dulu: hasil sync bisa MENIMPA catatan modal lokal dengan data server
-      // yang kosong → catatan modal + gambar bukti ikut hilang.
-      // Sekarang: catatan modal lokal TIDAK PERNAH dibuang saat sync.
-      // Data lokal + data server digabung, dan kalau server belum punya
-      // catatan / gambarnya → otomatis dikirim ulang (Sheet diperbaiki).
+      // ★ buang catatan modal yang memang sudah dihapus sengaja di aplikasi
+      var cDel=Array.isArray(data.deleted)?data.deleted:[];
+      if(cDel.length>0){
+        var delMap={};
+        for(var d=0;d<cDel.length;d++){
+          if(cDel[d]&&cDel[d].id!==undefined&&String(cDel[d].id)!=='')delMap[String(cDel[d].id)]=true;
+        }
+        if(Object.keys(delMap).length>0){
+          cModals=cModals.filter(function(m){return !(m&&m.id!==undefined&&delMap[String(m.id)]);});
+        }
+      }
+
+      // ★★★ SELALU GABUNG catatan modal lokal + server (SEMUA kondisi).
+      // Data modal yang diketik manual langsung di Sheet masuk ke aplikasi
+      // dan ikut dikirim balik — TIDAK PERNAH hilang saat sync lagi.
+      var mMerged=mergeModalEntries(modalEntries,cModals);
+      modalEntries=mMerged.list;
+
       if(dirty>cloudTime){
-        // data lokal lebih baru → catatan modal lokal tetap utuh, kirim ke server
+        // data lokal lebih baru → kirim (modal sudah digabung dulu, jadi aman)
         saveToCloud();
       }else if(cloudTime>0){
         products=cProds;
         history=cHist;
-        var mMerged=mergeModalEntries(modalEntries,cModals);
-        modalEntries=mMerged.list;
         bagiHasil=cBagi;
         if(mMerged.serverMissing){markDirty();saveToCloud();}
       }else{
         var needPush=false;
         if(cProds.length>0)products=cProds;else if(products.length>0)needPush=true;
         if(cHist.length>0)history=cHist;else if(history.length>0)needPush=true;
-        var mMerged0=mergeModalEntries(modalEntries,cModals);
-        modalEntries=mMerged0.list;
-        if(mMerged0.serverMissing)needPush=true;
+        if(mMerged.serverMissing)needPush=true;
         if(cBagi.length>0)bagiHasil=cBagi;else if(bagiHasil.length>0)needPush=true;
         if(needPush){markDirty();saveToCloud();}
       }
@@ -1248,10 +1254,17 @@ function syncSheet(silent,isRetry){
 }
 
 // ★ SIMPAN KE SERVER: antrian + timeout + kirim ulang otomatis
-var saveInFlight=false, saveQueued=false, pendingPush=false, pushFailNotified=false;
-function saveToCloud(){
+// opts.modalsReplace=true → hanya untuk HAPUS / RESET / IMPOR sengaja
+var saveInFlight=false, saveQueued=false, saveQueuedOpts=null, pendingPush=false, pushFailNotified=false;
+function saveToCloud(opts){
   if(!document.documentElement.classList.contains('logged-in'))return;
-  if(saveInFlight){saveQueued=true;return;}
+  opts=opts||{};
+  if(saveInFlight){
+    saveQueued=true;
+    saveQueuedOpts=saveQueuedOpts||{};
+    if(opts.modalsReplace)saveQueuedOpts.modalsReplace=true;
+    return;
+  }
   saveInFlight=true;
   var modalsChunks=modalEntries.map(splitImageForSave);
   var payload={
@@ -1260,6 +1273,7 @@ function saveToCloud(){
     history:Array.isArray(history)?history:[],
     modals:modalsChunks,
     bagiHasil:Array.isArray(bagiHasil)?bagiHasil:[],
+    modalsReplace:(opts.modalsReplace===true),
     meta:{lastModified:dirty||Date.now()}
   };
   var ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
@@ -1284,6 +1298,12 @@ function saveToCloud(){
   })
   .catch(function(e){
     if(timer)clearTimeout(timer);
+    var msg=(e&&e.message)||String(e);
+    if(msg.indexOf('DITOLAK')===0){
+      // ditolak proteksi server → jangan diulang terus (bukan masalah koneksi)
+      showToast('Pengiriman ditolak proteksi server: '+msg,'err');
+      return;
+    }
     pendingPush=true;
     if(!pushFailNotified){
       pushFailNotified=true;
@@ -1293,7 +1313,11 @@ function saveToCloud(){
   })
   .finally(function(){
     saveInFlight=false;
-    if(saveQueued){saveQueued=false;saveToCloud();}
+    if(saveQueued){
+      saveQueued=false;
+      var o=saveQueuedOpts;saveQueuedOpts=null;
+      saveToCloud(o);
+    }
   });
 }
 setInterval(function(){
@@ -1593,7 +1617,7 @@ function renderCosts(){
       delBtn.onclick=function(){
         askConfirm('Hapus catatan modal <b>'+esc(m.note||fRp(m.amount))+'</b>?',function(){
           modalEntries.splice(idx,1);
-          saveAndSync();renderAll();
+          saveAndSync({modalsReplace:true});renderAll();
           showToast('Catatan modal dihapus','ok');
         },'Ya, Hapus');
       };
@@ -1769,8 +1793,6 @@ function exportData(){
 
 /* ============================================================
    AUTO-UPDATE (AUTO CLEAR CACHE UNTUK APLIKASI HP)
-   Aplikasi mengecek file terbaru di server secara diam-diam.
-   Kalau versinya beda → otomatis reload dengan file baru.
    ============================================================ */
 function checkForUpdate(){
   try{
@@ -1790,8 +1812,8 @@ function checkForUpdate(){
       .catch(function(){});
   }catch(e){}
 }
-setTimeout(checkForUpdate,4000);          // cek 4 detik setelah buka
-setInterval(checkForUpdate,600000);       // cek tiap 10 menit
+setTimeout(checkForUpdate,4000);
+setInterval(checkForUpdate,600000);
 document.addEventListener('visibilitychange',function(){
   if(document.visibilityState==='visible')setTimeout(checkForUpdate,1500);
 });
@@ -1889,7 +1911,7 @@ document.getElementById('btnConfirmYes').addEventListener('click',function(){
 document.getElementById('btnClearAllModals').addEventListener('click',function(){
   askConfirm('Hapus <b>SEMUA</b> catatan modal? Tidak bisa dibatalkan.',function(){
     modalEntries=[];
-    saveAndSync();renderAll();
+    saveAndSync({modalsReplace:true});renderAll();
     showToast('Semua catatan modal dihapus','ok');
   },'Ya, Hapus Semua');
 });
@@ -1957,7 +1979,7 @@ document.getElementById('btnDoImport').addEventListener('click',function(){
     if(Array.isArray(d.modals))modalEntries=validateModalEntries(d.modals);
     if(Array.isArray(d.bagiHasil))bagiHasil=validateBagiHasil(d.bagiHasil);
     if(Array.isArray(d.sheetSales))sheetSales=d.sheetSales;
-    saveAndSync();renderAll();
+    saveAndSync({modalsReplace:true});renderAll();
     closeModal('mImport');
     showToast('Data berhasil diimpor','ok');
   }catch(e){showToast('Format JSON tidak valid','err');}
@@ -1966,7 +1988,7 @@ document.getElementById('btnReset').addEventListener('click',function(){
   askConfirm('Reset <b>semua data</b> (stok, penjualan manual, catatan modal, bagi hasil)? Data di Google Form Sheet tidak ikut terhapus.',function(){
     products=JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
     history=[];modalEntries=[];bagiHasil=[];sheetSales=[];
-    saveAndSync();renderAll();
+    saveAndSync({modalsReplace:true});renderAll();
     showToast('Semua data direset','ok');
   },'Ya, Reset');
 });
