@@ -423,7 +423,7 @@ select.input-field{cursor:pointer}
         <div style="min-width:0">
           <div style="display:flex;align-items:center;gap:8px">
             <h1 class="font-display gold-shimmer" style="font-size:19px;font-weight:900;letter-spacing:2px">VJ PARFUM</h1>
-            <span class="ver-badge">v13</span>
+            <span class="ver-badge">v14</span>
           </div>
           <p style="font-size:10px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase" id="headerDate"></p>
         </div>
@@ -435,7 +435,8 @@ select.input-field{cursor:pointer}
           <span class="zoom-val" id="zoomVal">100%</span>
           <button class="zoom-btn" id="zoomInBtn"><i class="fas fa-plus"></i></button>
         </div>
-        <a class="btn-outline" href="https://docs.google.com/spreadsheets/d/1C_aVqFUws8GsIaW1VW9vBjMiUWmJy4Y2qu_BHZYv6ac" target="_blank" rel="noopener" style="padding:7px 12px;font-size:12px"><i class="fas fa-table"></i> Sheet</a>
+        <!-- ★ diperbaiki: sekarang membuka spreadsheet yang BENAR (yang ditulis backend) -->
+        <a class="btn-outline" href="https://docs.google.com/spreadsheets/d/1u145uymia6zUEcp2dH-A8fhXsrfrlPRFuABmmhpBbrw" target="_blank" rel="noopener" style="padding:7px 12px;font-size:12px"><i class="fas fa-table"></i> Sheet</a>
         <button class="btn-outline" id="btnSync" style="padding:7px 12px;font-size:12px"><i class="fas fa-cloud-arrow-down" id="syncIcon"></i> <span id="syncText">Sync</span></button>
         <span style="font-size:12px;color:var(--text-secondary)" id="headerUser"></span>
         <span class="small muted" id="lastSync"></span>
@@ -729,10 +730,15 @@ select.input-field{cursor:pointer}
 
 <script>
 /* ============================================================
-   VJ PARFUME — Frontend v13
-   Baru: TOMBOL "TARIK PENUH DARI SERVER" — browser/perangkat
-   mana pun bisa dipaksa sama persis dengan data server (semua
-   catatan modal + semua gambar bukti transfer langsung muncul).
+   VJ PARFUME — Frontend v14
+   BARU: OPERASI ATOMIK PER CATATAN MODAL
+   - Setiap tambah / ganti gambar / hapus modal dikirim sebagai
+     OPERASI KECIL SENDIRI ke server → mustahil menimpa catatan lain.
+   - Antrean dijamin: gagal kirim → dikirim ulang otomatis sampai
+     MASUK ke Google Sheet (muncul toast "✓ MASUK ke Google Sheet").
+   - Alarm versi backend: kalau Apps Script belum di-deploy ulang,
+     aplikasi memberi peringatan JELAS (bukan gagal diam-diam).
+   - Tombol Sheet diperbaiki ke spreadsheet yang benar.
    ============================================================ */
 
 // ---------- KONFIG ----------
@@ -740,9 +746,14 @@ var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3qQHJ8Vqv13goaL
 var LOGIN_BG_URL = 'https://lh3.googleusercontent.com/d/1biMn45dAjep1fot3jrZaZ5Yw33ytUh62';
 var DASH_BG_URL  = '';
 
-// SETIAP UPDATE FILE: naikkan angka ini (12 → 13 → 14 ...)
+// SETIAP UPDATE FILE: naikkan angka ini (13 → 14 → 15 ...)
 // Aplikasi HP akan OTOMATIS deteksi & muat versi baru (cache terlewati)
-var APP_VERSION = '13';
+var APP_VERSION = '14';
+
+// ★ versi backend Apps Script yang HARUS aktif (lihat panduan pemasangan).
+// Kalau server tidak melaporkan versi ini → muncul peringatan deploy ulang.
+var BACKEND_NEED = 'v10';
+var backendSupportsSkip=false, backendWarnShown=false;
 
 var PRICE_RP   = 200000;   // harga 1 botol dalam Rupiah
 var PRICE_BAHT = 400000;   // ← harga 1 botol dalam Baht — UBAH ANGKA INI kalau beda
@@ -886,19 +897,31 @@ function splitImageForSave(entry){
   }
   return out;
 }
+// ★ diperbaiki: potongan gambar (image_0, image_1, ...) DIPRIORITASKAN
+//   di atas kolom image utuh — supaya gambar lama yang terpotong tidak
+//   ditampilkan rusak kalau potongannya tersimpan lengkap.
 function joinImageFromChunks(m){
-  if(m.image&&/^data:image\//.test(String(m.image)))return String(m.image);
   var parts=[];
   for(var c=0;c<8;c++){
     var p=m['image_'+c];
     if(p===undefined||p===null||p==='')break;
     parts.push(String(p));
   }
-  var joined=parts.join('');
-  if(joined&&joined.indexOf('base64')>-1&&!/^data:image\//.test(joined)){
-    joined='data:image/jpeg;base64,'+joined.split('base64,')[1];
+  if(parts.length){
+    var joined=parts.join('');
+    if(joined&&joined.indexOf('base64')>-1&&!/^data:image\//.test(joined)){
+      joined='data:image/jpeg;base64,'+joined.split('base64,')[1];
+    }
+    if(/^data:image\//.test(joined))return joined;
   }
-  return /^data:image\//.test(joined)?joined:'';
+  if(m.image&&/^data:image\//.test(String(m.image)))return String(m.image);
+  return '';
+}
+// ★ id stabil untuk baris sheet yang diketik manual (tanpa kolom id)
+//   supaya tidak berubah-ubah tiap kali tarik data
+function stableModalId(m,amt){
+  var base=String(amt)+'_'+String(m.note||'').replace(/\s+/g,'').slice(0,30)+'_'+String(m.date||'').slice(0,10);
+  return 'mx'+base.replace(/[^a-zA-Z0-9_]/g,'');
 }
 function validateModalEntries(arr){
   if(!Array.isArray(arr))return[];
@@ -909,7 +932,7 @@ function validateModalEntries(arr){
     var amt=parseInt(String(m.amount==null?'':m.amount).replace(/[^0-9]/g,''),10)||0;
     if(amt<=0)continue;
     out.push({
-      id:m.id||('m'+Date.now()+i),
+      id:m.id||stableModalId(m,amt),
       date:m.date||new Date().toISOString(),
       amount:amt,
       note:String(m.note||''),
@@ -937,38 +960,35 @@ function validateBagiHasil(arr){
   return out;
 }
 
-// ---------- ★ ANTI-HILANG: GABUNG CATATAN MODAL (LOKAL + SERVER) ----------
-// Catatan modal & gambar bukti TIDAK PERNAH ditimpa / dibuang oleh data
-// dari server. Gambar bukti terbaru dari aplikasi selalu dipakai.
+// ---------- ★ GABUNG CATATAN MODAL (LOKAL + SERVER) ----------
+// Catatan lokal TIDAK PERNAH dibuang. Catatan yang belum ada di server
+// / gambarnya berubah dikembalikan sebagai needPush → langsung masuk
+// ANTREAN KIRIM ATOMIK (dijamin sampai ke Google Sheet).
 function mergeModalEntries(localArr,cloudArr){
   var localList=Array.isArray(localArr)?localArr:[];
   var cloudList=Array.isArray(cloudArr)?cloudArr:[];
-  var out=[],byId={},bySig={},i,j,serverMissing=false;
-  function sig(m){return String(m.amount)+'|'+String(m.note||'')+'|'+String(m.date||'');}
-  // 1) masukkan semua data server
+  var out=[],byId={},bySig={},needPush=[],i,j;
+  function sig(m){return String(m.amount)+'|'+String(m.note||'')+'|'+String(m.date||'').slice(0,10);}
   for(i=0;i<cloudList.length;i++){
     var c=cloudList[i];
     out.push(c);
     byId[String(c.id)]=c;
     bySig[sig(c)]=c;
   }
-  // 2) gabungkan data lokal — entri lokal TIDAK PERNAH dibuang
   for(j=0;j<localList.length;j++){
     var l=localList[j];
     var ex=byId[String(l.id)];
     if(!ex)ex=bySig[sig(l)];
     if(!ex){
-      // catatan lokal belum ada di server → pertahankan & tandai perlu dikirim
       out.push(l);
-      serverMissing=true;
+      needPush.push(l);
     }else if(l.image&&l.image!==ex.image){
-      // gambar bukti dari aplikasi selalu dipakai (upload/ganti bukti transfer)
       ex.image=l.image;
-      serverMissing=true;
+      needPush.push(ex);
     }
   }
   out.sort(function(a,b){return new Date(a.date)-new Date(b.date);});
-  return{list:out,serverMissing:serverMissing};
+  return{list:out,needPush:needPush};
 }
 
 // ★ buang catatan modal yang memang sudah dihapus sengaja di aplikasi
@@ -980,6 +1000,76 @@ function filterDeleted(cModals,cDel){
   }
   if(Object.keys(delMap).length===0)return cModals;
   return cModals.filter(function(m){return !(m&&m.id!==undefined&&delMap[String(m.id)]);});
+}
+
+// ---------- ★ ANTREAN OPERASI MODAL (ATOMIK PER CATATAN) ----------
+// Setiap tambah / ganti gambar / hapus modal dikirim sebagai operasi
+// KECIL sendiri ke server (saveModal / deleteModal). Operasi gagal →
+// tetap di antrean & dikirim ulang otomatis sampai MASUK ke Google Sheet.
+function loadPendingOps(){
+  try{return JSON.parse(localStorage.getItem('vj_pending_ops')||'[]')||[];}
+  catch(e){return[];}
+}
+function savePendingOps(q){
+  try{localStorage.setItem('vj_pending_ops',JSON.stringify(q||[]));}catch(e){}
+}
+function enqueueModalOp(op){
+  op.ts=Date.now()+'_'+Math.random().toString(36).slice(2);
+  var q=loadPendingOps();
+  if(op.op==='save'){
+    // hanya simpan versi TERBARU per catatan (id sama → yang lama dibuang)
+    q=q.filter(function(o){return !(o.op==='save'&&String(o.entry&&o.entry.id)===String(op.entry.id));});
+  }else if(op.op==='delete'){
+    q=q.filter(function(o){return !(o.op==='delete'&&String(o.id)===String(op.id));});
+    // save yang masih mengantre untuk id ini tidak boleh menghidupkan lagi
+    q=q.filter(function(o){return !(o.op==='save'&&String(o.entry&&o.entry.id)===String(op.id));});
+  }
+  q.push(op);
+  savePendingOps(q);
+  flushPendingOps();
+}
+var flushingOps=false;
+function flushPendingOps(){
+  if(flushingOps)return;
+  if(!document.documentElement.classList.contains('logged-in'))return;
+  var q=loadPendingOps();
+  if(!q.length)return;
+  flushingOps=true;
+  var op=q[0];
+  var payload;
+  if(op.op==='save'){
+    payload={action:'saveModal',entry:splitImageForSave(op.entry),meta:{lastModified:Date.now()}};
+  }else{
+    payload={action:'deleteModal',id:String(op.id),meta:{lastModified:Date.now()}};
+  }
+  postPayload(payload)
+    .then(function(){
+      var q2=loadPendingOps();
+      if(q2.length&&q2[0]&&q2[0].ts===op.ts)q2.shift();
+      savePendingOps(q2);
+      hideSyncWarn();
+      set('lastSync','✓ '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
+      showToast(op.op==='save'?'✓ Catatan modal & gambar MASUK ke Google Sheet':'✓ Dihapus dari Google Sheet','ok');
+      flushingOps=false;
+      if(loadPendingOps().length)flushPendingOps();
+    })
+    .catch(function(){
+      // gagal → operasi TETAP di antrean, dicoba lagi otomatis (interval / online)
+      flushingOps=false;
+      showSyncWarn();
+    });
+}
+setInterval(flushPendingOps,30000);
+window.addEventListener('online',function(){flushPendingOps();});
+
+// ★ cek versi backend — kalau masih lama, kasih peringatan JELAS
+function noteBackendVersion(data){
+  var bv=(data&&data.meta&&data.meta.backend)||'';
+  backendSupportsSkip=(bv===BACKEND_NEED);
+  if(!backendSupportsSkip&&!backendWarnShown){
+    backendWarnShown=true;
+    showToast('⚠ Backend masih versi lama — deploy ulang Apps Script v10!','err');
+  }
 }
 
 // ---------- PARSER SHEET ----------
@@ -1146,8 +1236,6 @@ function loadDataLocal(){
   }
 }
 function saveDataLocal(){
-  // tiap jenis data disimpan TERPISAH — kalau penyimpanan HP penuh,
-  // catatan modal tetap tersimpan (gambar darurat dibuang dulu).
   try{localStorage.setItem('vj_products_v3',JSON.stringify(products));}catch(e){}
   try{localStorage.setItem('vj_history_v3',JSON.stringify(history));}catch(e){}
   try{
@@ -1213,7 +1301,7 @@ function postPayload(payload){
   });
 }
 
-// ---------- CLOUD SYNC (★ ANTI HILANG DATA) ----------
+// ---------- CLOUD SYNC ----------
 function syncSheet(silent,isRetry){
   if(isSyncing)return Promise.resolve();
   isSyncing=true;
@@ -1224,6 +1312,7 @@ function syncSheet(silent,isRetry){
   return fetchAll(20000)
     .then(function(data){
       if(data.error)throw new Error(data.error);
+      noteBackendVersion(data);
       var cProds=Array.isArray(data.products)?data.products:[];
       var cHist=Array.isArray(data.history)?data.history:[];
       var cModals=validateModalEntries(Array.isArray(data.modals)?data.modals:(Array.isArray(data.modalEntries)?data.modalEntries:[]));
@@ -1233,28 +1322,26 @@ function syncSheet(silent,isRetry){
 
       if(cSales.length>0)sheetSales=cSales;
 
-      // ★ buang catatan modal yang memang sudah dihapus sengaja di aplikasi
       cModals=filterDeleted(cModals,Array.isArray(data.deleted)?data.deleted:[]);
 
-      // ★★★ SELALU GABUNG catatan modal lokal + server (SEMUA kondisi).
-      // Data modal yang diketik manual langsung di Sheet masuk ke aplikasi
-      // dan ikut dikirim balik — TIDAK PERNAH hilang saat sync lagi.
       var mMerged=mergeModalEntries(modalEntries,cModals);
       modalEntries=mMerged.list;
+      // ★ catatan lokal yang belum ada di server / gambarnya berubah →
+      //   masuk ANTREAN KIRIM ATOMIK (dijamin sampai ke Google Sheet)
+      for(var pi=0;pi<mMerged.needPush.length;pi++){
+        enqueueModalOp({op:'save',entry:mMerged.needPush[pi]});
+      }
 
       if(dirty>cloudTime){
-        // data lokal lebih baru → kirim (modal sudah digabung dulu, jadi aman)
         saveToCloud();
       }else if(cloudTime>0){
         products=cProds;
         history=cHist;
         bagiHasil=cBagi;
-        if(mMerged.serverMissing){markDirty();saveToCloud();}
       }else{
         var needPush=false;
         if(cProds.length>0)products=cProds;else if(products.length>0)needPush=true;
         if(cHist.length>0)history=cHist;else if(history.length>0)needPush=true;
-        if(mMerged.serverMissing)needPush=true;
         if(cBagi.length>0)bagiHasil=cBagi;else if(bagiHasil.length>0)needPush=true;
         if(needPush){markDirty();saveToCloud();}
       }
@@ -1263,6 +1350,7 @@ function syncSheet(silent,isRetry){
       hideSyncWarn();
       set('lastSync','✓ '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
       if(!silent)showToast('Data berhasil disinkronkan','ok');
+      flushPendingOps();
     })
     .catch(function(e){
       if(!isRetry){
@@ -1282,10 +1370,6 @@ function syncSheet(silent,isRetry){
 }
 
 // ★★★ TARIK PENUH DARI SERVER ★★★
-// Langkah 1: gabungkan data lokal + server lalu KIRIM (catatan lokal &
-//   gambar bukti yang cuma ada di browser ini ikut naik ke server).
-// Langkah 2: tarik ulang lalu JADIKAN data server sebagai data browser ini.
-// Hasil: browser/perangkat mana pun menampilkan data & gambar yang sama.
 function fullResync(){
   if(isSyncing)return;
   isSyncing=true;
@@ -1296,13 +1380,13 @@ function fullResync(){
   fetchAll(25000)
     .then(function(data){
       if(data.error)throw new Error(data.error);
+      noteBackendVersion(data);
       var cProds=Array.isArray(data.products)?data.products:[];
       var cHist=Array.isArray(data.history)?data.history:[];
       var cBagi=Array.isArray(data.bagiHasil)?data.bagiHasil:[];
       var cModals=validateModalEntries(Array.isArray(data.modals)?data.modals:(Array.isArray(data.modalEntries)?data.modalEntries:[]));
       cModals=filterDeleted(cModals,Array.isArray(data.deleted)?data.deleted:[]);
 
-      // gabung dulu supaya catatan & gambar lokal ikut naik ke server
       var mMerged=mergeModalEntries(modalEntries,cModals);
       var payload={
         action:'saveAll',
@@ -1312,11 +1396,11 @@ function fullResync(){
         bagiHasil:(cBagi.length>0?cBagi:(Array.isArray(bagiHasil)?bagiHasil:[])),
         meta:{lastModified:Date.now()}
       };
-      // setelah kirim berhasil → tarik ulang hasil akhirnya
       return postPayload(payload).then(function(){return fetchAll(25000);});
     })
     .then(function(data2){
       if(data2.error)throw new Error(data2.error);
+      noteBackendVersion(data2);
       var cProds=Array.isArray(data2.products)?data2.products:[];
       var cHist=Array.isArray(data2.history)?data2.history:[];
       var cModals=validateModalEntries(Array.isArray(data2.modals)?data2.modals:(Array.isArray(data2.modalEntries)?data2.modalEntries:[]));
@@ -1324,14 +1408,12 @@ function fullResync(){
       var cBagi=validateBagiHasil(Array.isArray(data2.bagiHasil)?data2.bagiHasil:[]);
       var cSales=Array.isArray(data2.sheetSales)?data2.sheetSales:[];
 
-      // ★ data server = kebenaran penuh untuk browser ini
       if(cProds.length>0)products=cProds;
       if(cHist.length>0)history=cHist;
       modalEntries=cModals;
       if(cBagi.length>0)bagiHasil=cBagi;
       if(cSales.length>0)sheetSales=cSales;
 
-      // samakan waktu lokal dengan server supaya tidak ada dorongan data lama
       var cloudTime=Number(data2.meta&&data2.meta.lastModified)||0;
       dirty=cloudTime||Date.now();
       try{localStorage.setItem('vj_dirty',String(dirty));}catch(e){}
@@ -1341,6 +1423,7 @@ function fullResync(){
       hideSyncWarn();
       set('lastSync','✓ '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
       showToast('Data & gambar ditarik penuh dari server — '+modalEntries.length+' catatan modal','ok');
+      flushPendingOps();
     })
     .catch(function(e){
       showSyncWarn();
@@ -1353,8 +1436,8 @@ function fullResync(){
     });
 }
 
-// ★ SIMPAN KE SERVER: antrian + timeout + kirim ulang otomatis
-// opts.modalsReplace=true → hanya untuk HAPUS / RESET / IMPOR sengaja
+// ★ SIMPAN KE SERVER (data lain: produk, riwayat, bagi hasil)
+// opts.modalsReplace=true → hanya untuk HAPUS SEMUA / RESET / IMPOR sengaja
 var saveInFlight=false, saveQueued=false, saveQueuedOpts=null, pendingPush=false, pushFailNotified=false;
 function saveToCloud(opts){
   if(!document.documentElement.classList.contains('logged-in'))return;
@@ -1366,12 +1449,16 @@ function saveToCloud(opts){
     return;
   }
   saveInFlight=true;
+  // ★ pengiriman biasa TIDAK menyentuh catatan modal di sheet sama sekali
+  //   (modal hanya lewat saveModal / deleteModal yang atomik)
+  var useSkip=backendSupportsSkip&&opts.modalsReplace!==true;
   var modalsChunks=modalEntries.map(splitImageForSave);
   var payload={
     action:'saveAll',
     products:Array.isArray(products)?products:[],
     history:Array.isArray(history)?history:[],
-    modals:modalsChunks,
+    modals:(useSkip?[]:modalsChunks),
+    skipModals:(useSkip?true:undefined),
     bagiHasil:Array.isArray(bagiHasil)?bagiHasil:[],
     modalsReplace:(opts.modalsReplace===true),
     meta:{lastModified:dirty||Date.now()}
@@ -1400,7 +1487,6 @@ function saveToCloud(opts){
     if(timer)clearTimeout(timer);
     var msg=(e&&e.message)||String(e);
     if(msg.indexOf('DITOLAK')===0){
-      // ditolak proteksi server → jangan diulang terus (bukan masalah koneksi)
       showToast('Pengiriman ditolak proteksi server: '+msg,'err');
       return;
     }
@@ -1703,8 +1789,11 @@ function renderCosts(){
           var img=await compressImage(f);
           if(!img){showToast('Gambar gagal diproses — coba foto lain','err');return;}
           modalEntries[idx].image=img;
-          saveAndSync();renderAll();
-          showToast('Bukti transfer disimpan','ok');
+          saveDataLocal();
+          renderAll();
+          // ★ ATOMIK: hanya catatan INI yang dikirim — catatan lain aman
+          enqueueModalOp({op:'save',entry:modalEntries[idx]});
+          showToast('Bukti transfer diperbarui — mengirim ke Google Sheet...','inf');
         };
         inp.click();
       };
@@ -1716,8 +1805,11 @@ function renderCosts(){
       delBtn.innerHTML='<i class="fas fa-trash"></i>';
       delBtn.onclick=function(){
         askConfirm('Hapus catatan modal <b>'+esc(m.note||fRp(m.amount))+'</b>?',function(){
-          modalEntries.splice(idx,1);
-          saveAndSync({modalsReplace:true});renderAll();
+          var removed=modalEntries.splice(idx,1)[0];
+          saveDataLocal();
+          renderAll();
+          // ★ ATOMIK: hanya catatan INI yang dihapus dari Sheet
+          if(removed&&removed.id)enqueueModalOp({op:'delete',id:String(removed.id)});
           showToast('Catatan modal dihapus','ok');
         },'Ya, Hapus');
       };
@@ -2014,6 +2106,7 @@ document.getElementById('btnConfirmYes').addEventListener('click',function(){
 document.getElementById('btnClearAllModals').addEventListener('click',function(){
   askConfirm('Hapus <b>SEMUA</b> catatan modal? Tidak bisa dibatalkan.',function(){
     modalEntries=[];
+    savePendingOps([]);   // ★ bersihkan antrean supaya tidak ada yang "hidup lagi"
     saveAndSync({modalsReplace:true});renderAll();
     showToast('Semua catatan modal dihapus','ok');
   },'Ya, Hapus Semua');
@@ -2044,8 +2137,12 @@ document.getElementById('btnSaveModal').addEventListener('click',async function(
     img=await compressImage(file);
     if(!img)showToast('Gambar gagal diproses, disimpan tanpa bukti','err');
   }
-  modalEntries.push({id:'m'+Date.now(),date:new Date().toISOString(),amount:amt,note:note,image:img});
-  saveAndSync();renderAll();
+  // ★ simpan lokal + KIRIM ATOMIK satu catatan ini langsung ke Google Sheet
+  var entry={id:'m'+Date.now(),date:new Date().toISOString(),amount:amt,note:note,image:img};
+  modalEntries.push(entry);
+  saveDataLocal();
+  renderAll();
+  enqueueModalOp({op:'save',entry:entry});
   document.getElementById('modalInput').value='';
   document.getElementById('modalNote').value='';
   document.getElementById('modalFile').value='';
@@ -2053,7 +2150,7 @@ document.getElementById('btnSaveModal').addEventListener('click',async function(
   pv.style.display='none';pv.removeAttribute('src');
   btn.disabled=false;
   btn.innerHTML='<i class="fas fa-save"></i> Simpan Catatan Modal';
-  showToast('Tersimpan di HP — mengirim ke server...','inf');
+  showToast('Tersimpan — mengirim ke Google Sheet...','inf');
 });
 
 document.getElementById('btnOpenBagi').addEventListener('click',function(){openModal('mBagi');});
@@ -2082,6 +2179,7 @@ document.getElementById('btnDoImport').addEventListener('click',function(){
     if(Array.isArray(d.modals))modalEntries=validateModalEntries(d.modals);
     if(Array.isArray(d.bagiHasil))bagiHasil=validateBagiHasil(d.bagiHasil);
     if(Array.isArray(d.sheetSales))sheetSales=d.sheetSales;
+    savePendingOps([]);
     saveAndSync({modalsReplace:true});renderAll();
     closeModal('mImport');
     showToast('Data berhasil diimpor','ok');
@@ -2091,6 +2189,7 @@ document.getElementById('btnReset').addEventListener('click',function(){
   askConfirm('Reset <b>semua data</b> (stok, penjualan manual, catatan modal, bagi hasil)? Data di Google Form Sheet tidak ikut terhapus.',function(){
     products=JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
     history=[];modalEntries=[];bagiHasil=[];sheetSales=[];
+    savePendingOps([]);
     saveAndSync({modalsReplace:true});renderAll();
     showToast('Semua data direset','ok');
   },'Ya, Reset');
